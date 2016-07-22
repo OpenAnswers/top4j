@@ -1,0 +1,36 @@
+#
+# assertion-data.csv
+#
+# Fields:
+#
+#    1. StatsType - the Top4J stats type
+#    2. Attribute - the Top4J MBean attribute name
+#    3. Comparator - the assertion comparator, where gt = greater than, lt = less than, eq = equal to
+#    4. AssertionType - the data type of the assertion data
+#    5. AssertionData - the assertion data
+#
+GCStats,GcOverhead,gt,double,0.1
+GCStats,MeanNurseryGCTime,gt,double,1.0
+GCStats,MeanTenuredGCTime,eq,double,0.0
+#GCStats,MBeanCpuTime,gt,double,0.1
+MemoryStats,MemoryAllocationRate,gt,double,1.0
+MemoryStats,MemoryPromotionRate,gt,double,0.0
+MemoryStats,MemorySurvivorRate,gt,double,0.0
+#MemoryStats,MBeanCpuTime,gt,double,1.0
+HeapStats,EdenSpaceUtil,eq,double,0.0
+HeapStats,SurvivorSpaceUtil,gt,double,0.1
+HeapStats,TenuredHeapUtil,eq,double,0.0
+#HeapStats,MBeanCpuTime,gt,double,0.1
+AgentStats,AgentCpuUtil,gt,double,0.1
+AgentStats,AgentCpuTime,gt,double,10.0
+AgentStats,Iterations,gt,long,0
+#AgentStats,MBeanCpuTime,gt,double,0.1
+ThreadStats,CpuUsage,gt,double,0.0
+ThreadStats,UserCpuUsage,gt,double,0.0
+ThreadStats,SysCpuUsage,eq,double,0.0
+ThreadStats,ThreadCount,gt,long,10
+ThreadStats,RunnableThreadCount,gt,long,1
+ThreadStats,BlockedThreadCount,gt,long,1
+ThreadStats,WaitingThreadCount,gt,long,1
+ThreadStats,TimedWaitingThreadCount,gt,long,0
+ThreadStats,MBeanCpuTime,gt,double,10.0

@@ -1,0 +1,1 @@
+java -classpath "../../../target/top4j-javaagent-0.0.1-SNAPSHOT.jar" -javaagent:../../../target/top4j-javaagent-0.0.1-SNAPSHOT.jar=test.property=test,top.thread.count=10 -Djava.util.logging.config.file=logging.properties ${JAVA_OPTS} io.top4j.javaagent.test.MultiThreadedTest $*

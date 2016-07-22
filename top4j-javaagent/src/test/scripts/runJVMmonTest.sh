@@ -1,0 +1,1 @@
+java -Xms64m -Xmx64m -verbosegc -classpath ./target/Top4JJavaAgent-0.0.1-SNAPSHOT.jar:./lib/gson-1.7.1.jar -javaagent:./target/Top4JJavaAgent-0.0.1-SNAPSHOT.jar io.top4j.top4j.javaagent.Top4JJavaAgent.Test

@@ -1,0 +1,103 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <parent>
+    <groupId>io.top4j</groupId>
+    <artifactId>top4j-parent</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+  </parent>
+
+  <artifactId>top4j-cli</artifactId>
+  <packaging>jar</packaging>
+
+  <name>Top4J CLI</name>
+  <description>
+    Top4J is a lightweight, low overhead, production-ready performance analysis tool for the Java runtime environment.
+  </description>
+  <url>http://top4j.io</url>
+
+
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+  </properties>
+
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-jar-plugin</artifactId>
+        <version>2.6</version>
+        <configuration>
+          <archive>
+            <manifestEntries>
+              <Main-Class>io.top4j.cli.Top4J</Main-Class>
+            </manifestEntries>
+          </archive>
+        </configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-shade-plugin</artifactId>
+        <version>2.4.3</version>
+        <executions>
+          <execution>
+            <phase>package</phase>
+            <goals>
+              <goal>shade</goal>
+            </goals>
+            <configuration>
+              <artifactSet>
+                <excludes>
+                  <exclude>junit:junit</exclude>
+                  <exclude>classworlds:classworlds</exclude>
+                  <exclude>classworlds:classworlds-boot</exclude>
+                  <exclude>javax.servlet:servlet-api</exclude>
+                  <exclude>log4j:log4j:jar:</exclude>
+                  <exclude>commons-beanutils:commons-beanutils</exclude>
+                  <exclude>commons-cli:commons-cli</exclude>
+                  <exclude>commons-collections:commons-collections</exclude>
+                  <exclude>commons-io:commons-io</exclude>
+                  <exclude>commons-logging</exclude>
+                  <exclude>logkit:logkit</exclude>
+                  <exclude>avalon-framework:avalon-framework</exclude>
+                  <exclude>org.cyclopsgroup:jcli</exclude>
+                </excludes>
+              </artifactSet>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+    </plugins>
+  </build>
+
+  <dependencies>
+    <dependency>
+      <groupId>jline</groupId>
+      <artifactId>jline</artifactId>
+      <version>2.12</version>
+    </dependency>
+    <dependency>
+      <groupId>com.sun</groupId>
+      <artifactId>tools</artifactId>
+      <version>1.7.0_79</version>
+      <scope>system</scope>
+      <systemPath>${java.home}/../lib/tools.jar</systemPath>
+    </dependency>
+    <dependency>
+      <groupId>org.cyclopsgroup</groupId>
+      <artifactId>jmxterm</artifactId>
+      <version>1.0-alpha-4</version>
+    </dependency>
+    <dependency>
+      <groupId>commons-lang</groupId>
+      <artifactId>commons-lang</artifactId>
+      <version>2.6</version>
+    </dependency>
+    <dependency>
+      <groupId>io.top4j</groupId>
+      <artifactId>top4j-javaagent</artifactId>
+      <version>${project.version}</version>
+    </dependency>
+  </dependencies>
+</project>
