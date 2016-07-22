@@ -2,11 +2,11 @@ Top4J
 =====
 Top4J is a lightweight, low overhead, production-ready performance analysis tool for the Java runtime environment.
 
-Top4J has two modes of operation: Java Agent and Command Line.
+Top4J has two modes of operation: Java Agent and Command Line Interface.
 
 The Top4J Java Agent is invoked via the standard `java -javaagent` command line argument and runs as a background thread inside the target JVM.
 
-The Top4J Command Line Interface attaches to a remote JVM process via the JDK tools VirtualMachine API.
+The Top4J CLI is executed via the command line and attaches to a remote JVM process via the JDK tools VirtualMachine API.
 
 See "Get Started" section for more details.
 Build
