@@ -20,6 +20,7 @@ Get Started
 **Run as Java Agent**
 1. Download and install the Top4J jar within an appropriate location on the local file system.
 1. Add -javaagent command line argument to JVM startup args, e.g. `java -javaagent:<path-to-top4j-jar>/top4j-javaagent-1.0.1.jar <java-class-name>`
+
 **Run Command Line Interface**
 1. Download and install the Top4J jar within an appropriate location on the local file system.
-1. Run Top4J jar specifying JVM PID as the first argument, e.g. `java -jar top4j-cli-0.0.1.jar 12345`
+1. Run Top4J jar specifying JVM PID as the first argument, e.g. `java -jar top4j-cli-1.0.1.jar 12345`
