@@ -25,7 +25,7 @@ public class JvmAgentTest {
         public String assertionDatum;
     }
 
-    private final String NUM_THREADS = "1000";
+    private final String NUM_THREADS = "900";
     private final String NUM_ITERATIONS = "6";
     private final String PAUSE_TIME = "5";
     private final String[] multiThreadedTestArgs = { NUM_THREADS, NUM_ITERATIONS, PAUSE_TIME };
