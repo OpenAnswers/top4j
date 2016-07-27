@@ -15,14 +15,13 @@
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <!-- Default distributionManagement proprties which can be overridden in 
-			a settings.xml profile: -->
-	<repository.deploy.releases.url>http://hlcit003:8081/nexus/content/repositories/releases</repository.deploy.releases.url>
-	<repository.deploy.snapshots.url>http://hlcit003:8081/nexus/content/repositories/snapshots</repository.deploy.snapshots.url>
-	<repository.deploy.releases.id>releases</repository.deploy.releases.id>
-	<repository.deploy.snapshots.id>snapshots</repository.deploy.snapshots.id>
-	<repository.deploy.releases.name>Releases</repository.deploy.releases.name>
-	<repository.deploy.snapshots.name>Snapshots</repository.deploy.snapshots.name>
+    <!-- Default distributionManagement proprties which can be overridden in a settings.xml profile: -->
+    <repository.deploy.releases.url>http://hlcit003:8081/nexus/content/repositories/releases</repository.deploy.releases.url>
+    <repository.deploy.snapshots.url>http://hlcit003:8081/nexus/content/repositories/snapshots</repository.deploy.snapshots.url>
+    <repository.deploy.releases.id>releases</repository.deploy.releases.id>
+    <repository.deploy.snapshots.id>snapshots</repository.deploy.snapshots.id>
+    <repository.deploy.releases.name>Releases</repository.deploy.releases.name>
+    <repository.deploy.snapshots.name>Snapshots</repository.deploy.snapshots.name>
   </properties>
 
   <modules>
@@ -43,24 +42,24 @@
           </configuration>
         </plugin>
         <plugin>
-			<groupId>org.apache.maven.plugins</groupId>
-			<artifactId>maven-release-plugin</artifactId>
-			<version>2.5.3</version>
-        	<configuration>
-				<tagNameFormat>@{project.version}</tagNameFormat>
-        	</configuration>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-release-plugin</artifactId>
+          <version>2.5.3</version>
+          <configuration>
+            <tagNameFormat>@{project.version}</tagNameFormat>
+          </configuration>
 		</plugin>
       </plugins>
     </pluginManagement>
   </build>
   
   <distributionManagement>
-	<repository>
+    <repository>
 	  <id>${repository.deploy.releases.id}</id>
 	  <name>${repository.deploy.releases.name}</name>
 	  <url>${repository.deploy.releases.url}</url>
-	</repository>
-	<snapshotRepository>
+    </repository>
+    <snapshotRepository>
 	  <id>${repository.deploy.snapshots.id}</id>
 	  <name>${repository.deploy.snapshots.name}</name>
 	  <url>${repository.deploy.snapshots.url}</url>
