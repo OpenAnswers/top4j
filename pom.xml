@@ -15,6 +15,14 @@
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <!-- Default distributionManagement proprties which can be overridden in 
+			a settings.xml profile: -->
+	<repository.deploy.releases.url>http://hlcit003:8081/nexus/content/repositories/releases</repository.deploy.releases.url>
+	<repository.deploy.snapshots.url>http://hlcit003:8081/nexus/content/repositories/snapshots</repository.deploy.snapshots.url>
+	<repository.deploy.releases.id>releases</repository.deploy.releases.id>
+	<repository.deploy.snapshots.id>snapshots</repository.deploy.snapshots.id>
+	<repository.deploy.releases.name>Releases</repository.deploy.releases.name>
+	<repository.deploy.snapshots.name>Snapshots</repository.deploy.snapshots.name>
   </properties>
 
   <modules>
@@ -34,9 +42,34 @@
             <target>1.7</target>
           </configuration>
         </plugin>
+        <plugin>
+			<groupId>org.apache.maven.plugins</groupId>
+			<artifactId>maven-release-plugin</artifactId>
+			<version>2.5.3</version>
+        	<configuration>
+				<tagNameFormat>@{project.version}</tagNameFormat>
+        	</configuration>
+		</plugin>
       </plugins>
     </pluginManagement>
   </build>
+  
+  <distributionManagement>
+	<repository>
+	  <id>${repository.deploy.releases.id}</id>
+	  <name>${repository.deploy.releases.name}</name>
+	  <url>${repository.deploy.releases.url}</url>
+	</repository>
+	<snapshotRepository>
+	  <id>${repository.deploy.snapshots.id}</id>
+	  <name>${repository.deploy.snapshots.name}</name>
+	  <url>${repository.deploy.snapshots.url}</url>
+    </snapshotRepository>
+  </distributionManagement>
+  <scm>
+    <developerConnection>scm:git:git@gitlab.openans.co.uk:ryan/top4j.git</developerConnection>
+    <tag>HEAD</tag>
+  </scm>
 
   <dependencies>
     <dependency>
