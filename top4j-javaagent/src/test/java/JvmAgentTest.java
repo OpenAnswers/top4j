@@ -26,7 +26,7 @@ public class JvmAgentTest {
     }
 
     private final String NUM_THREADS = "500";
-    private final String NUM_ITERATIONS = "10";
+    private final String NUM_ITERATIONS = "15";
     private final String PAUSE_TIME = "5";
     private final String[] multiThreadedTestArgs = { NUM_THREADS, NUM_ITERATIONS, PAUSE_TIME };
     private final String assertionDataFile = "/assertion-data.csv";
@@ -147,18 +147,23 @@ public class JvmAgentTest {
 
     private void assertDouble( String message, Double expectedValue, Double actualValue, String comparator ) {
 
+        String errorMessage;
+
         switch (comparator) {
 
             case "eq":
-                assertEquals(message, expectedValue, actualValue);
+                errorMessage = message + " -> actual value: " + actualValue + " != expected value: " + expectedValue;
+                assertEquals(errorMessage, expectedValue, actualValue);
                 break;
 
             case "gt":
-                assertTrue(message, actualValue > expectedValue);
+                errorMessage = message + " -> actual value: " + actualValue + " < expected value: " + expectedValue;
+                assertTrue(errorMessage, actualValue > expectedValue);
                 break;
 
             case "lt":
-                assertTrue(message, actualValue < expectedValue);
+                errorMessage = message + " -> actual value: " + actualValue + " > expected value: " + expectedValue;
+                assertTrue(errorMessage, actualValue < expectedValue);
                 break;
 
             default:
@@ -170,18 +175,23 @@ public class JvmAgentTest {
 
     private void assertLong( String message, Long expectedValue, Long actualValue, String comparator ) {
 
+        String errorMessage;
+
         switch (comparator) {
 
             case "eq":
-                assertEquals(message, expectedValue, actualValue);
+                errorMessage = message + " -> actual value: " + actualValue + " != expected value: " + expectedValue;
+                assertEquals(errorMessage, expectedValue, actualValue);
                 break;
 
             case "gt":
-                assertTrue(message, actualValue > expectedValue);
+                errorMessage = message + " -> actual value: " + actualValue + " < expected value: " + expectedValue;
+                assertTrue(errorMessage, actualValue > expectedValue);
                 break;
 
             case "lt":
-                assertTrue(message, actualValue < expectedValue);
+                errorMessage = message + " -> actual value: " + actualValue + " > expected value: " + expectedValue;
+                assertTrue(errorMessage, actualValue < expectedValue);
                 break;
 
             default:
