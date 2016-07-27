@@ -48,21 +48,21 @@
           <configuration>
             <tagNameFormat>@{project.version}</tagNameFormat>
           </configuration>
-		</plugin>
+        </plugin>
       </plugins>
     </pluginManagement>
   </build>
   
   <distributionManagement>
     <repository>
-	  <id>${repository.deploy.releases.id}</id>
-	  <name>${repository.deploy.releases.name}</name>
-	  <url>${repository.deploy.releases.url}</url>
+      <id>${repository.deploy.releases.id}</id>
+      <name>${repository.deploy.releases.name}</name>
+      <url>${repository.deploy.releases.url}</url>
     </repository>
     <snapshotRepository>
-	  <id>${repository.deploy.snapshots.id}</id>
-	  <name>${repository.deploy.snapshots.name}</name>
-	  <url>${repository.deploy.snapshots.url}</url>
+      <id>${repository.deploy.snapshots.id}</id>
+      <name>${repository.deploy.snapshots.name}</name>
+      <url>${repository.deploy.snapshots.url}</url>
     </snapshotRepository>
   </distributionManagement>
   <scm>
