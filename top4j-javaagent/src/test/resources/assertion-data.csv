@@ -27,7 +27,7 @@ AgentStats,Iterations,gt,long,0
 #AgentStats,MBeanCpuTime,gt,double,0.1
 ThreadStats,CpuUsage,gt,double,0.0
 ThreadStats,UserCpuUsage,gt,double,0.0
-ThreadStats,SysCpuUsage,eq,double,0.0
+ThreadStats,SysCpuUsage,gt,double,0.0
 ThreadStats,ThreadCount,gt,long,10
 ThreadStats,RunnableThreadCount,gt,long,1
 ThreadStats,BlockedThreadCount,gt,long,1
