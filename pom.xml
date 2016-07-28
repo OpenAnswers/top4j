@@ -66,7 +66,7 @@
     </snapshotRepository>
   </distributionManagement>
   <scm>
-    <developerConnection>scm:git:git@gitlab.openans.co.uk:ryan/top4j.git</developerConnection>
+    <developerConnection>scm:git:git@gitlab.openans.co.uk:open-answers/top4j.git</developerConnection>
     <tag>HEAD</tag>
   </scm>
 
