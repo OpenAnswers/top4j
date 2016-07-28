@@ -12,7 +12,7 @@ See "Get Started" section for more details.
 Build
 =====
 ```bash
-git clone git@gitlab.openans.co.uk:ryan/top4j.git
+git clone git@gitlab.openans.co.uk:open-answers/top4j.git
 mvn clean package
 ```
 Get Started
