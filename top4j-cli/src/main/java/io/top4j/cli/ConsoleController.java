@@ -35,6 +35,7 @@ public class ConsoleController  extends TimerTask {
     private Map<Integer, Long> threadIds = new HashMap<>();
     private final SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm:ss");
     private ThreadHelper threadHelper;
+    private final int MAX_THREAD_NAME_LENGTH = 49;
 
     public ConsoleController ( ConsoleReader consoleReader, Display display, MBeanServerConnection mbsc, int topThreadCount ) {
 
@@ -192,14 +193,18 @@ public class ConsoleController  extends TimerTask {
                 String.format("%.2f", memoryStatsMXBean.getMemoryPromotionRate()) + " tenured\n");
         sb.append("GC Stats:  " + String.format("%.4f", gcStatsMXBean.getGcOverhead()) + "% GC overhead\n");
         sb.append("\n");
-        sb.append("#  TID     THREAD NAME                             %CPU\n");
+        sb.append("#  TID     THREAD NAME                                       %CPU\n");
         // initialise thread counter
         int counter = 0;
         for (TopThreadMXBean topThreadMXBean : topThreadMXBeans) {
 
+            String threadName = topThreadMXBean.getThreadName();
+            if (threadName != null && threadName.length() > MAX_THREAD_NAME_LENGTH) {
+               threadName = threadName.substring(0, MAX_THREAD_NAME_LENGTH-1);
+            }
             sb.append(  counter + "  " +
                     String.format("%1$-8s", topThreadMXBean.getThreadId()) +
-                    String.format("%1$-40s", topThreadMXBean.getThreadName()) +
+                    String.format("%1$-50s", threadName) +
                     String.format( "%.1f", topThreadMXBean.getThreadCpuUsage() ) +
                     "\n");
 
