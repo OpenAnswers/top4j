@@ -63,6 +63,7 @@ public class Top4J {
         String configOverrides = "collector.poll.frequency=15000," +
                 "dispatcher.poll.frequency=15000," +
                 "log.properties.on.startup=true," +
+                "stats.logger.enabled=false," +
                 "top.thread.count=" + topThreadCount;
         // initialise configurator
 		Configurator config = new Configurator( mbsc, configOverrides );

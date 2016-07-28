@@ -63,8 +63,10 @@ public class JVMStats implements JVMStatsMXBean {
      	// initialise AgentStats
      	initAgentStats();
 
-        // initialise StatsLogger
-        initStatsLogger();
+        if (config.isStatsLoggerEnabled()) {
+            // initialise StatsLogger
+            initStatsLogger();
+        }
 
     }
 	
