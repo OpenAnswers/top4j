@@ -139,7 +139,19 @@ public class ConsoleController  extends TimerTask {
         Character userInput = (char) Integer.valueOf( display.getText() ).intValue();
         String screen;
         if ( Character.isDigit(userInput) ) {
-            screen = createThreadStackTraceScreen( Character.getNumericValue( userInput ));
+            screen = createThreadStackTraceScreen(Character.getNumericValue(userInput));
+        }
+        else if ( userInput.toString().equals("q")) {
+            screen = null;
+            try {
+                consoleReader.println("Exiting....");
+                consoleReader.println();
+                consoleReader.flush();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            // exit Top4J
+            System.exit(0);
         }
         else {
             screen = createTopThreadsScreen();
@@ -196,6 +208,8 @@ public class ConsoleController  extends TimerTask {
             // increment thread counter
             counter++;
         }
+        sb.append("\n\n");
+        sb.append("Hit [0-9] to view thread stack trace, [q] to quit\n");
 
         return sb.toString();
 
@@ -210,6 +224,8 @@ public class ConsoleController  extends TimerTask {
         sb.append("top4j - " + timeFormat.format(date) + " up " + ( runtimeMXBean.getUptime() / 1000 )  + " secs,  load average: " + osMXBean.getSystemLoadAverage() + "\n");
         sb.append("\n");
         sb.append(threadHelper.getStackTraceWithContext(threadId, 15));
+        sb.append("\n\n");
+        sb.append("Hit [m] to return to main screen, [q] to quit\n");
 
         return sb.toString();
     }

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/top4j-cli/top4j-cli.iml" filepath="$PROJECT_DIR$/top4j-cli/top4j-cli.iml" />
+      <module fileurl="file://$PROJECT_DIR$/top4j-javaagent/top4j-javaagent.iml" filepath="$PROJECT_DIR$/top4j-javaagent/top4j-javaagent.iml" />
+      <module fileurl="file://$PROJECT_DIR$/top4j-parent.iml" filepath="$PROJECT_DIR$/top4j-parent.iml" />
+    </modules>
+  </component>
+</project>
