@@ -21,7 +21,7 @@ import java.util.*;
 public class ConsoleController  extends TimerTask {
 
     private final ConsoleReader consoleReader;
-    private final Display display;
+    private final UserInput userInput;
     private final MBeanServerConnection mbsc;
     private final MBeanServer localMBS = ManagementFactory.getPlatformMBeanServer();
     private final GCStatsMXBean gcStatsMXBean;
@@ -37,15 +37,16 @@ public class ConsoleController  extends TimerTask {
     private ThreadHelper threadHelper;
     private final int MAX_THREAD_NAME_LENGTH = 49;
 
-    public ConsoleController ( ConsoleReader consoleReader, Display display, MBeanServerConnection mbsc, int topThreadCount ) {
+    public ConsoleController ( ConsoleReader consoleReader, UserInput userInput, MBeanServerConnection mbsc, int topThreadCount ) {
 
         this.consoleReader = consoleReader;
-        this.display = display;
+        this.userInput = userInput;
         this.mbsc = mbsc;
         try {
             this.threadHelper = new ThreadHelper( mbsc );
         } catch (IOException e) {
             e.printStackTrace();
+            System.exit(1);
         }
 
         // create GCStats objectName
@@ -54,6 +55,7 @@ public class ConsoleController  extends TimerTask {
             gcStatsObjectName = new ObjectName(Constants.DOMAIN + ":type=" + Constants.JVM_STATS_TYPE + ",statsType=" + Constants.GC_STATS_TYPE );
         } catch (MalformedObjectNameException e) {
             e.printStackTrace();
+            System.exit(1);
         }
         // instantiate new gcStatsMXBean proxy based on gcStatsObjectName
         this.gcStatsMXBean = JMX.newMBeanProxy(localMBS, gcStatsObjectName, GCStatsMXBean.class);
@@ -64,6 +66,7 @@ public class ConsoleController  extends TimerTask {
             memoryStatsObjectName = new ObjectName(Constants.DOMAIN + ":type=" + Constants.JVM_STATS_TYPE + ",statsType=" + Constants.MEMORY_STATS_TYPE );
         } catch (MalformedObjectNameException e) {
             e.printStackTrace();
+            System.exit(1);
         }
         // instantiate new memoryStatsMXBean proxy based on memoryStatsObjectName
         this.memoryStatsMXBean = JMX.newMBeanProxy(localMBS, memoryStatsObjectName, MemoryStatsMXBean.class);
@@ -74,6 +77,7 @@ public class ConsoleController  extends TimerTask {
             heapStatsObjectName = new ObjectName(Constants.DOMAIN + ":type=" + Constants.JVM_STATS_TYPE + ",statsType=" + Constants.HEAP_STATS_TYPE );
         } catch (MalformedObjectNameException e) {
             e.printStackTrace();
+            System.exit(1);
         }
         // instantiate new heapStatsMXBean proxy based on heapStatsObjectName
         this.heapStatsMXBean = JMX.newMBeanProxy(localMBS, heapStatsObjectName, HeapStatsMXBean.class);
@@ -84,6 +88,7 @@ public class ConsoleController  extends TimerTask {
             threadStatsObjectName = new ObjectName(Constants.DOMAIN + ":type=" + Constants.JVM_STATS_TYPE + ",statsType=" + Constants.THREADS_STATS_TYPE );
         } catch (MalformedObjectNameException e) {
             e.printStackTrace();
+            System.exit(1);
         }
         // instantiate new threadStatsMXBean proxy based on threadStatsObjectName
         this.threadStatsMXBean = JMX.newMBeanProxy(localMBS, threadStatsObjectName, ThreadStatsMXBean.class);
@@ -97,6 +102,7 @@ public class ConsoleController  extends TimerTask {
                 topThreadObjectName = new ObjectName(Constants.DOMAIN + ":type=" + Constants.JVM_STATS_TYPE + ",statsType=" + Constants.TOP_THREAD_STATS_TYPE + ",rank=" + rank);
             } catch (MalformedObjectNameException e) {
                 e.printStackTrace();
+                System.exit(1);
             }
             // instantiate and store topThreadMXBean proxy based on topThreadObjectName
             this.topThreadMXBeans.add(JMX.newMBeanProxy(localMBS, topThreadObjectName, TopThreadMXBean.class));
@@ -108,6 +114,7 @@ public class ConsoleController  extends TimerTask {
             threadMXBeanObjectName = new ObjectName(ManagementFactory.THREAD_MXBEAN_NAME);
         } catch (MalformedObjectNameException e) {
             e.printStackTrace();
+            System.exit(1);
         }
         // instantiate new threadMXBean proxy based on threadMXBeanObjectName
         this.threadMXBean = JMX.newMBeanProxy(mbsc, threadMXBeanObjectName, ThreadMXBean.class);
@@ -118,6 +125,7 @@ public class ConsoleController  extends TimerTask {
             runtimeMXBeanObjectName = new ObjectName(ManagementFactory.RUNTIME_MXBEAN_NAME);
         } catch (MalformedObjectNameException e) {
             e.printStackTrace();
+            System.exit(1);
         }
         // instantiate new runtimeMXBean proxy based on runtimeMXBeanObjectName
         this.runtimeMXBean = JMX.newMBeanProxy(mbsc, runtimeMXBeanObjectName, RuntimeMXBean.class);
@@ -128,6 +136,7 @@ public class ConsoleController  extends TimerTask {
             osMXBeanObjectName = new ObjectName(ManagementFactory.OPERATING_SYSTEM_MXBEAN_NAME);
         } catch (MalformedObjectNameException e) {
             e.printStackTrace();
+            System.exit(1);
         }
         // instantiate new osMXBean proxy based on osMXBeanObjectName
         this.osMXBean = JMX.newMBeanProxy(mbsc, osMXBeanObjectName, OperatingSystemMXBean.class);
@@ -137,22 +146,10 @@ public class ConsoleController  extends TimerTask {
     @Override
     public void run() {
 
-        Character userInput = (char) Integer.valueOf( display.getText() ).intValue();
+        String screenId = this.userInput.getText();
         String screen;
-        if ( Character.isDigit(userInput) ) {
-            screen = createThreadStackTraceScreen(Character.getNumericValue(userInput));
-        }
-        else if ( userInput.toString().equals("q")) {
-            screen = null;
-            try {
-                consoleReader.println("Exiting....");
-                consoleReader.println();
-                consoleReader.flush();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            // exit Top4J
-            System.exit(0);
+        if ( userInput.isDigit() ) {
+            screen = createThreadStackTraceScreen(Integer.valueOf(screenId).intValue());
         }
         else {
             screen = createTopThreadsScreen();
@@ -164,11 +161,12 @@ public class ConsoleController  extends TimerTask {
             //consoleReader.println("Terminal Width: " + new Integer(consoleReader.getTerminal().getWidth()).toString());
             //consoleReader.println("Terminal Height: " + new Integer(consoleReader.getTerminal().getHeight()).toString());
             //consoleReader.println();
-            //consoleReader.println("Test text: " + display.getText());
+            //consoleReader.println("Test text: " + userInput.getText());
             //consoleReader.println();
             consoleReader.flush();
         } catch (IOException e) {
             e.printStackTrace();
+            System.exit(1);
         }
     }
 
@@ -209,7 +207,7 @@ public class ConsoleController  extends TimerTask {
                     "\n");
 
             // store thread Id
-            threadIds.put(counter, topThreadMXBean.getThreadId() );
+            threadIds.put(counter, topThreadMXBean.getThreadId());
             // increment thread counter
             counter++;
         }

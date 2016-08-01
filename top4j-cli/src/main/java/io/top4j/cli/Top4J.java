@@ -29,7 +29,7 @@ public class Top4J {
 
         ConsoleReader consoleReader = new ConsoleReader();
 
-        Display display = new Display();
+        UserInput userInput = new UserInput();
 
         if (args.length != 1) {
             System.err.println("USAGE: java -jar top4j-cli.jar <jvm-pid>");
@@ -77,7 +77,7 @@ public class Top4J {
         MBeanServer mbs = ManagementFactory.getPlatformMBeanServer();
 
         // create new TimerTask to run ConsoleController
-        TimerTask consoleController = new ConsoleController(consoleReader, display, mbsc, topThreadCount);
+        TimerTask consoleController = new ConsoleController(consoleReader, userInput, mbsc, topThreadCount);
         // create new Timer to schedule ConsoleController
         Timer timer = new Timer("Top4J Console Controller", true);
         // run Top4J Console Controller at fixed interval
@@ -86,7 +86,27 @@ public class Top4J {
         while (true) {
             //String input = consoleReader.readLine();
             Integer input = consoleReader.readCharacter();
-            display.setText(input.toString());
+            Character inputChar = (char) Integer.valueOf(input).intValue();
+            String inputText = inputChar.toString();
+            if (inputText.equals("q")) {
+                try {
+                    consoleReader.println("Exiting....");
+                    consoleReader.println();
+                    consoleReader.flush();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    System.exit(1);
+                }
+                // exit Top4J
+                System.exit(0);
+            }
+            if (Character.isDigit( inputChar )) {
+                userInput.setIsDigit(true);
+            }
+            else {
+                userInput.setIsDigit(false);
+            }
+            userInput.setText(inputText);
         }
 
     }
