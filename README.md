@@ -15,6 +15,9 @@ Build
 git clone git@gitlab.openans.co.uk:open-answers/top4j.git
 mvn clean package
 ```
+Release
+=======
+The Top4J continuous build and release Jenkins job can be found [here](http://hlcit001:8080/jenkins/job/top4j/).
 Get Started
 ===========
 **Run Top4J as a Java Agent**
