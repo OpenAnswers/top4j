@@ -21,12 +21,12 @@ The Top4J continuous build and release Jenkins job can be found [here](http://hl
 Get Started
 ===========
 **Run Top4J as a Java Agent**
-1. Download and install the [Top4J Java Agent jar](http://hlcit003:8081/nexus/content/repositories/releases/io/top4j/top4j-javaagent/0.0.1/top4j-javaagent-0.0.1.jar) within an appropriate location on the local file system.
-1. Add -javaagent command line argument to JVM startup args, e.g. `java -javaagent:<path-to-top4j-jar>/top4j-javaagent-0.0.1.jar <java-class-name>`
+1. Download and install the [Top4J Java Agent jar](http://hlcit003:8081/nexus/content/repositories/releases/io/top4j/top4j-javaagent/0.0.2/top4j-javaagent-0.0.2.jar) within an appropriate location on the local file system.
+1. Add -javaagent command line argument to JVM startup args, e.g. `java -javaagent:<path-to-top4j-jar>/top4j-javaagent-0.0.2.jar <java-class-name>`
 
 **Run Top4J via Remote Attach feature**
-1. Download and install the [Top4J CLI jar](http://hlcit003:8081/nexus/content/repositories/releases/io/top4j/top4j-cli/0.0.1/top4j-cli-0.0.1.jar) within an appropriate location on the local file system.
-1. Run Top4J CLI jar specifying JVM PID as the first argument, e.g. `java -jar top4j-cli-0.0.1.jar 12345`
+1. Download and install the [Top4J CLI jar](http://hlcit003:8081/nexus/content/repositories/releases/io/top4j/top4j-cli/0.0.2/top4j-cli-0.0.2.jar) within an appropriate location on the local file system.
+1. Run Top4J CLI jar specifying JVM PID as the first argument, e.g. `java -jar top4j-cli-0.0.2.jar 12345`
 
 Screenshots
 ===========
