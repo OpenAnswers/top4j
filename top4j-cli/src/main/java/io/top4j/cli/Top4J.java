@@ -56,15 +56,16 @@ public class Top4J {
         JMXConnector connector = JMXConnectorFactory.connect(serviceURL);
         MBeanServerConnection mbsc = connector.getMBeanServerConnection();
 
-        // set topThreadCount
-        int topThreadCount = 10;
+        // set displayThreadCount
+        int displayThreadCount = 10;
 
         // define Top4J config overrides
         String configOverrides = "collector.poll.frequency=15000," +
                 "dispatcher.poll.frequency=15000," +
                 "log.properties.on.startup=true," +
                 "stats.logger.enabled=false," +
-                "top.thread.count=" + topThreadCount;
+                "top.thread.count=" + displayThreadCount + "," +
+                "blocked.thread.count=" + displayThreadCount;
         // initialise configurator
 		Configurator config = new Configurator( mbsc, configOverrides );
 
@@ -77,7 +78,7 @@ public class Top4J {
         MBeanServer mbs = ManagementFactory.getPlatformMBeanServer();
 
         // create new TimerTask to run ConsoleController
-        TimerTask consoleController = new ConsoleController(consoleReader, userInput, mbsc, topThreadCount);
+        TimerTask consoleController = new ConsoleController(consoleReader, userInput, mbsc, displayThreadCount);
         // create new Timer to schedule ConsoleController
         Timer timer = new Timer("Top4J Console Controller", true);
         // run Top4J Console Controller at fixed interval

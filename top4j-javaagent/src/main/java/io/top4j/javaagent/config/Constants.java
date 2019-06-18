@@ -30,7 +30,7 @@ public final class Constants {
 	public static final String GC_STATS_TYPE = "GCStats";
 	
 	// JMX MXBean agent type
-	public static final String AGENT_TYPE = "AgentStats";
+	public static final String AGENT_TYPE = "Agent";
 		
 	// JMX MXBean agent stats type
 	public static final String AGENT_STATS_TYPE = "AgentStats";
