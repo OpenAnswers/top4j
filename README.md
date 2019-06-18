@@ -32,12 +32,12 @@ Screenshots
 ===========
 **Screenshot of Top4J using Remote Attach command line interface:**
 ```bash
-top4j - 14:08:48 up 1479607 secs,  load average: 0.67
+top4j - 14:08:48 up 17 days,  load average: 0.67
 Threads: 884 total,   128 runnable,   308 waiting,   448 timed waiting,   0 blocked
 %Cpu(s): 39.10 total,  27.61 user,  11.49 sys
 Heap Util(%):        0.00 eden,        14.31 survivor,        35.75 tenured
 Mem Alloc(MB/s):     123.51 eden,        4.38 survivor,        0.35 tenured
-GC Stats:  1.1463% GC overhead
+GC Overhead(%):      1.1463
 
 #  TID     THREAD NAME                             %CPU
 0  913     [c4nl-mediator-service-ws-1.6.2].c4nl-m 19.6
