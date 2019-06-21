@@ -119,9 +119,17 @@ public class ThreadUsage {
         resetActivityTracker();
         for ( java.lang.management.ThreadInfo jmxThreadInfo : threadInfos ) {
 
-            final long id = jmxThreadInfo.getThreadId();
-            final String name = jmxThreadInfo.getThreadName();
-            State state = jmxThreadInfo.getThreadState();
+            final long id;
+            final String name;
+            State state;
+            if (jmxThreadInfo != null) {
+                id = jmxThreadInfo.getThreadId();
+                name = jmxThreadInfo.getThreadName();
+                state = jmxThreadInfo.getThreadState();
+            }
+            else {
+                continue;   // Assume thread died
+            }
             final long threadCpuTime = threadMXBean.getThreadCpuTime(id);
             final long threadUserTime = threadMXBean.getThreadUserTime(id);
             final long systemTime = System.currentTimeMillis();
@@ -138,6 +146,7 @@ public class ThreadUsage {
             ThreadInfo threadInfo = threadHistory.get( id );
             if ( threadInfo == null ) {
 
+                // create new ThreadInfo object
                 threadInfo = new ThreadInfo( );
                 threadInfo.id = id;
                 threadInfo.name = name;
@@ -159,6 +168,7 @@ public class ThreadUsage {
 
             } else {
 
+                // update existing ThreadInfo object
                 threadInfo.state = state;
                 threadInfo.active = true;
                 threadInfo.endTime = systemTime;
@@ -365,8 +375,8 @@ public class ThreadUsage {
         java.lang.management.ThreadInfo threadInfo;
         int blockedThreadLimit;
         // handle situation where threadCount less than blockedThreadsCount
-        if ( threadCount < blockedThreadsCount ) {
-            blockedThreadLimit = (int) threadCount;
+        if ( blockedThreadCount < blockedThreadsCount ) {
+            blockedThreadLimit = (int) blockedThreadCount;
         }
         else {
             blockedThreadLimit = blockedThreadsCount;

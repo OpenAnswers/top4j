@@ -5,7 +5,7 @@
 #
 #    1. StatsType - the Top4J stats type
 #    2. Attribute - the Top4J MBean attribute name
-#    3. Comparator - the assertion comparator, where gt = greater than, lt = less than, eq = equal to
+#    3. Comparator - the assertion comparator, where gt = greater than, ge = greater than or equal to, lt = less than, le = less than or equal to, eq = equal to
 #    4. AssertionType - the data type of the assertion data
 #    5. AssertionData - the assertion data
 #
@@ -27,7 +27,7 @@ AgentStats,Iterations,gt,long,0
 #AgentStats,MBeanCpuTime,gt,double,0.1
 ThreadStats,CpuUsage,gt,double,0.0
 ThreadStats,UserCpuUsage,gt,double,0.0
-ThreadStats,SysCpuUsage,gt,double,0.0
+ThreadStats,SysCpuUsage,ge,double,0.0
 ThreadStats,ThreadCount,gt,long,10
 ThreadStats,RunnableThreadCount,gt,long,1
 ThreadStats,BlockedThreadCount,gt,long,1

@@ -26,7 +26,7 @@ public class JvmAgentTest {
     }
 
     private final String NUM_THREADS = "100";
-    private final String NUM_ITERATIONS = "75";
+    private final String NUM_ITERATIONS = "100";
     private final String PAUSE_TIME = "5";
     private final String[] multiThreadedTestArgs = { NUM_THREADS, NUM_ITERATIONS, PAUSE_TIME };
     private final String assertionDataFile = "/assertion-data.csv";
@@ -152,18 +152,33 @@ public class JvmAgentTest {
         switch (comparator) {
 
             case "eq":
+                // assert that actualValue is equal to expectedValue
                 errorMessage = message + " -> actual value: " + actualValue + " != expected value: " + expectedValue;
                 assertEquals(errorMessage, expectedValue, actualValue);
                 break;
 
             case "gt":
+                // assert that actualValue is greater than expectedValue
                 errorMessage = message + " -> actual value: " + actualValue + " < expected value: " + expectedValue;
                 assertTrue(errorMessage, actualValue > expectedValue);
                 break;
 
+            case "ge":
+                // assert that actualValue is greater than or equal to expectedValue
+                errorMessage = message + " -> actual value: " + actualValue + " < expected value: " + expectedValue;
+                assertTrue(errorMessage, actualValue >= expectedValue);
+                break;
+
             case "lt":
+                // assert that actualValue is less than expectedValue
                 errorMessage = message + " -> actual value: " + actualValue + " > expected value: " + expectedValue;
                 assertTrue(errorMessage, actualValue < expectedValue);
+                break;
+
+            case "le":
+                // assert that actualValue is less than or equal to expectedValue
+                errorMessage = message + " -> actual value: " + actualValue + " > expected value: " + expectedValue;
+                assertTrue(errorMessage, actualValue <= expectedValue);
                 break;
 
             default:
@@ -180,18 +195,33 @@ public class JvmAgentTest {
         switch (comparator) {
 
             case "eq":
+                // assert that actualValue is equal to expectedValue
                 errorMessage = message + " -> actual value: " + actualValue + " != expected value: " + expectedValue;
                 assertEquals(errorMessage, expectedValue, actualValue);
                 break;
 
             case "gt":
+                // assert that actualValue is greater than expectedValue
                 errorMessage = message + " -> actual value: " + actualValue + " < expected value: " + expectedValue;
                 assertTrue(errorMessage, actualValue > expectedValue);
                 break;
 
+            case "ge":
+                // assert that actualValue is greater than or equal to expectedValue
+                errorMessage = message + " -> actual value: " + actualValue + " < expected value: " + expectedValue;
+                assertTrue(errorMessage, actualValue >= expectedValue);
+                break;
+
             case "lt":
+                // assert that actualValue is less than expectedValue
                 errorMessage = message + " -> actual value: " + actualValue + " > expected value: " + expectedValue;
                 assertTrue(errorMessage, actualValue < expectedValue);
+                break;
+
+            case "le":
+                // assert that actualValue is less than or equal to expectedValue
+                errorMessage = message + " -> actual value: " + actualValue + " > expected value: " + expectedValue;
+                assertTrue(errorMessage, actualValue <= expectedValue);
                 break;
 
             default:

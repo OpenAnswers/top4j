@@ -231,19 +231,24 @@ public class ConsoleController  extends TimerTask {
         StringBuffer sb = new StringBuffer();
         sb.append(createTop4JHeader());
         sb.append("\n");
-        sb.append("#  TID     THREAD NAME                                       %CPU\n");
+        sb.append("#  TID     S  %CPU  THREAD NAME\n");
+        sb.append("=  ===     =  ====  ===========\n");
         // initialise thread counter
         int counter = 0;
         for (TopThreadMXBean topThreadMXBean : topThreadMXBeans) {
 
             String threadName = topThreadMXBean.getThreadName();
+            Long threadId = topThreadMXBean.getThreadId();
+            String threadState = abbreviateThreadState( threadHelper.getThreadState( threadId ));
+            Double threadCpuUsage = topThreadMXBean.getThreadCpuUsage();
             if (threadName != null && threadName.length() > MAX_THREAD_NAME_LENGTH) {
                threadName = threadName.substring(0, MAX_THREAD_NAME_LENGTH-1);
             }
             sb.append(  counter + "  " +
-                    String.format("%1$-8s", topThreadMXBean.getThreadId()) +
-                    String.format("%1$-50s", threadName) +
-                    String.format( "%.1f", topThreadMXBean.getThreadCpuUsage() ) +
+                    String.format("%1$-8s", threadId ) +
+                    String.format("%1$-3s", threadState ) +
+                    String.format("%1$-6.1f", threadCpuUsage ) +
+                    String.format("%1$-50s", threadName ) +
                     "\n");
 
             // store thread Id
@@ -263,19 +268,24 @@ public class ConsoleController  extends TimerTask {
         StringBuffer sb = new StringBuffer();
         sb.append(createTop4JHeader());
         sb.append("\n");
-        sb.append("#  TID     THREAD NAME                                       %BLOCKED\n");
+        sb.append("#  TID     S  %BLOCKED  THREAD NAME\n");
+        sb.append("=  ===     =  ========  ===========\n");
         // initialise thread counter
         int counter = 0;
         for (BlockedThreadMXBean blockedThreadMXBean : blockedThreadMXBeans) {
 
             String threadName = blockedThreadMXBean.getThreadName();
+            Long threadId = blockedThreadMXBean.getThreadId();
+            String threadState = abbreviateThreadState( threadHelper.getThreadState( threadId ));
+            Double threadBlockedPercentage = blockedThreadMXBean.getThreadBlockedPercentage();
             if (threadName != null && threadName.length() > MAX_THREAD_NAME_LENGTH) {
                 threadName = threadName.substring(0, MAX_THREAD_NAME_LENGTH - 1);
             }
             sb.append(counter + "  " +
-                    String.format("%1$-8s", blockedThreadMXBean.getThreadId()) +
-                    String.format("%1$-50s", threadName) +
-                    String.format("%.1f", blockedThreadMXBean.getThreadBlockedPercentage()) +
+                    String.format("%1$-8s", threadId ) +
+                    String.format("%1$-3s", threadState ) +
+                    String.format("%1$-10.1f", threadBlockedPercentage ) +
+                    String.format("%1$-50s", threadName ) +
                     "\n");
 
             // store thread Id
@@ -322,4 +332,36 @@ public class ConsoleController  extends TimerTask {
         }
         return uptime;
     }
+
+    private String abbreviateThreadState( Thread.State state ) {
+
+        if (state == null) return "X";
+        String abbreviatedState;
+        switch (state) {
+
+            case NEW:
+                abbreviatedState = "N";
+                break;
+            case RUNNABLE:
+                abbreviatedState = "R";
+                break;
+            case BLOCKED:
+                abbreviatedState = "B";
+                break;
+            case WAITING:
+                abbreviatedState = "W";
+                break;
+            case TIMED_WAITING:
+                abbreviatedState = "T";
+                break;
+            case TERMINATED:
+                abbreviatedState = "X";
+                break;
+            default:
+                abbreviatedState = "U";
+                break;
+        }
+        return abbreviatedState;
+    }
+
 }
