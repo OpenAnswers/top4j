@@ -1,14 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="376088a4-ef8e-48f3-874a-15ae0da20460" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change beforePath="$PROJECT_DIR$/top4j-cli/src/main/java/io/top4j/cli/ConsoleController.java" afterPath="$PROJECT_DIR$/top4j-cli/src/main/java/io/top4j/cli/ConsoleController.java" />
-      <change beforePath="$PROJECT_DIR$/top4j-javaagent/src/main/java/io/top4j/javaagent/mbeans/jvm/threads/ThreadUsage.java" afterPath="$PROJECT_DIR$/top4j-javaagent/src/main/java/io/top4j/javaagent/mbeans/jvm/threads/ThreadUsage.java" />
-      <change beforePath="$PROJECT_DIR$/top4j-javaagent/src/test/java/JvmAgentTest.java" afterPath="$PROJECT_DIR$/top4j-javaagent/src/test/java/JvmAgentTest.java" />
-      <change beforePath="$PROJECT_DIR$/top4j-javaagent/src/test/resources/assertion-data.csv" afterPath="$PROJECT_DIR$/top4j-javaagent/src/test/resources/assertion-data.csv" />
-      <change beforePath="$PROJECT_DIR$/top4j-javaagent/src/test/scripts/runMultiThreadedTest.sh" afterPath="$PROJECT_DIR$/top4j-javaagent/src/test/scripts/runMultiThreadedTest.sh" />
-    </list>
+    <list default="true" id="376088a4-ef8e-48f3-874a-15ae0da20460" name="Default" comment="" />
     <ignored path="top4j.iws" />
     <ignored path=".idea/workspace.xml" />
     <ignored path="$PROJECT_DIR$/target/" />
@@ -84,8 +77,8 @@
       <file leaf-file-name="ThreadUsage.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/top4j-javaagent/src/main/java/io/top4j/javaagent/mbeans/jvm/threads/ThreadUsage.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="4488">
-              <caret line="360" column="0" lean-forward="false" selection-start-line="360" selection-start-column="0" selection-end-line="360" selection-end-column="0" />
+            <state relative-caret-position="119">
+              <caret line="366" column="35" lean-forward="false" selection-start-line="366" selection-start-column="16" selection-end-line="366" selection-end-column="36" />
               <folding>
                 <element signature="imports" expanded="true" />
                 <element signature="e#12379#12380#0" expanded="true" />
@@ -1254,8 +1247,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/top4j-javaagent/src/main/java/io/top4j/javaagent/mbeans/jvm/threads/ThreadUsage.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="4488">
-          <caret line="360" column="0" lean-forward="false" selection-start-line="360" selection-start-column="0" selection-end-line="360" selection-end-column="0" />
+        <state relative-caret-position="119">
+          <caret line="366" column="35" lean-forward="false" selection-start-line="366" selection-start-column="16" selection-end-line="366" selection-end-column="36" />
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="e#12379#12380#0" expanded="true" />

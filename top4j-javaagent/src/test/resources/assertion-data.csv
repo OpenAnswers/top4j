@@ -14,7 +14,7 @@ GCStats,MeanNurseryGCTime,gt,double,1.0
 GCStats,MeanTenuredGCTime,eq,double,0.0
 #GCStats,MBeanCpuTime,gt,double,0.1
 MemoryStats,MemoryAllocationRate,gt,double,1.0
-MemoryStats,MemoryPromotionRate,gt,double,0.0
+MemoryStats,MemoryPromotionRate,ge,double,0.0
 MemoryStats,MemorySurvivorRate,gt,double,0.0
 #MemoryStats,MBeanCpuTime,gt,double,1.0
 HeapStats,EdenSpaceUtil,eq,double,0.0
