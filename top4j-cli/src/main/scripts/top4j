@@ -1,0 +1,112 @@
+#!/bin/bash
+#
+# top4j
+#
+#  - Top4J wrapper script
+#
+#    Arguments:
+#
+#      1. JVM_PID (optional): The JVM process ID to attach to
+#
+#    Example Usage:
+#
+#      Run the top4j wrapper script with no arguments to auto-detect running JVMs and select the appropriate JVM from a numbered list....
+#
+#        ./top4j
+#
+#      Alternatively, if you alreday know the JVM PID, you can specify it on the command line....
+#
+#        ./top4j 468
+#
+
+JVM_PID=$1
+INSTALL_DIR=`dirname $0`
+LIB_DIR=${INSTALL_DIR}/../lib
+TOP4J_JAR=${LIB_DIR}/top4j-cli-0.0.4.jar
+JAVA_HOME=/usr/java/jdk1.8.0_60
+JCMD=${JAVA_HOME}/bin/jcmd
+JAVA=${JAVA_HOME}/bin/java
+
+# check JAVA
+if [[ ! -x ${JAVA} ]]
+then
+	echo "ERROR: Java command not found under configured JAVA_HOME - ${JAVA_HOME}"
+	exit 1
+fi
+
+# check TOP4J_JAR
+if [[ ! -f ${TOP4J_JAR} ]]
+then
+	echo "ERROR: Top4j jar not found under configured TOP4J_JAR location - ${TOP4J_JAR}"
+	exit 1
+fi
+
+function select-jvm-pid
+
+{
+
+# prompt user to select JVM PID
+
+declare -a JVM_PIDS
+declare -a JVM_CLASSES
+
+NUMBER_OF_JVMS=`${JCMD} | grep -v jcmd | wc -l`
+
+if [[ ${NUMBER_OF_JVMS} -eq 0 ]]
+then
+	echo "ERROR: No available JVMs detected using the jcmd command."
+	echo "HINT: Check you are running this script as the JVM process owner."
+	exit 1
+fi
+
+JVM_PIDS=(`${JCMD} | gawk ' { print $1 } '`)
+JVM_CLASSES=(`${JCMD} | gawk ' { print $2 } '`)
+
+JVM_COUNT=0
+
+echo
+echo "The following JVMs are available:"
+echo
+
+for JVM_PID in ${JVM_PIDS[*]}
+do
+	echo "${JVM_COUNT}) ${JVM_CLASSES[${JVM_COUNT}]} [PID=${JVM_PID}]"
+	(( JVM_COUNT=JVM_COUNT+1 ))
+
+done
+
+echo
+
+while [[ -z ${JVM_NO} ]]
+do
+	echo -e "Please select a JVM number between 0 and $(($JVM_COUNT-1)): \c"
+        read JVM_NO
+	if [[ -z ${JVM_PIDS[$JVM_NO]} ]]
+	then
+		JVM_NO=""
+		continue
+	fi
+done
+
+echo "JVM PID ${JVM_PIDS[${JVM_NO}]} selected. Launching top4j...."
+
+JVM_PID=${JVM_PIDS[${JVM_NO}]}
+
+}
+
+
+# check args
+if [[ -z ${JVM_PID} ]]
+then
+	if [[ ! -x ${JCMD} ]]
+	then
+		echo "USAGE: $0 <jvm-pid>"
+		exit 1
+	else
+		select-jvm-pid
+	fi
+fi
+
+# launch top4j against JVM_PID
+${JAVA} -jar ${TOP4J_JAR} ${JVM_PID}
+
