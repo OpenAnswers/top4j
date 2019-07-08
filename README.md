@@ -26,7 +26,9 @@ Get Started
 
 **Run Top4J via Remote Attach feature**
 1. Download and install the [Top4J CLI jar](http://hlcit003:8081/nexus/content/repositories/releases/io/top4j/top4j-cli/0.0.4/top4j-cli-0.0.4.jar) within an appropriate location on the local file system.
-1. Run Top4J CLI jar specifying JVM PID as the first argument, e.g. `java -jar top4j-cli-0.0.4.jar 12345`
+1. Run Top4J CLI jar specifying JVM PID as the first argument, e.g. `java -jar top4j-cli-0.0.4.jar 12345`, **OR** with no arguments to auto-detect running JVMs and select from a list, e.g. `java -jar top4j-cli-0.0.4.jar`
+
+   **NOTE:** The top4j CLI jar **must** be run as the target JVM process owner.
 
 Screenshots
 ===========
@@ -61,12 +63,23 @@ MBeans
 Top4J performance metrics are exposed via JMX MBean attributes. All Top4J MBeans can be found under the "io.top4j" JMX domain.
 A complete list of Top4J MBeans and their associated attributes is documented below. The MBean Object Name is provided in square brackets.
 **All MBeans**
+--------------
 **AgentStats** [io.top4j:type=Agent,statsType=AgentStats]
+---------------------------------------------------------
 **BlockedThread** [io.top4j:type=JVM,statsType=BlockedThread,rank=N]
+--------------------------------------------------------------------
 **GCStats** [io.top4j:type=JVM,statsType=GCStats]
+-------------------------------------------------
 **HeapStats** [io.top4j:type=JVM,statsType=HeapStats]
+-----------------------------------------------------
 **HotMethod** [io.top4j:type=JVM,statsType=HotMethod]
+-----------------------------------------------------
 **MemoryStats** [io.top4j:type=JVM,statsType=MemoryStats]
+---------------------------------------------------------
 **StatsLogger** [io.top4j:type=JVM,statsType=StatsLogger]
+---------------------------------------------------------
 **ThreadStats** [io.top4j:type=JVM,statsType=ThreadStats]
+---------------------------------------------------------
 **TopThread** [io.top4j:type=JVM,statsType=TopThread,rank=N]
+------------------------------------------------------------
+
