@@ -165,6 +165,13 @@ public class ConsoleController  extends TimerTask {
     @Override
     public void run() {
 
+        // first things first, check MBean Server Connection is still alive
+        if (! isMBSConnectionAlive()) {
+            // the connection to the remote MBean Server has been lost - we have no choice but to exit gracefully
+            System.err.println("ERROR: The connection to the remote MBean Server has been lost. Check if the target JVM is still running.");
+            System.exit(-1);
+        }
+        // retrieve user provided screenId from userInput shared object
         String screenId = this.userInput.getText();
         // store mainScreenId
         mainScreenId = screenId;
@@ -362,6 +369,23 @@ public class ConsoleController  extends TimerTask {
                 break;
         }
         return abbreviatedState;
+    }
+
+    /*
+        Check MBean Server Connection is still alive
+     */
+    private boolean isMBSConnectionAlive() {
+
+        boolean isAlive;
+        try {
+            // use OS MX Bean to retrieve OS name
+            String osName = osMXBean.getName();
+            isAlive = true;
+        }
+        catch (Exception e) {
+           isAlive = false;
+        }
+        return isAlive;
     }
 
 }
