@@ -120,7 +120,7 @@ public class Top4J {
         // check jvm exists
         if (jvm == null) {
             System.err.println("ERROR: JVM not found with PID " + jvmPid);
-            System.err.println("HINT: If the JVM is running, check that top4j is running as the same user as the JVM process owner");
+            System.err.println("HINT: If the JVM is running, check that top4j is running as the JVM process owner");
             System.exit(-1);
         }
         // start JMX management agent within target jvm

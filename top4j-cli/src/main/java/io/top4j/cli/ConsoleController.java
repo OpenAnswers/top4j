@@ -38,7 +38,7 @@ public class ConsoleController  extends TimerTask {
     private Map<Integer, Long> blockedThreadIds = new HashMap<>();
     private final SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm:ss");
     private ThreadHelper threadHelper;
-    private final int MAX_THREAD_NAME_LENGTH = 49;
+    private final int MAX_THREAD_NAME_LENGTH = 64;
     private String mainScreenId;
 
     public ConsoleController ( ConsoleReader consoleReader, UserInput userInput, MBeanServerConnection mbsc, int displayThreadCount ) {
@@ -255,7 +255,7 @@ public class ConsoleController  extends TimerTask {
                     String.format("%1$-8s", threadId ) +
                     String.format("%1$-3s", threadState ) +
                     String.format("%1$-6.1f", threadCpuUsage ) +
-                    String.format("%1$-50s", threadName ) +
+                    String.format("%1$-64s", threadName ) +
                     "\n");
 
             // store thread Id
