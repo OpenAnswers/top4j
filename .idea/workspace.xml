@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="376088a4-ef8e-48f3-874a-15ae0da20460" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/README.md" afterPath="$PROJECT_DIR$/README.md" />
-    </list>
+    <list default="true" id="376088a4-ef8e-48f3-874a-15ae0da20460" name="Default" comment="" />
     <ignored path="top4j.iws" />
     <ignored path=".idea/workspace.xml" />
     <ignored path="$PROJECT_DIR$/target/" />

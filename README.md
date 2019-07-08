@@ -65,62 +65,96 @@ A complete list of Top4J MBeans and their associated attributes is documented be
 **All MBeans**
 --------------
 **Description:** The following MBean attributes and operations are common to all top4j MBeans....
+
 **Attributes:**
+
 **MBeanCpuTime:** The amount of CPU time in milliseconds consumed by the MBean update() operation per invocation.
+
 **Operations:**
+
 **update():** Update MBean attributes with latest data. 
+
 **AgentStats** [io.top4j:type=Agent,statsType=AgentStats]
 ---------------------------------------------------------
 **Description:** Used to store stats relating to the top4J JavaAgent run-time.
+
 **Attributes:**
+
 **AgentCpuTime:** The amount of CPU time in milliseconds consumed by the top4J JavaAgent background threads.
+
 **AgentCpuUtil:** The percentage CPU utilisation of the top4J JavaAgent background threads.
+
 **Iterations:** The number of top4J JavaAgent stats update iterations since the JavaAgent was enabled.
+
 **BlockedThread:** [io.top4j:type=JVM,statsType=BlockedThread,rank=N]
 ---------------------------------------------------------------------
 **Description:** Used to store stats relating to a thread that has been blocked for some time during the last iteration.
+
 **Attributes:**
+
 **ThreadName:** The thread name.
+
 **ThreadId:** The thread ID.
+
 **ThreadState:** The thread state as defined by the [java.lang.Thread.State Enum](https://docs.oracle.com/javase/8/docs/api/java/lang/Thread.State.html).
+
 **ThreadBlockedTime:** The time in milliseconds that the thread has been in a blocked state during the last iteration.
+
 **ThreadBlockedPercentage:** The percentage of time that the thread has been in a blocked state during the last iteration.
+
 **Operations:**
+
 **getStackTrace(int maxDepth):** Get stack trace for thread with a maximum frame depth of maxDepth.
+
 **getStackTraceWithContext(int maxDepth):** Get stack trace for thread with context, e.g. thread name and thread state, with a maximum frame depth of maxDepth.
+
 **GCStats** [io.top4j:type=JVM,statsType=GCStats]
 -------------------------------------------------
 **Description:**
+
 **Attributes:**
+
 **Operations:**
 **HeapStats** [io.top4j:type=JVM,statsType=HeapStats]
 -----------------------------------------------------
 **Description:**
+
 **Attributes:**
+
 **Operations:**
 **HotMethod** [io.top4j:type=JVM,statsType=HotMethod]
 -----------------------------------------------------
 **Description:**
+
 **Attributes:**
+
 **Operations:**
 **MemoryStats** [io.top4j:type=JVM,statsType=MemoryStats]
 ---------------------------------------------------------
 **Description:**
+
 **Attributes:**
+
 **Operations:**
 **StatsLogger** [io.top4j:type=JVM,statsType=StatsLogger]
 ---------------------------------------------------------
 **Description:**
+
 **Attributes:**
+
 **Operations:**
 **ThreadStats** [io.top4j:type=JVM,statsType=ThreadStats]
 ---------------------------------------------------------
 **Description:**
+
 **Attributes:**
+
 **Operations:**
 **TopThread** [io.top4j:type=JVM,statsType=TopThread,rank=N]
 ------------------------------------------------------------
 **Description:**
+
 **Attributes:**
+
 **Operations:**
 
