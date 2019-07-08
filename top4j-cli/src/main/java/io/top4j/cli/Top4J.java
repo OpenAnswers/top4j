@@ -25,6 +25,12 @@ public class Top4J {
 
     public static void main( String[] args ) throws IOException, NoSuchMethodException, ClassNotFoundException {
 
+        // set console refresh period - how frequently in milliseconds the Top4J console screen is refreshed
+        int consoleRefreshPeriod = 3000;
+
+        // set Top4J JavaAgent collector poll frequency - how frequently in milliseconds the performance metrics gathered by the Top4J JavaAgent are updated
+        int collectorPollFrequency = consoleRefreshPeriod * 5;
+
         // instantiate new consoleReader
         ConsoleReader consoleReader = new ConsoleReader();
 
@@ -64,14 +70,29 @@ public class Top4J {
                 jvmCounter++;
             }
             System.out.println();
-            // instantiate stdin text scanner
-            Scanner in = new Scanner(System.in);
-            System.out.print("Please select a JVM number between 0 and " + (jvmCount-1) + ": ");
+            // prompt user to enter a number
+            if (jvmCount >= 10) {
+                System.out.print("Please type a JVM number between 0 and " + (jvmCount - 1) + " and hit enter: ");
+            }
+            else {
+                System.out.print("Please select a JVM number between 0 and " + (jvmCount - 1) + ": ");
+            }
+            // initialise jvmNumber used to store user input as an Integer
             int jvmNumber;
             // try reading jvmNumber from stdin
             try {
-                jvmNumber = in.nextInt();
+                if (jvmCount >= 10) {
+                    // use Java Text Scanner to read multi-digit text string
+                    Scanner in = new Scanner(System.in);
+                    jvmNumber = in.nextInt();
+                }
+                else {
+                    // use System Console to read single digit character
+                    String input = System.console().readLine();
+                    jvmNumber = Integer.parseInt( input );
+                }
                 System.out.println(jvmNumber);
+                // validate user input
                 if (!(jvmNumber >= 0 && jvmNumber <= jvmCount-1)) {
                     // user has entered an out-of-bounds jvmNumber - return error message and exit with error code
                     System.err.println("ERROR: Please enter a JVM number between 0 and " + (jvmCount-1));
@@ -99,6 +120,7 @@ public class Top4J {
         // check jvm exists
         if (jvm == null) {
             System.err.println("ERROR: JVM not found with PID " + jvmPid);
+            System.err.println("HINT: If the JVM is running, check that top4j is running as the same user as the JVM process owner");
             System.exit(-1);
         }
         // start JMX management agent within target jvm
@@ -118,10 +140,10 @@ public class Top4J {
         int displayThreadCount = 10;
 
         // define Top4J config overrides
-        String configOverrides = "collector.poll.frequency=15000," +
-                "dispatcher.poll.frequency=15000," +
+        String configOverrides = "collector.poll.frequency=" + collectorPollFrequency + "," +
                 "log.properties.on.startup=true," +
                 "stats.logger.enabled=false," +
+                "hot.method.profiling.enabled=false," +
                 "top.thread.count=" + displayThreadCount + "," +
                 "blocked.thread.count=" + displayThreadCount;
         // initialise Top4J configurator
@@ -137,7 +159,7 @@ public class Top4J {
         // create new Timer to schedule ConsoleController thread
         Timer timer = new Timer("Top4J Console Controller", true);
         // run Top4J Console Controller at fixed interval
-        timer.scheduleAtFixedRate(consoleController, 0, 3000);
+        timer.scheduleAtFixedRate(consoleController, 0, consoleRefreshPeriod);
 
         while (true) {
             //String input = consoleReader.readLine();

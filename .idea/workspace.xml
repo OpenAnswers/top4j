@@ -2,7 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="376088a4-ef8e-48f3-874a-15ae0da20460" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/top4j-cli/src/main/java/io/top4j/cli/ConsoleController.java" afterPath="$PROJECT_DIR$/top4j-cli/src/main/java/io/top4j/cli/ConsoleController.java" />
       <change beforePath="$PROJECT_DIR$/top4j-cli/src/main/java/io/top4j/cli/Top4J.java" afterPath="$PROJECT_DIR$/top4j-cli/src/main/java/io/top4j/cli/Top4J.java" />
     </list>
     <ignored path="top4j.iws" />
@@ -154,7 +153,7 @@
       <file leaf-file-name="ThreadTimeMap.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/top4j-javaagent/src/main/java/io/top4j/javaagent/mbeans/jvm/threads/ThreadTimeMap.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1050">
+            <state relative-caret-position="777">
               <caret line="54" column="44" lean-forward="false" selection-start-line="54" selection-start-column="44" selection-end-line="54" selection-end-column="44" />
               <folding />
             </state>
@@ -164,8 +163,8 @@
       <file leaf-file-name="Top4J.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/top4j-cli/src/main/java/io/top4j/cli/Top4J.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="231">
-              <caret line="65" column="32" lean-forward="false" selection-start-line="65" selection-start-column="32" selection-end-line="65" selection-end-column="32" />
+            <state relative-caret-position="714">
+              <caret line="122" column="129" lean-forward="false" selection-start-line="122" selection-start-column="129" selection-end-line="122" selection-end-column="129" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -1167,14 +1166,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/top4j-javaagent/src/main/java/io/top4j/javaagent/mbeans/jvm/threads/ThreadTimeMap.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1050">
-          <caret line="54" column="44" lean-forward="false" selection-start-line="54" selection-start-column="44" selection-end-line="54" selection-end-column="44" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/top4j-javaagent/src/main/java/io/top4j/javaagent/mbeans/jvm/threads/ThreadStats.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="84">
@@ -1285,10 +1276,18 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/top4j-javaagent/src/main/java/io/top4j/javaagent/mbeans/jvm/threads/ThreadTimeMap.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="777">
+          <caret line="54" column="44" lean-forward="false" selection-start-line="54" selection-start-column="44" selection-end-line="54" selection-end-column="44" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/top4j-cli/src/main/java/io/top4j/cli/Top4J.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="231">
-          <caret line="65" column="32" lean-forward="false" selection-start-line="65" selection-start-column="32" selection-end-line="65" selection-end-column="32" />
+        <state relative-caret-position="714">
+          <caret line="122" column="129" lean-forward="false" selection-start-line="122" selection-start-column="129" selection-end-line="122" selection-end-column="129" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
