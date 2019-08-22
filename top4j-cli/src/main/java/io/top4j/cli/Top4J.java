@@ -59,6 +59,8 @@ public class Top4J {
 
         // initialise jvmPid variable used to store JVM process ID
         int jvmPid = 0;
+        // initialise jvmDisplayName variable used to store JVM display name
+        String jvmDisplayName = "";
 
         // check args
         if (args.length == 1 && !isNumeric(args[0])) {
@@ -116,6 +118,8 @@ public class Top4J {
                 }
                 // set jvmPid according to user selection
                 jvmPid = jvms.get(jvmNumber).getProcessId();
+                // set jvmDisplayName according to user selection
+                jvmDisplayName = jvms.get(jvmNumber).getDisplayName();
             }
             catch (Exception e) {
                 // user has entered an invalid jvmNumber - return error message and exit with error code
@@ -170,8 +174,10 @@ public class Top4J {
 		controller.start();
 		System.out.println("Top4J: Java agent activated.");
 
+		// create new DisplayConfig to pass to ConsoleController
+        DisplayConfig displayConfig = new DisplayConfig(displayThreadCount, jvmPid, jvmDisplayName);
         // create new TimerTask to run Top4J CLI ConsoleController thread
-        TimerTask consoleController = new ConsoleController(consoleReader, userInput, mbsc, displayThreadCount);
+        TimerTask consoleController = new ConsoleController(consoleReader, userInput, mbsc, displayConfig);
         // create new Timer to schedule ConsoleController thread
         Timer timer = new Timer("Top4J Console Controller", true);
         // run Top4J Console Controller at fixed interval

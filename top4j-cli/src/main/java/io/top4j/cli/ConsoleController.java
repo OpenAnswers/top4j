@@ -56,12 +56,15 @@ public class ConsoleController  extends TimerTask {
     private ThreadHelper threadHelper;
     private final int MAX_THREAD_NAME_LENGTH = 64;
     private String mainScreenId;
+    private DisplayConfig displayConfig;
 
-    public ConsoleController ( ConsoleReader consoleReader, UserInput userInput, MBeanServerConnection mbsc, int displayThreadCount ) {
+    public ConsoleController ( ConsoleReader consoleReader, UserInput userInput, MBeanServerConnection mbsc, DisplayConfig displayConfig ) {
 
         this.consoleReader = consoleReader;
         this.userInput = userInput;
         this.mbsc = mbsc;
+        this.displayConfig = displayConfig;
+        int displayThreadCount = displayConfig.getThreadCount();
         try {
             this.threadHelper = new ThreadHelper( mbsc );
         } catch (IOException e) {
@@ -230,6 +233,7 @@ public class ConsoleController  extends TimerTask {
         Date date = new Date();
         StringBuffer sb = new StringBuffer();
         sb.append("top4j - " + timeFormat.format(date) + " up " + getUptime() + ",  load average: " + osMXBean.getSystemLoadAverage() + "\n");
+        sb.append("Attached to: " + displayConfig.getDisplayName() + " [PID=" + displayConfig.getJvmPid() + "]" + "\n");
         sb.append("Threads: " + threadStatsMXBean.getThreadCount() + " total,   " +
                 threadStatsMXBean.getRunnableThreadCount() + " runnable,   " +
                 threadStatsMXBean.getWaitingThreadCount() + " waiting,   " +
@@ -254,6 +258,8 @@ public class ConsoleController  extends TimerTask {
         StringBuffer sb = new StringBuffer();
         sb.append(createTop4JHeader());
         sb.append("\n");
+        sb.append("Top Threads:\n");
+        sb.append("\n");
         sb.append("#  TID     S  %CPU  THREAD NAME\n");
         sb.append("=  ===     =  ====  ===========\n");
         // initialise thread counter
@@ -261,6 +267,10 @@ public class ConsoleController  extends TimerTask {
         for (TopThreadMXBean topThreadMXBean : topThreadMXBeans) {
 
             String threadName = topThreadMXBean.getThreadName();
+            // check we've got a top thread, continue to next topThreadMXBean if not
+            if (threadName == null) {
+                continue;
+            }
             Long threadId = topThreadMXBean.getThreadId();
             String threadState = abbreviateThreadState( threadHelper.getThreadState( threadId ));
             Double threadCpuUsage = topThreadMXBean.getThreadCpuUsage();
@@ -291,13 +301,35 @@ public class ConsoleController  extends TimerTask {
         StringBuffer sb = new StringBuffer();
         sb.append(createTop4JHeader());
         sb.append("\n");
+        sb.append("Blocked Threads:\n");
+        sb.append("\n");
         sb.append("#  TID     S  %BLOCKED  THREAD NAME\n");
         sb.append("=  ===     =  ========  ===========\n");
+
+        // first things first, check if there have been any blocked threads during this sample period
+        Double totalThreadBlockedPercentage = 0.0;
+        for (BlockedThreadMXBean blockedThreadMXBean : blockedThreadMXBeans) {
+            totalThreadBlockedPercentage += blockedThreadMXBean.getThreadBlockedPercentage();
+        }
+        // if totalThreadBlockedPercentage is equal to zero, return "no blocked threads" message
+        if (totalThreadBlockedPercentage == 0.0) {
+            sb.append("\n");
+            sb.append("No blocked threads detected.\n");
+            sb.append("\n\n");
+            sb.append("Hit [0-9] to view thread stack trace, [t] to view top threads, [q] to quit\n");
+
+            return sb.toString();
+        }
+
         // initialise thread counter
         int counter = 0;
         for (BlockedThreadMXBean blockedThreadMXBean : blockedThreadMXBeans) {
 
             String threadName = blockedThreadMXBean.getThreadName();
+            // check we've got a blocked thread, continue to next blockedThreadMXBean if not
+            if (threadName == null) {
+                continue;
+            }
             Long threadId = blockedThreadMXBean.getThreadId();
             String threadState = abbreviateThreadState( threadHelper.getThreadState( threadId ));
             Double threadBlockedPercentage = blockedThreadMXBean.getThreadBlockedPercentage();
