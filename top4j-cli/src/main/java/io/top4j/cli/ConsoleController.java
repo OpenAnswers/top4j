@@ -39,7 +39,6 @@ public class ConsoleController  extends TimerTask {
 
     private final ConsoleReader consoleReader;
     private final UserInput userInput;
-    private final MBeanServerConnection mbsc;
     private final MBeanServer localMBS = ManagementFactory.getPlatformMBeanServer();
     private final GCStatsMXBean gcStatsMXBean;
     private final MemoryStatsMXBean memoryStatsMXBean;
@@ -47,14 +46,13 @@ public class ConsoleController  extends TimerTask {
     private final ThreadStatsMXBean threadStatsMXBean;
     private List<TopThreadMXBean> topThreadMXBeans = new ArrayList<>();
     private List<BlockedThreadMXBean> blockedThreadMXBeans = new ArrayList<>();
-    private final ThreadMXBean threadMXBean;
     private final RuntimeMXBean runtimeMXBean;
     private final OperatingSystemMXBean osMXBean;
     private Map<Integer, Long> topThreadIds = new HashMap<>();
     private Map<Integer, Long> blockedThreadIds = new HashMap<>();
     private final SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm:ss");
     private ThreadHelper threadHelper;
-    private final int MAX_THREAD_NAME_LENGTH = 64;
+    private final static int MAX_THREAD_NAME_LENGTH = 64;
     private String mainScreenId;
     private DisplayConfig displayConfig;
 
@@ -62,7 +60,6 @@ public class ConsoleController  extends TimerTask {
 
         this.consoleReader = consoleReader;
         this.userInput = userInput;
-        this.mbsc = mbsc;
         this.displayConfig = displayConfig;
         int displayThreadCount = displayConfig.getThreadCount();
         try {
@@ -145,17 +142,6 @@ public class ConsoleController  extends TimerTask {
             // instantiate and store blockedThreadMXBean proxy based on blockedThreadObjectName
             this.blockedThreadMXBeans.add(JMX.newMBeanProxy(localMBS, blockedThreadObjectName, BlockedThreadMXBean.class));
         }
-
-        // create ThreadMXBean objectName
-        ObjectName threadMXBeanObjectName = null;
-        try {
-            threadMXBeanObjectName = new ObjectName(ManagementFactory.THREAD_MXBEAN_NAME);
-        } catch (MalformedObjectNameException e) {
-            e.printStackTrace();
-            System.exit(1);
-        }
-        // instantiate new threadMXBean proxy based on threadMXBeanObjectName
-        this.threadMXBean = JMX.newMBeanProxy(mbsc, threadMXBeanObjectName, ThreadMXBean.class);
 
         // create RuntimeMXBean objectName
         ObjectName runtimeMXBeanObjectName = null;
@@ -361,11 +347,9 @@ public class ConsoleController  extends TimerTask {
         long threadId;
         if (mainScreenId.equals("b")) {
             threadId = blockedThreadIds.get(threadNumber);
-            BlockedThreadMXBean blockedThreadMXBean = blockedThreadMXBeans.get(threadNumber);
         }
         else {
             threadId = topThreadIds.get(threadNumber);
-            TopThreadMXBean topThreadMXBean = topThreadMXBeans.get(threadNumber);
         }
         sb.append("top4j - " + timeFormat.format(date) + " up " + getUptime() + ",  load average: " + osMXBean.getSystemLoadAverage() + "\n");
         sb.append("\n");
@@ -427,7 +411,7 @@ public class ConsoleController  extends TimerTask {
         boolean isAlive;
         try {
             // use OS MX Bean to retrieve OS name
-            String osName = osMXBean.getName();
+            osMXBean.getName();
             isAlive = true;
         }
         catch (Exception e) {

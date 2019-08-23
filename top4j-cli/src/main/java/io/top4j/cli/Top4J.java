@@ -216,7 +216,7 @@ public class Top4J {
      */
     private static boolean isNumeric(String stringNum) {
         try {
-            int number = Integer.parseInt(stringNum);
+            Integer.parseInt(stringNum);
         } catch (NumberFormatException | NullPointerException nfe) {
             return false;
         }
