@@ -2,11 +2,72 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="376088a4-ef8e-48f3-874a-15ae0da20460" name="Default" comment="">
-      <change beforePath="" afterPath="$PROJECT_DIR$/top4j-cli/src/main/java/io/top4j/cli/DisplayConfig.java" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change beforePath="$PROJECT_DIR$/top4j-cli/src/main/java/io/top4j/cli/ConsoleController.java" afterPath="$PROJECT_DIR$/top4j-cli/src/main/java/io/top4j/cli/ConsoleController.java" />
+      <change beforePath="$PROJECT_DIR$/top4j-cli/src/main/java/io/top4j/cli/DisplayConfig.java" afterPath="$PROJECT_DIR$/top4j-cli/src/main/java/io/top4j/cli/DisplayConfig.java" />
       <change beforePath="$PROJECT_DIR$/top4j-cli/src/main/java/io/top4j/cli/Top4J.java" afterPath="$PROJECT_DIR$/top4j-cli/src/main/java/io/top4j/cli/Top4J.java" />
-      <change beforePath="$PROJECT_DIR$/top4j-javaagent/src/test/scripts/runMultiThreadedTest.sh" afterPath="$PROJECT_DIR$/top4j-javaagent/src/test/scripts/runMultiThreadedTest.sh" />
+      <change beforePath="$PROJECT_DIR$/top4j-cli/src/main/java/io/top4j/cli/UserInput.java" afterPath="$PROJECT_DIR$/top4j-cli/src/main/java/io/top4j/cli/UserInput.java" />
+      <change beforePath="$PROJECT_DIR$/top4j-javaagent/src/main/java/io/top4j/javaagent/config/Configurator.java" afterPath="$PROJECT_DIR$/top4j-javaagent/src/main/java/io/top4j/javaagent/config/Configurator.java" />
+      <change beforePath="$PROJECT_DIR$/top4j-javaagent/src/main/java/io/top4j/javaagent/config/Constants.java" afterPath="$PROJECT_DIR$/top4j-javaagent/src/main/java/io/top4j/javaagent/config/Constants.java" />
+      <change beforePath="$PROJECT_DIR$/top4j-javaagent/src/main/java/io/top4j/javaagent/controller/Agent.java" afterPath="$PROJECT_DIR$/top4j-javaagent/src/main/java/io/top4j/javaagent/controller/Agent.java" />
+      <change beforePath="$PROJECT_DIR$/top4j-javaagent/src/main/java/io/top4j/javaagent/controller/Collector.java" afterPath="$PROJECT_DIR$/top4j-javaagent/src/main/java/io/top4j/javaagent/controller/Collector.java" />
+      <change beforePath="$PROJECT_DIR$/top4j-javaagent/src/main/java/io/top4j/javaagent/controller/Controller.java" afterPath="$PROJECT_DIR$/top4j-javaagent/src/main/java/io/top4j/javaagent/controller/Controller.java" />
+      <change beforePath="$PROJECT_DIR$/top4j-javaagent/src/main/java/io/top4j/javaagent/controller/LoggerThread.java" afterPath="$PROJECT_DIR$/top4j-javaagent/src/main/java/io/top4j/javaagent/controller/LoggerThread.java" />
+      <change beforePath="$PROJECT_DIR$/top4j-javaagent/src/main/java/io/top4j/javaagent/listener/CollectionListener.java" afterPath="$PROJECT_DIR$/top4j-javaagent/src/main/java/io/top4j/javaagent/listener/CollectionListener.java" />
+      <change beforePath="$PROJECT_DIR$/top4j-javaagent/src/main/java/io/top4j/javaagent/mbeans/StatsMXBean.java" afterPath="$PROJECT_DIR$/top4j-javaagent/src/main/java/io/top4j/javaagent/mbeans/StatsMXBean.java" />
+      <change beforePath="$PROJECT_DIR$/top4j-javaagent/src/main/java/io/top4j/javaagent/mbeans/agent/AgentMXBean.java" afterPath="$PROJECT_DIR$/top4j-javaagent/src/main/java/io/top4j/javaagent/mbeans/agent/AgentMXBean.java" />
+      <change beforePath="$PROJECT_DIR$/top4j-javaagent/src/main/java/io/top4j/javaagent/mbeans/agent/AgentStats.java" afterPath="$PROJECT_DIR$/top4j-javaagent/src/main/java/io/top4j/javaagent/mbeans/agent/AgentStats.java" />
+      <change beforePath="$PROJECT_DIR$/top4j-javaagent/src/main/java/io/top4j/javaagent/mbeans/agent/AgentStatsMXBean.java" afterPath="$PROJECT_DIR$/top4j-javaagent/src/main/java/io/top4j/javaagent/mbeans/agent/AgentStatsMXBean.java" />
+      <change beforePath="$PROJECT_DIR$/top4j-javaagent/src/main/java/io/top4j/javaagent/mbeans/jvm/JVMStats.java" afterPath="$PROJECT_DIR$/top4j-javaagent/src/main/java/io/top4j/javaagent/mbeans/jvm/JVMStats.java" />
+      <change beforePath="$PROJECT_DIR$/top4j-javaagent/src/main/java/io/top4j/javaagent/mbeans/jvm/JVMStatsMXBean.java" afterPath="$PROJECT_DIR$/top4j-javaagent/src/main/java/io/top4j/javaagent/mbeans/jvm/JVMStatsMXBean.java" />
+      <change beforePath="$PROJECT_DIR$/top4j-javaagent/src/main/java/io/top4j/javaagent/mbeans/jvm/gc/CollectionUsageListener.java" afterPath="$PROJECT_DIR$/top4j-javaagent/src/main/java/io/top4j/javaagent/mbeans/jvm/gc/CollectionUsageListener.java" />
+      <change beforePath="$PROJECT_DIR$/top4j-javaagent/src/main/java/io/top4j/javaagent/mbeans/jvm/gc/GCOverhead.java" afterPath="$PROJECT_DIR$/top4j-javaagent/src/main/java/io/top4j/javaagent/mbeans/jvm/gc/GCOverhead.java" />
+      <change beforePath="$PROJECT_DIR$/top4j-javaagent/src/main/java/io/top4j/javaagent/mbeans/jvm/gc/GCPauseTime.java" afterPath="$PROJECT_DIR$/top4j-javaagent/src/main/java/io/top4j/javaagent/mbeans/jvm/gc/GCPauseTime.java" />
+      <change beforePath="$PROJECT_DIR$/top4j-javaagent/src/main/java/io/top4j/javaagent/mbeans/jvm/gc/GCStats.java" afterPath="$PROJECT_DIR$/top4j-javaagent/src/main/java/io/top4j/javaagent/mbeans/jvm/gc/GCStats.java" />
+      <change beforePath="$PROJECT_DIR$/top4j-javaagent/src/main/java/io/top4j/javaagent/mbeans/jvm/gc/GCStatsMXBean.java" afterPath="$PROJECT_DIR$/top4j-javaagent/src/main/java/io/top4j/javaagent/mbeans/jvm/gc/GCStatsMXBean.java" />
+      <change beforePath="$PROJECT_DIR$/top4j-javaagent/src/main/java/io/top4j/javaagent/mbeans/jvm/gc/GCTimeBean.java" afterPath="$PROJECT_DIR$/top4j-javaagent/src/main/java/io/top4j/javaagent/mbeans/jvm/gc/GCTimeBean.java" />
+      <change beforePath="$PROJECT_DIR$/top4j-javaagent/src/main/java/io/top4j/javaagent/mbeans/jvm/gc/GarbageCollectorMXBeanHelper.java" afterPath="$PROJECT_DIR$/top4j-javaagent/src/main/java/io/top4j/javaagent/mbeans/jvm/gc/GarbageCollectorMXBeanHelper.java" />
+      <change beforePath="$PROJECT_DIR$/top4j-javaagent/src/main/java/io/top4j/javaagent/mbeans/jvm/heap/HeapStats.java" afterPath="$PROJECT_DIR$/top4j-javaagent/src/main/java/io/top4j/javaagent/mbeans/jvm/heap/HeapStats.java" />
+      <change beforePath="$PROJECT_DIR$/top4j-javaagent/src/main/java/io/top4j/javaagent/mbeans/jvm/heap/HeapStatsMXBean.java" afterPath="$PROJECT_DIR$/top4j-javaagent/src/main/java/io/top4j/javaagent/mbeans/jvm/heap/HeapStatsMXBean.java" />
+      <change beforePath="$PROJECT_DIR$/top4j-javaagent/src/main/java/io/top4j/javaagent/mbeans/jvm/heap/HeapUtilisation.java" afterPath="$PROJECT_DIR$/top4j-javaagent/src/main/java/io/top4j/javaagent/mbeans/jvm/heap/HeapUtilisation.java" />
+      <change beforePath="$PROJECT_DIR$/top4j-javaagent/src/main/java/io/top4j/javaagent/mbeans/jvm/memory/MemoryPoolAllocationRate.java" afterPath="$PROJECT_DIR$/top4j-javaagent/src/main/java/io/top4j/javaagent/mbeans/jvm/memory/MemoryPoolAllocationRate.java" />
+      <change beforePath="$PROJECT_DIR$/top4j-javaagent/src/main/java/io/top4j/javaagent/mbeans/jvm/memory/MemoryPoolMXBeanHelper.java" afterPath="$PROJECT_DIR$/top4j-javaagent/src/main/java/io/top4j/javaagent/mbeans/jvm/memory/MemoryPoolMXBeanHelper.java" />
+      <change beforePath="$PROJECT_DIR$/top4j-javaagent/src/main/java/io/top4j/javaagent/mbeans/jvm/memory/MemoryPoolUsageBean.java" afterPath="$PROJECT_DIR$/top4j-javaagent/src/main/java/io/top4j/javaagent/mbeans/jvm/memory/MemoryPoolUsageBean.java" />
+      <change beforePath="$PROJECT_DIR$/top4j-javaagent/src/main/java/io/top4j/javaagent/mbeans/jvm/memory/MemoryPoolUsageTracker.java" afterPath="$PROJECT_DIR$/top4j-javaagent/src/main/java/io/top4j/javaagent/mbeans/jvm/memory/MemoryPoolUsageTracker.java" />
+      <change beforePath="$PROJECT_DIR$/top4j-javaagent/src/main/java/io/top4j/javaagent/mbeans/jvm/memory/MemoryStats.java" afterPath="$PROJECT_DIR$/top4j-javaagent/src/main/java/io/top4j/javaagent/mbeans/jvm/memory/MemoryStats.java" />
+      <change beforePath="$PROJECT_DIR$/top4j-javaagent/src/main/java/io/top4j/javaagent/mbeans/jvm/memory/MemoryStatsMXBean.java" afterPath="$PROJECT_DIR$/top4j-javaagent/src/main/java/io/top4j/javaagent/mbeans/jvm/memory/MemoryStatsMXBean.java" />
+      <change beforePath="$PROJECT_DIR$/top4j-javaagent/src/main/java/io/top4j/javaagent/mbeans/jvm/memory/MemorySurvivorBean.java" afterPath="$PROJECT_DIR$/top4j-javaagent/src/main/java/io/top4j/javaagent/mbeans/jvm/memory/MemorySurvivorBean.java" />
+      <change beforePath="$PROJECT_DIR$/top4j-javaagent/src/main/java/io/top4j/javaagent/mbeans/jvm/memory/MemorySurvivorRate.java" afterPath="$PROJECT_DIR$/top4j-javaagent/src/main/java/io/top4j/javaagent/mbeans/jvm/memory/MemorySurvivorRate.java" />
+      <change beforePath="$PROJECT_DIR$/top4j-javaagent/src/main/java/io/top4j/javaagent/mbeans/jvm/threads/BlockedThread.java" afterPath="$PROJECT_DIR$/top4j-javaagent/src/main/java/io/top4j/javaagent/mbeans/jvm/threads/BlockedThread.java" />
+      <change beforePath="$PROJECT_DIR$/top4j-javaagent/src/main/java/io/top4j/javaagent/mbeans/jvm/threads/BlockedThreadMXBean.java" afterPath="$PROJECT_DIR$/top4j-javaagent/src/main/java/io/top4j/javaagent/mbeans/jvm/threads/BlockedThreadMXBean.java" />
+      <change beforePath="$PROJECT_DIR$/top4j-javaagent/src/main/java/io/top4j/javaagent/mbeans/jvm/threads/HotMethod.java" afterPath="$PROJECT_DIR$/top4j-javaagent/src/main/java/io/top4j/javaagent/mbeans/jvm/threads/HotMethod.java" />
+      <change beforePath="$PROJECT_DIR$/top4j-javaagent/src/main/java/io/top4j/javaagent/mbeans/jvm/threads/HotMethodMXBean.java" afterPath="$PROJECT_DIR$/top4j-javaagent/src/main/java/io/top4j/javaagent/mbeans/jvm/threads/HotMethodMXBean.java" />
+      <change beforePath="$PROJECT_DIR$/top4j-javaagent/src/main/java/io/top4j/javaagent/mbeans/jvm/threads/HotMethodTracker.java" afterPath="$PROJECT_DIR$/top4j-javaagent/src/main/java/io/top4j/javaagent/mbeans/jvm/threads/HotMethodTracker.java" />
+      <change beforePath="$PROJECT_DIR$/top4j-javaagent/src/main/java/io/top4j/javaagent/mbeans/jvm/threads/HotMethods.java" afterPath="$PROJECT_DIR$/top4j-javaagent/src/main/java/io/top4j/javaagent/mbeans/jvm/threads/HotMethods.java" />
+      <change beforePath="$PROJECT_DIR$/top4j-javaagent/src/main/java/io/top4j/javaagent/mbeans/jvm/threads/MethodTimeMap.java" afterPath="$PROJECT_DIR$/top4j-javaagent/src/main/java/io/top4j/javaagent/mbeans/jvm/threads/MethodTimeMap.java" />
+      <change beforePath="$PROJECT_DIR$/top4j-javaagent/src/main/java/io/top4j/javaagent/mbeans/jvm/threads/ThreadStats.java" afterPath="$PROJECT_DIR$/top4j-javaagent/src/main/java/io/top4j/javaagent/mbeans/jvm/threads/ThreadStats.java" />
+      <change beforePath="$PROJECT_DIR$/top4j-javaagent/src/main/java/io/top4j/javaagent/mbeans/jvm/threads/ThreadStatsMXBean.java" afterPath="$PROJECT_DIR$/top4j-javaagent/src/main/java/io/top4j/javaagent/mbeans/jvm/threads/ThreadStatsMXBean.java" />
+      <change beforePath="$PROJECT_DIR$/top4j-javaagent/src/main/java/io/top4j/javaagent/mbeans/jvm/threads/ThreadTimeMap.java" afterPath="$PROJECT_DIR$/top4j-javaagent/src/main/java/io/top4j/javaagent/mbeans/jvm/threads/ThreadTimeMap.java" />
+      <change beforePath="$PROJECT_DIR$/top4j-javaagent/src/main/java/io/top4j/javaagent/mbeans/jvm/threads/ThreadUsage.java" afterPath="$PROJECT_DIR$/top4j-javaagent/src/main/java/io/top4j/javaagent/mbeans/jvm/threads/ThreadUsage.java" />
+      <change beforePath="$PROJECT_DIR$/top4j-javaagent/src/main/java/io/top4j/javaagent/mbeans/jvm/threads/TopThread.java" afterPath="$PROJECT_DIR$/top4j-javaagent/src/main/java/io/top4j/javaagent/mbeans/jvm/threads/TopThread.java" />
+      <change beforePath="$PROJECT_DIR$/top4j-javaagent/src/main/java/io/top4j/javaagent/mbeans/jvm/threads/TopThreadMXBean.java" afterPath="$PROJECT_DIR$/top4j-javaagent/src/main/java/io/top4j/javaagent/mbeans/jvm/threads/TopThreadMXBean.java" />
+      <change beforePath="$PROJECT_DIR$/top4j-javaagent/src/main/java/io/top4j/javaagent/mbeans/logger/StatsLogWriter.java" afterPath="$PROJECT_DIR$/top4j-javaagent/src/main/java/io/top4j/javaagent/mbeans/logger/StatsLogWriter.java" />
+      <change beforePath="$PROJECT_DIR$/top4j-javaagent/src/main/java/io/top4j/javaagent/mbeans/logger/StatsLogger.java" afterPath="$PROJECT_DIR$/top4j-javaagent/src/main/java/io/top4j/javaagent/mbeans/logger/StatsLogger.java" />
+      <change beforePath="$PROJECT_DIR$/top4j-javaagent/src/main/java/io/top4j/javaagent/mbeans/logger/StatsLoggerMXBean.java" afterPath="$PROJECT_DIR$/top4j-javaagent/src/main/java/io/top4j/javaagent/mbeans/logger/StatsLoggerMXBean.java" />
+      <change beforePath="$PROJECT_DIR$/top4j-javaagent/src/main/java/io/top4j/javaagent/messaging/LoggerQueue.java" afterPath="$PROJECT_DIR$/top4j-javaagent/src/main/java/io/top4j/javaagent/messaging/LoggerQueue.java" />
+      <change beforePath="$PROJECT_DIR$/top4j-javaagent/src/main/java/io/top4j/javaagent/profiler/CPUTimer.java" afterPath="$PROJECT_DIR$/top4j-javaagent/src/main/java/io/top4j/javaagent/profiler/CPUTimer.java" />
+      <change beforePath="$PROJECT_DIR$/top4j-javaagent/src/main/java/io/top4j/javaagent/profiler/CpuTime.java" afterPath="$PROJECT_DIR$/top4j-javaagent/src/main/java/io/top4j/javaagent/profiler/CpuTime.java" />
+      <change beforePath="$PROJECT_DIR$/top4j-javaagent/src/main/java/io/top4j/javaagent/test/CollatorTest.java" afterPath="$PROJECT_DIR$/top4j-javaagent/src/main/java/io/top4j/javaagent/test/CollatorTest.java" />
+      <change beforePath="$PROJECT_DIR$/top4j-javaagent/src/main/java/io/top4j/javaagent/test/MemTest.java" afterPath="$PROJECT_DIR$/top4j-javaagent/src/main/java/io/top4j/javaagent/test/MemTest.java" />
+      <change beforePath="$PROJECT_DIR$/top4j-javaagent/src/main/java/io/top4j/javaagent/test/MultiThreadedTest.java" afterPath="$PROJECT_DIR$/top4j-javaagent/src/main/java/io/top4j/javaagent/test/MultiThreadedTest.java" />
+      <change beforePath="$PROJECT_DIR$/top4j-javaagent/src/main/java/io/top4j/javaagent/test/Test.java" afterPath="$PROJECT_DIR$/top4j-javaagent/src/main/java/io/top4j/javaagent/test/Test.java" />
+      <change beforePath="$PROJECT_DIR$/top4j-javaagent/src/main/java/io/top4j/javaagent/utils/GarbageCollectorNames.java" afterPath="$PROJECT_DIR$/top4j-javaagent/src/main/java/io/top4j/javaagent/utils/GarbageCollectorNames.java" />
+      <change beforePath="$PROJECT_DIR$/top4j-javaagent/src/main/java/io/top4j/javaagent/utils/MBeanHelper.java" afterPath="$PROJECT_DIR$/top4j-javaagent/src/main/java/io/top4j/javaagent/utils/MBeanHelper.java" />
+      <change beforePath="$PROJECT_DIR$/top4j-javaagent/src/main/java/io/top4j/javaagent/utils/MBeanInfo.java" afterPath="$PROJECT_DIR$/top4j-javaagent/src/main/java/io/top4j/javaagent/utils/MBeanInfo.java" />
+      <change beforePath="$PROJECT_DIR$/top4j-javaagent/src/main/java/io/top4j/javaagent/utils/MemoryPoolNames.java" afterPath="$PROJECT_DIR$/top4j-javaagent/src/main/java/io/top4j/javaagent/utils/MemoryPoolNames.java" />
+      <change beforePath="$PROJECT_DIR$/top4j-javaagent/src/main/java/io/top4j/javaagent/utils/ThreadHelper.java" afterPath="$PROJECT_DIR$/top4j-javaagent/src/main/java/io/top4j/javaagent/utils/ThreadHelper.java" />
+      <change beforePath="$PROJECT_DIR$/top4j-javaagent/src/test/java/JunitTest.java" afterPath="$PROJECT_DIR$/top4j-javaagent/src/test/java/JunitTest.java" />
+      <change beforePath="$PROJECT_DIR$/top4j-javaagent/src/test/java/JvmAgentTest.java" afterPath="$PROJECT_DIR$/top4j-javaagent/src/test/java/JvmAgentTest.java" />
     </list>
     <ignored path="top4j.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -28,23 +89,26 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="ThreadStatsMXBean.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/top4j-javaagent/src/main/java/io/top4j/javaagent/mbeans/jvm/threads/ThreadStatsMXBean.java">
+      <file leaf-file-name="Top4J.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/top4j-cli/src/main/java/io/top4j/cli/Top4J.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="510">
-              <caret line="44" column="12" lean-forward="false" selection-start-line="44" selection-start-column="12" selection-end-line="44" selection-end-column="12" />
-              <folding />
+            <state relative-caret-position="1360">
+              <caret line="80" column="30" lean-forward="false" selection-start-line="80" selection-start-column="30" selection-end-line="80" selection-end-column="30" />
+              <folding>
+                <element signature="e#0#9956#0" expanded="true" />
+                <element signature="imports" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Top4J.java" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/top4j-cli/src/main/java/io/top4j/cli/Top4J.java">
+      <file leaf-file-name="JvmAgentTest.java" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/top4j-javaagent/src/test/java/JvmAgentTest.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="578">
-              <caret line="80" column="30" lean-forward="false" selection-start-line="80" selection-start-column="30" selection-end-line="80" selection-end-column="30" />
+            <state relative-caret-position="544">
+              <caret line="32" column="13" lean-forward="false" selection-start-line="32" selection-start-column="13" selection-end-line="32" selection-end-column="13" />
               <folding>
-                <element signature="e#0#9926#0" expanded="true" />
+                <element signature="e#0#10544#0" expanded="true" />
                 <element signature="imports" expanded="true" />
               </folding>
             </state>
@@ -67,17 +131,17 @@
             <state relative-caret-position="306">
               <caret line="32" column="4" lean-forward="false" selection-start-line="32" selection-start-column="4" selection-end-line="32" selection-end-column="4" />
               <folding>
-                <element signature="e#970#971#0" expanded="true" />
-                <element signature="e#1055#1056#0" expanded="true" />
-                <element signature="e#1101#1102#0" expanded="true" />
+                <element signature="e#1000#1001#0" expanded="true" />
+                <element signature="e#1085#1086#0" expanded="true" />
                 <element signature="e#1131#1132#0" expanded="true" />
-                <element signature="e#1160#1161#0" expanded="true" />
-                <element signature="e#1201#1202#0" expanded="true" />
-                <element signature="e#1237#1238#0" expanded="true" />
-                <element signature="e#1275#1276#0" expanded="true" />
-                <element signature="e#1309#1310#0" expanded="true" />
-                <element signature="e#1363#1364#0" expanded="true" />
-                <element signature="e#1409#1410#0" expanded="true" />
+                <element signature="e#1161#1162#0" expanded="true" />
+                <element signature="e#1190#1191#0" expanded="true" />
+                <element signature="e#1231#1232#0" expanded="true" />
+                <element signature="e#1267#1268#0" expanded="true" />
+                <element signature="e#1305#1306#0" expanded="true" />
+                <element signature="e#1339#1340#0" expanded="true" />
+                <element signature="e#1393#1394#0" expanded="true" />
+                <element signature="e#1439#1440#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -86,10 +150,10 @@
       <file leaf-file-name="ConsoleController.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/top4j-cli/src/main/java/io/top4j/cli/ConsoleController.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="527">
+            <state relative-caret-position="4403">
               <caret line="287" column="15" lean-forward="false" selection-start-line="287" selection-start-column="15" selection-end-line="287" selection-end-column="15" />
               <folding>
-                <element signature="e#0#18879#0" expanded="true" />
+                <element signature="e#0#18909#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -101,7 +165,7 @@
             <state relative-caret-position="119">
               <caret line="21" column="13" lean-forward="false" selection-start-line="21" selection-start-column="13" selection-end-line="21" selection-end-column="13" />
               <folding>
-                <element signature="e#0#1060#0" expanded="true" />
+                <element signature="e#0#1090#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -113,7 +177,7 @@
             <state relative-caret-position="68">
               <caret line="18" column="13" lean-forward="false" selection-start-line="18" selection-start-column="13" selection-end-line="18" selection-end-column="13" />
               <folding>
-                <element signature="e#0#918#0" expanded="true" />
+                <element signature="e#0#948#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -125,7 +189,7 @@
             <state relative-caret-position="0">
               <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
               <folding>
-                <element signature="e#0#896#0" expanded="true" />
+                <element signature="e#0#926#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -160,6 +224,18 @@
       </list>
     </option>
   </component>
+  <component name="FindInProjectRecents">
+    <findStrings>
+      <find>Open Answers Ltd.</find>
+    </findStrings>
+    <replaceStrings>
+      <replace>Open Answers Ltd. https://www.openanswers.co.uk</replace>
+    </replaceStrings>
+    <dirStrings>
+      <dir>C:\Users\ryan\git\pet\top4j\top4j-cli\src\main\java</dir>
+      <dir>C:\Users\ryan\git\pet\top4j\top4j-javaagent\src</dir>
+    </dirStrings>
+  </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
@@ -175,7 +251,6 @@
         <option value="$PROJECT_DIR$/top4j-cli/src/main/java/io/top4j/cli/UserInput.java" />
         <option value="$PROJECT_DIR$/top4j-javaagent/src/main/java/io/top4j/javaagent/config/Constants.java" />
         <option value="$PROJECT_DIR$/README.md" />
-        <option value="$PROJECT_DIR$/top4j-javaagent/src/test/java/JvmAgentTest.java" />
         <option value="$PROJECT_DIR$/top4j-javaagent/src/test/resources/top4j-test.properties" />
         <option value="$PROJECT_DIR$/top4j-javaagent/src/main/java/Test.java" />
         <option value="$PROJECT_DIR$/top4j-javaagent/src/main/java/io/top4j/javaagent/test/Test.java" />
@@ -184,6 +259,7 @@
         <option value="$PROJECT_DIR$/top4j-javaagent/src/main/java/io/top4j/javaagent/mbeans/jvm/threads/ThreadUsage.java" />
         <option value="$PROJECT_DIR$/top4j-cli/src/main/java/io/top4j/cli/ConsoleController.java" />
         <option value="$PROJECT_DIR$/top4j-cli/src/main/java/io/top4j/cli/Top4J.java" />
+        <option value="$PROJECT_DIR$/top4j-javaagent/src/test/java/JvmAgentTest.java" />
       </list>
     </option>
   </component>
@@ -288,8 +364,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="AndroidView" />
-      <pane id="Scratches" />
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -455,7 +530,8 @@
         </subPane>
       </pane>
       <pane id="PackagesPane" />
-      <pane id="Scope" />
+      <pane id="Scratches" />
+      <pane id="AndroidView" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -789,20 +865,21 @@
       <window_info id="Palette&#9;" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Image Layers" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.31177095" sideWeight="0.5104167" order="7" side_tool="true" content_ui="tabs" />
-      <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.16197917" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.31177095" sideWeight="0.5125" order="7" side_tool="true" content_ui="tabs" />
+      <window_info id="Maven Projects" active="true" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.16197917" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.31177095" sideWeight="0.4875" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32985386" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.31177095" sideWeight="0.48958334" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.1125" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32979852" sideWeight="0.49375" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Theme Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="true" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3997879" sideWeight="0.49791667" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="true" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
@@ -811,7 +888,6 @@
       <window_info id="SonarQube" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32979852" sideWeight="0.49375" order="1" side_tool="false" content_ui="tabs" />
     </layout>
   </component>
   <component name="Vcs.Log.UiProperties">
@@ -916,14 +992,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="357">
           <caret line="83" column="38" lean-forward="false" selection-start-line="83" selection-start-column="38" selection-end-line="83" selection-end-column="38" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/top4j-javaagent/src/test/java/JvmAgentTest.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-399">
-          <caret line="28" column="45" lean-forward="false" selection-start-line="28" selection-start-column="45" selection-end-line="28" selection-end-column="45" />
           <folding />
         </state>
       </provider>
@@ -1138,17 +1206,17 @@
         <state relative-caret-position="306">
           <caret line="32" column="4" lean-forward="false" selection-start-line="32" selection-start-column="4" selection-end-line="32" selection-end-column="4" />
           <folding>
-            <element signature="e#970#971#0" expanded="true" />
-            <element signature="e#1055#1056#0" expanded="true" />
-            <element signature="e#1101#1102#0" expanded="true" />
+            <element signature="e#1000#1001#0" expanded="true" />
+            <element signature="e#1085#1086#0" expanded="true" />
             <element signature="e#1131#1132#0" expanded="true" />
-            <element signature="e#1160#1161#0" expanded="true" />
-            <element signature="e#1201#1202#0" expanded="true" />
-            <element signature="e#1237#1238#0" expanded="true" />
-            <element signature="e#1275#1276#0" expanded="true" />
-            <element signature="e#1309#1310#0" expanded="true" />
-            <element signature="e#1363#1364#0" expanded="true" />
-            <element signature="e#1409#1410#0" expanded="true" />
+            <element signature="e#1161#1162#0" expanded="true" />
+            <element signature="e#1190#1191#0" expanded="true" />
+            <element signature="e#1231#1232#0" expanded="true" />
+            <element signature="e#1267#1268#0" expanded="true" />
+            <element signature="e#1305#1306#0" expanded="true" />
+            <element signature="e#1339#1340#0" expanded="true" />
+            <element signature="e#1393#1394#0" expanded="true" />
+            <element signature="e#1439#1440#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -1158,7 +1226,7 @@
         <state relative-caret-position="119">
           <caret line="21" column="13" lean-forward="false" selection-start-line="21" selection-start-column="13" selection-end-line="21" selection-end-column="13" />
           <folding>
-            <element signature="e#0#1060#0" expanded="true" />
+            <element signature="e#0#1090#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -1168,7 +1236,7 @@
         <state relative-caret-position="68">
           <caret line="18" column="13" lean-forward="false" selection-start-line="18" selection-start-column="13" selection-end-line="18" selection-end-column="13" />
           <folding>
-            <element signature="e#0#918#0" expanded="true" />
+            <element signature="e#0#948#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -1178,7 +1246,7 @@
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <element signature="e#0#896#0" expanded="true" />
+            <element signature="e#0#926#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -1201,20 +1269,31 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/top4j-cli/src/main/java/io/top4j/cli/ConsoleController.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="527">
+        <state relative-caret-position="4403">
           <caret line="287" column="15" lean-forward="false" selection-start-line="287" selection-start-column="15" selection-end-line="287" selection-end-column="15" />
           <folding>
-            <element signature="e#0#18879#0" expanded="true" />
+            <element signature="e#0#18909#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/top4j-cli/src/main/java/io/top4j/cli/Top4J.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="578">
+        <state relative-caret-position="1360">
           <caret line="80" column="30" lean-forward="false" selection-start-line="80" selection-start-column="30" selection-end-line="80" selection-end-column="30" />
           <folding>
-            <element signature="e#0#9926#0" expanded="true" />
+            <element signature="e#0#9956#0" expanded="true" />
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/top4j-javaagent/src/test/java/JvmAgentTest.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="544">
+          <caret line="32" column="13" lean-forward="false" selection-start-line="32" selection-start-column="13" selection-end-line="32" selection-end-column="13" />
+          <folding>
+            <element signature="e#0#10544#0" expanded="true" />
             <element signature="imports" expanded="true" />
           </folding>
         </state>
