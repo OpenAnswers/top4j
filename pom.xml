@@ -3,7 +3,7 @@
 
   <groupId>io.top4j</groupId>
   <artifactId>top4j-parent</artifactId>
-  <version>0.0.7-SNAPSHOT</version>
+  <version>0.0.8-SNAPSHOT</version>
   <packaging>pom</packaging>
 
   <name>Top4J Parent</name>

@@ -21,12 +21,12 @@ The Top4J continuous build and release Jenkins job can be found [here](http://hl
 Get Started
 ===========
 **Run Top4J as a Java Agent**
-1. Download and install the [Top4J Java Agent jar](http://hlcit003:8081/nexus/content/repositories/releases/io/top4j/top4j-javaagent/0.0.6/top4j-javaagent-0.0.6.jar) within an appropriate location on the local file system.
-1. Add -javaagent command line argument to JVM startup args, e.g. `java -javaagent:<path-to-top4j-jar>/top4j-javaagent-0.0.6.jar <java-class-name>`
+1. Download and install the [Top4J Java Agent jar](http://hlcit003:8081/nexus/content/repositories/releases/io/top4j/top4j-javaagent/0.0.7/top4j-javaagent-0.0.7.jar) within an appropriate location on the local file system.
+1. Add -javaagent command line argument to JVM startup args, e.g. `java -javaagent:<path-to-top4j-jar>/top4j-javaagent-0.0.7.jar <java-class-name>`
 
 **Run Top4J via CLI Remote Attach feature**
-1. Download and install the [Top4J CLI jar](http://hlcit003:8081/nexus/content/repositories/releases/io/top4j/top4j-cli/0.0.6/top4j-cli-0.0.6.jar) within an appropriate location on the local file system.
-1. Run Top4J CLI jar specifying JVM PID as the first argument, e.g. `java -jar top4j-cli-0.0.6.jar 12345`, **OR** with no arguments to auto-detect running JVMs and select from a list, e.g. `java -jar top4j-cli-0.0.6.jar`
+1. Download and install the [Top4J CLI jar](http://hlcit003:8081/nexus/content/repositories/releases/io/top4j/top4j-cli/0.0.7/top4j-cli-0.0.7.jar) within an appropriate location on the local file system.
+1. Run Top4J CLI jar specifying JVM PID as the first argument, e.g. `java -jar top4j-cli-0.0.7.jar 12345`, **OR** with no arguments to auto-detect running JVMs and select from a list, e.g. `java -jar top4j-cli-0.0.7.jar`
 
    **NOTE1:** The top4j CLI jar **must** be run as the target JVM process owner.
    **NOTE2:** The top4j CLI jar **must** be run using a Java JDK install not a JRE.
@@ -36,11 +36,14 @@ Screenshots
 **Screenshot of Top4J using Remote Attach command line interface:**
 ```bash
 top4j - 16:12:18 up 2 days,  load average: 1.43
+Attached to: org.mule.module.reboot.MuleContainerBootstrap start0 [PID=7448]
 Threads: 1018 total,   162 runnable,   292 waiting,   564 timed waiting,   0 blocked
 %Cpu(s): 32.29 total,  22.43 user,  9.85 sys
 Heap Util(%):        0.00 eden,        57.58 survivor,        48.77 tenured
 Mem Alloc(MB/s):     55.76 eden,        3.64 survivor,        0.25 tenured
 GC Overhead(%):      1.2930
+
+Top Threads:
 
 #  TID     S  %CPU  THREAD NAME
 =  ===     =  ====  ===========
