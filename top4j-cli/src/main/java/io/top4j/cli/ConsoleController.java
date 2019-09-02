@@ -177,23 +177,21 @@ public class ConsoleController  extends TimerTask {
             System.exit(-1);
         }
         // retrieve user provided screenId from userInput shared object
-        String screenId = this.userInput.getText();
+        String screenId = this.userInput.getScreenId();
+        // retrieve user provided userText from userInput shared object
+        String userText = this.userInput.getText();
         // store mainScreenId
         mainScreenId = screenId;
         String screen;
         if ( userInput.isDigit() ) {
             // create thread stack trace screen
-            screen = createThreadStackTraceScreen(Integer.valueOf(screenId).intValue());
+            screen = createThreadStackTraceScreen(Integer.valueOf(userText).intValue());
         }
-        else if ( userInput.getText().equals("b") ) {
-            // store mainScreenId
-            mainScreenId = screenId;
+        else if ( screenId.equals("b") ) {
             // create blocked threads screen
             screen = createBlockedThreadsScreen();
         }
         else {
-            // store mainScreenId
-            mainScreenId = screenId;
             // create top threads screen
             screen = createTopThreadsScreen();
         }

@@ -22,6 +22,7 @@ package io.top4j.cli;
 public class UserInput {
 
     private volatile String text = "t";
+    private volatile String screenId = "t";
     private volatile boolean isDigit = false;
 
     public void setText(String text) {
@@ -39,4 +40,13 @@ public class UserInput {
     public void setIsDigit(boolean isDigit) {
         this.isDigit = isDigit;
     }
+
+    public String getScreenId() {
+        return screenId;
+    }
+
+    public void setScreenId(String screenId) {
+        this.screenId = screenId;
+    }
+
 }

@@ -203,8 +203,12 @@ public class Top4J {
             if (Character.isDigit( inputChar )) {
                 userInput.setIsDigit(true);
             }
+            else if (inputText.equals("m")) {
+                userInput.setIsDigit(false);
+            }
             else {
                 userInput.setIsDigit(false);
+                userInput.setScreenId(inputText);
             }
             userInput.setText(inputText);
         }
