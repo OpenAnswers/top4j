@@ -19,6 +19,7 @@ package io.top4j.cli;
 import io.top4j.javaagent.config.Configurator;
 import io.top4j.javaagent.controller.Controller;
 import jline.console.ConsoleReader;
+import org.apache.commons.cli.*;
 import org.cyclopsgroup.jmxterm.JavaProcess;
 import org.cyclopsgroup.jmxterm.JavaProcessManager;
 import org.cyclopsgroup.jmxterm.jdk6.Jdk6JavaProcessManager;
@@ -41,7 +42,7 @@ public class Top4J {
 
     public static void main( String[] args ) throws IOException, NoSuchMethodException, ClassNotFoundException {
 
-        // set console refresh period - how frequently in milliseconds the Top4J console screen is refreshed
+        // set default console refresh period - how frequently in milliseconds the Top4J console screen is refreshed
         int consoleRefreshPeriod = 3000;
 
         // set Top4J JavaAgent collector poll frequency - how frequently in milliseconds the performance metrics gathered by the Top4J JavaAgent are updated
@@ -62,18 +63,52 @@ public class Top4J {
         // initialise jvmDisplayName variable used to store JVM display name
         String jvmDisplayName = "";
 
-        // check args
-        if (args.length == 1 && !isNumeric(args[0])) {
-            // user has provided a command-line arg but it's *not* a number - return usage message and exit with error code
-            System.err.println("USAGE: java -jar top4j-cli.jar <jvm-pid>");
+        // define command-line args
+        Options options = defineOptions();
+
+        // parse command-line args
+        CommandLineParser parser = new DefaultParser();
+        CommandLine cmd = null;
+        try {
+            cmd = parser.parse( options, args);
+        } catch (ParseException e) {
+            System.err.println("ERROR: There was a problem parsing command-line arguments. Reason: " + e.getMessage() );
             System.exit(-1);
         }
-        else if (args.length == 1 && isNumeric(args[0])){
-            // user has provided a command-line arg and it's a valid number - use the arg as the jvmPid
-            jvmPid = Integer.parseInt(args[0]);
+
+        // interrogate command-line args
+        if (cmd.hasOption("h")) {
+            // automatically generate the help statement
+            HelpFormatter formatter = new HelpFormatter();
+            formatter.printHelp( "top4j", options );
+            System.exit(1);
         }
-        else if (args.length == 0) {
-            // user has provided no command-line args - attempt to detect running JVMs and provide list of PIDs to select from
+        if (cmd.hasOption("d")) {
+            // user has provided a screen refresh delay interval via the command-line
+            String userProvidedDelayInterval = cmd.getOptionValue("d", "3");
+            if (!isNumeric(userProvidedDelayInterval)) {
+                // user provided delay interval is *not* a number - return usage message and exit with error code
+                System.err.println("ERROR: Delay interval provided via command-line argument is not a number: " + userProvidedDelayInterval );
+                System.exit(-1);
+            }
+            // override default consoleRefreshPeriod
+            consoleRefreshPeriod = Integer.parseInt(userProvidedDelayInterval) * 1000;
+            // set collectorPollFrequency to consoleRefreshPeriod
+            collectorPollFrequency = consoleRefreshPeriod;
+        }
+        if (cmd.hasOption("p")) {
+            // user has provided a JVM PID via the command-line
+            String userProvidedJvmPid = cmd.getOptionValue("p");
+            if (!isNumeric(userProvidedJvmPid)) {
+                // user provided JVM PID is *not* a number - return usage message and exit with error code
+                System.err.println("ERROR: JVM PID provided via command-line argument is not a number: " + userProvidedJvmPid );
+                System.exit(-1);
+            }
+            // user has provided a command-line arg and it's a valid number - use the arg as the jvmPid
+            jvmPid = Integer.parseInt(userProvidedJvmPid);
+        }
+        else {
+            // user has not provided a JVM PID via command-line args - attempt to detect running JVMs and provide list of PIDs to select from
             // generate list of running Java processes
             List<JavaProcess> jvms = javaProcessManager.list();
             int jvmCount = jvms.size();
@@ -126,11 +161,6 @@ public class Top4J {
                 System.err.println("ERROR: Please enter a JVM number between 0 and " + (jvmCount-1));
                 System.exit(-1);
             }
-        }
-        else {
-            // user has provided some unexpected command-line args - return usage message and exit with error code
-            System.err.println("USAGE: java -jar top4j-cli.jar <jvm-pid>");
-            System.exit(-1);
         }
 
         // use javaProcessManager to attach to jvmPid
@@ -225,5 +255,27 @@ public class Top4J {
             return false;
         }
         return true;
+    }
+
+    /*
+        Define command-line options
+     */
+    private static Options defineOptions() {
+
+        // instantiate new command-line options
+        Options options = new Options();
+
+        // add d option
+        options.addOption("d", "delay", true, "delay time interval (in seconds)");
+
+        // add h option
+        options.addOption("h", "help", false, "print this message");
+
+        // add p option
+        options.addOption("p", "pid", true, "monitor PID");
+
+        // return command-line options
+        return options;
+
     }
 }
