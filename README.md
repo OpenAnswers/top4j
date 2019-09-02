@@ -26,7 +26,7 @@ Get Started
 
 **Run Top4J via CLI Remote Attach feature**
 1. Download and install the [Top4J CLI jar](http://hlcit003:8081/nexus/content/repositories/releases/io/top4j/top4j-cli/0.0.7/top4j-cli-0.0.7.jar) within an appropriate location on the local file system.
-1. Run Top4J CLI jar specifying JVM PID as the first argument, e.g. `java -jar top4j-cli-0.0.7.jar 12345`, **OR** with no arguments to auto-detect running JVMs and select from a list, e.g. `java -jar top4j-cli-0.0.7.jar`
+1. Run Top4J CLI jar specifying JVM PID as the first argument, e.g. `java -jar top4j-cli-0.0.7.jar -p 12345`, **OR** with no arguments to auto-detect running JVMs and select from a list, e.g. `java -jar top4j-cli-0.0.7.jar`
 
    **NOTE1:** The top4j CLI jar **must** be run as the target JVM process owner.
    **NOTE2:** The top4j CLI jar **must** be run using a Java JDK install not a JRE.
@@ -68,10 +68,12 @@ When running the top4j CLI jar in Remote Attach mode, the user will be presented
 
 Each of the fields and columns displayed by the top4J CLI are detailed below.
 
-Header Fields
--------------
+1. Header Fields
+----------------
 
 **Load average:** The system load average for the last minute. The system load average is the sum of the number of runnable entities queued to the available processors plus the number of runnable entities running on the available processors averaged over a period of time. The way in which the load average is calculated is operating system specific but is typically a damped time-dependent average. If the load average is not available, a negative value is returned.
+
+**Attached to:** The display name and process ID of the attached Java process.
 
 **Threads:** The total number of threads within the JVM process along with a breakdown of the thread states. See the [java.lang.Thread.State Enum](https://docs.oracle.com/javase/8/docs/api/java/lang/Thread.State.html) for more details.
 
@@ -83,11 +85,42 @@ Header Fields
 
 **GC Overhead(%):** The GC overhead is calculated as the percentage of real time (wall clock time) the JVM spends in garbage collection. Only stop-the-world garbage collection pauses contribute to the GC overhead. This, therefore, equates to the percentage of real time that the application is stopped whilst garbage collection takes place. This is a key performance indicator of the impact of garbage collection on a running Java application. A high GC overhead overhead can lead to poor application performance as there is less time available to process application tasks and application threads can be blocked waiting to allocate memory (i.e. create objects).
 
-Columns
--------
+2. Columns
+----------
 
+    **#** : The Thread Number
+    Used to select the thread in order to view the thread stack trace.
 
+    **TID** : Thread ID
+    The thread's unique process ID, which periodically wraps, though never restarting at zero.
 
+    **S** : Thread State
+    The thread state as defined by the [java.lang.Thread.State Enum](https://docs.oracle.com/javase/8/docs/api/java/lang/Thread.State.html).
+    
+    **%CPU** : CPU Usage
+    The thread percentage CPU utilisation.
+
+    **%BLOCKED** : Blocked Time
+    The percentage of time that the thread has been in a blocked state during the last iteration.
+
+    **THREAD NAME** : Thread Name
+    The thread name.
+
+3. COMMAND-LINE Options
+-----------------------
+
+The command-line syntax for top4j consists of:
+
+         -h | -d delay -p pid
+
+    -h : Help
+         Show usage prompt, then quit.
+
+    -d : Delay time interval as:  -d ss (seconds)
+         Specifies the delay between screen updates, and overrides the default value of 3 seconds.
+
+    -p : Monitor PIDs as:  -p pid
+         Monitor the JVM process ID specified.
 
 MBeans
 ======
