@@ -36,11 +36,14 @@ Screenshots
 **Screenshot of Top4J using Remote Attach command line interface:**
 ```bash
 top4j - 16:12:18 up 2 days,  load average: 1.43
+Attached to: org.mule.module.reboot.MuleContainerBootstrap start0 [PID=7448]
 Threads: 1018 total,   162 runnable,   292 waiting,   564 timed waiting,   0 blocked
 %Cpu(s): 32.29 total,  22.43 user,  9.85 sys
 Heap Util(%):        0.00 eden,        57.58 survivor,        48.77 tenured
 Mem Alloc(MB/s):     55.76 eden,        3.64 survivor,        0.25 tenured
 GC Overhead(%):      1.2930
+
+Top Threads:
 
 #  TID     S  %CPU  THREAD NAME
 =  ===     =  ====  ===========
