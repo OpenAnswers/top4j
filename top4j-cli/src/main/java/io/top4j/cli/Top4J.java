@@ -45,7 +45,12 @@ public class Top4J {
         // set default console refresh period - how frequently in milliseconds the Top4J console screen is refreshed
         int consoleRefreshPeriod = 3000;
 
-        // set Top4J JavaAgent collector poll frequency - how frequently in milliseconds the performance metrics gathered by the Top4J JavaAgent are updated
+        /*
+         * Set default Top4J JavaAgent collector poll frequency - how frequently in milliseconds the performance metrics gathered by the Top4J JavaAgent are updated.
+         * To avoid putting undue load on the remote Java process when there are a large number of threads running within the target JVM, the collectorPollFrequency
+         * is set to 5x the consoleRefreshPeriod by default. The default behaviour can be overridden via the "-d" command line switch which allows the end-user to
+         * specify the screen refresh delay time interval (aka consoleRefreshPeriod and collectorPollFrequency)
+         */
         int collectorPollFrequency = consoleRefreshPeriod * 5;
 
         // instantiate new consoleReader
