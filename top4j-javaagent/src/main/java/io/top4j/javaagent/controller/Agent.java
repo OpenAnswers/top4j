@@ -26,7 +26,7 @@ import javax.management.MBeanServer;
 
 public class Agent {
 	
-	private static java.util.logging.Logger logger = java.util.logging.Logger.getLogger(Agent.class.getName());
+	private static Logger logger = Logger.getLogger(Agent.class.getName());
 	
 	public static void premain(String agentArgs, Instrumentation inst) {
 
