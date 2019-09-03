@@ -121,15 +121,15 @@ The command-line syntax for top4j consists of:
 
 -h : Help
 
-&nbsp;&nbsp;&nbsp;&nbsp;Show usage prompt, then quit.
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Show usage prompt, then quit.
 
 -d : Delay time interval as:  -d ss (seconds)
 
-&nbsp;&nbsp;&nbsp;&nbsp;Specifies the delay between screen updates, and overrides the default value of 3 seconds.
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Specifies the delay between screen updates, and overrides the default value of 3 seconds.
 
 -p : Monitor PIDs as:  -p pid
 
-&nbsp;&nbsp;&nbsp;&nbsp;Monitor the JVM process ID specified.
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Monitor the JVM process ID specified.
 
 MBeans
 ======
