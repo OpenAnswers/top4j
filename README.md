@@ -89,21 +89,27 @@ Each of the fields and columns displayed by the top4J CLI are detailed below.
 ----------
 
 **#** : The Thread Number
+
 Used to select the thread in order to view the thread stack trace.
 
 **TID** : Thread ID
+
 The thread's unique process ID, which periodically wraps, though never restarting at zero.
 
 **S** : Thread State
+
 The thread state as defined by the [java.lang.Thread.State Enum](https://docs.oracle.com/javase/8/docs/api/java/lang/Thread.State.html).
     
 **%CPU** : CPU Usage
+
 The thread percentage CPU utilisation.
 
 **%BLOCKED** : Blocked Time
+
 The percentage of time that the thread has been in a blocked state during the last iteration.
 
 **THREAD NAME** : Thread Name
+
 The thread name.
 
 3. COMMAND-LINE Options
@@ -114,13 +120,16 @@ The command-line syntax for top4j consists of:
 -h | -d delay -p pid
 
 -h : Help
-     Show usage prompt, then quit.
+
+&nbsp;&nbsp;&nbsp;&nbsp;Show usage prompt, then quit.
 
 -d : Delay time interval as:  -d ss (seconds)
-     Specifies the delay between screen updates, and overrides the default value of 3 seconds.
+
+&nbsp;&nbsp;&nbsp;&nbsp;Specifies the delay between screen updates, and overrides the default value of 3 seconds.
 
 -p : Monitor PIDs as:  -p pid
-     Monitor the JVM process ID specified.
+
+&nbsp;&nbsp;&nbsp;&nbsp;Monitor the JVM process ID specified.
 
 MBeans
 ======
