@@ -21,12 +21,12 @@ The Top4J continuous build and release Jenkins job can be found [here](http://hl
 Get Started
 ===========
 **Run Top4J as a Java Agent**
-1. Download and install the [Top4J Java Agent jar](http://hlcit003:8081/nexus/content/repositories/releases/io/top4j/top4j-javaagent/0.0.7/top4j-javaagent-0.0.7.jar) within an appropriate location on the local file system.
-1. Add -javaagent command line argument to JVM startup args, e.g. `java -javaagent:<path-to-top4j-jar>/top4j-javaagent-0.0.7.jar <java-class-name>`
+1. Download and install the [Top4J Java Agent jar](http://hlcit003:8081/nexus/content/repositories/releases/io/top4j/top4j-javaagent/0.0.8/top4j-javaagent-0.0.8.jar) within an appropriate location on the local file system.
+1. Add -javaagent command line argument to JVM startup args, e.g. `java -javaagent:<path-to-top4j-jar>/top4j-javaagent-0.0.8.jar <java-class-name>`
 
 **Run Top4J via CLI Remote Attach feature**
-1. Download and install the [Top4J CLI jar](http://hlcit003:8081/nexus/content/repositories/releases/io/top4j/top4j-cli/0.0.7/top4j-cli-0.0.7.jar) within an appropriate location on the local file system.
-1. Run Top4J CLI jar specifying JVM PID as the first argument, e.g. `java -jar top4j-cli-0.0.7.jar -p 12345`, **OR** with no arguments to auto-detect running JVMs and select from a list, e.g. `java -jar top4j-cli-0.0.7.jar`
+1. Download and install the [Top4J CLI jar](http://hlcit003:8081/nexus/content/repositories/releases/io/top4j/top4j-cli/0.0.8/top4j-cli-0.0.8.jar) within an appropriate location on the local file system.
+1. Run Top4J CLI jar specifying JVM PID as the first argument, e.g. `java -jar top4j-cli-0.0.8.jar -p 12345`, **OR** with no arguments to auto-detect running JVMs and select from a list, e.g. `java -jar top4j-cli-0.0.8.jar`
 
    **NOTE1:** The top4j CLI jar **must** be run as the target JVM process owner.
    **NOTE2:** The top4j CLI jar **must** be run using a Java JDK install not a JRE.
