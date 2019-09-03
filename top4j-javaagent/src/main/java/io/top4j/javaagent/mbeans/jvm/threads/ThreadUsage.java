@@ -42,6 +42,7 @@ public class ThreadUsage {
             public long intervalBlockedTime;
 	        public double cpuUsage;
 	        public double userCpuUsage;
+	        public java.lang.management.ThreadInfo jmxThreadInfo;
 	    }
 
     private int numberOfProcessors;
@@ -120,8 +121,9 @@ public class ThreadUsage {
 
     /** Update thread usage stats. */
     public synchronized void update( ) {
-        final long[] ids = threadMXBean.getAllThreadIds( );
-        final java.lang.management.ThreadInfo[] threadInfos = threadMXBean.getThreadInfo(ids);
+
+        // retrieve list of running threads via ThreadMXBean
+        final long[] ids = threadMXBean.getAllThreadIds();
         double totalCpuTime = 0;
         double totalUserCpuTime = 0;
         ThreadTimeMap cpuTimeMap = new ThreadTimeMap();
@@ -133,11 +135,24 @@ public class ThreadUsage {
         long timedWaitingThreadCount = 0;
         // reset threadHistory activity tracking
         resetActivityTracker();
-        for ( java.lang.management.ThreadInfo jmxThreadInfo : threadInfos ) {
+        // iterate over thread ids and update threadInfo objects within threadHistory map
+        for ( long id : ids ) {
 
-            final long id;
             final String name;
             State state;
+            java.lang.management.ThreadInfo jmxThreadInfo;
+            // retrieve threadInfo object from threadHistory map
+            ThreadInfo threadInfo = threadHistory.get( id );
+            if ( threadInfo == null ) {
+
+                // get JMX ThreadInfo for thread ID from ThreadMXBean
+                jmxThreadInfo = threadMXBean.getThreadInfo(id);
+            }
+            else {
+
+                // get JMX ThreadInfo for thread ID from threadInfo object within threadHistory
+                jmxThreadInfo = threadInfo.jmxThreadInfo;
+            }
             if (jmxThreadInfo != null) {
                 id = jmxThreadInfo.getThreadId();
                 name = jmxThreadInfo.getThreadName();
@@ -150,7 +165,7 @@ public class ThreadUsage {
             final long threadUserTime = threadMXBean.getThreadUserTime(id);
             final long systemTime = System.currentTimeMillis();
             if ( threadCpuTime == -1 || threadUserTime == -1 ) {
-            	continue;   // Thread died
+                continue;   // Thread died
             }
             long threadBlockedTime = 0;
             if (threadContentionMonitoringEnabled) {
@@ -159,7 +174,6 @@ public class ThreadUsage {
                 }
             }
 
-            ThreadInfo threadInfo = threadHistory.get( id );
             if ( threadInfo == null ) {
 
                 // create new ThreadInfo object
@@ -180,6 +194,7 @@ public class ThreadUsage {
                 threadInfo.cpuUsage = 0;
                 cpuTimeMap.put((long) 0, id);
                 threadInfo.userCpuUsage = 0;
+                threadInfo.jmxThreadInfo = jmxThreadInfo;
                 threadHistory.put(id, threadInfo);
 
             } else {
@@ -391,8 +406,8 @@ public class ThreadUsage {
         java.lang.management.ThreadInfo threadInfo;
         int blockedThreadLimit;
         // handle situation where threadCount less than blockedThreadsCount
-        if ( blockedThreadCount < blockedThreadsCount ) {
-            blockedThreadLimit = (int) blockedThreadCount;
+        if ( threadCount < blockedThreadsCount ) {
+            blockedThreadLimit = (int) threadCount;
         }
         else {
             blockedThreadLimit = blockedThreadsCount;
@@ -566,4 +581,5 @@ public class ThreadUsage {
     public HotMethods getHotMethods( ) {
         return this.hotMethods;
     }
+
 }
