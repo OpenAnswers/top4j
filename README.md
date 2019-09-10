@@ -133,12 +133,11 @@ The command-line syntax for top4j consists of:
 
 -C : Enable thread usage cache
 
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Switch to enable thread usage cache (enabled by default).
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The thread usage cache is a performance enhancement used to store the top thread IDs by usage (CPU and blocked time) so that only the threads with a history of high CPU usage or thread contention are updated on each thread usage update. The thread usage cache is updated periodically according to the thread cache time-to-live setting.
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Switch to enable thread usage cache (enabled by default). The thread usage cache is a performance enhancement used to store the top thread IDs by usage (CPU and blocked time) so that only the threads with a history of high CPU usage or thread contention are updated on each thread usage update. The thread usage cache is updated periodically according to the thread cache time-to-live setting.
 
 -D : Disable thread usage cache
 
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Switch to disable thread usage cache (enabled by default).
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Switch to disable thread usage cache (which is enabled by default).
 
 -S : Thread usage cache size as: -S size
 
