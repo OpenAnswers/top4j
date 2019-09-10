@@ -16,6 +16,7 @@
 
 package io.top4j.javaagent.mbeans.jvm.threads;
 
+import io.top4j.javaagent.config.Configurator;
 import io.top4j.javaagent.profiler.CpuTime;
 
 import javax.management.MBeanServerConnection;
@@ -32,43 +33,43 @@ public class ThreadStats implements ThreadStatsMXBean {
 
 	private static final Logger LOGGER = Logger.getLogger(ThreadStats.class.getName());
 	
-	public ThreadStats ( MBeanServerConnection mbsc, Map<Integer, TopThread> topThreadsMap ) throws IOException {
+	public ThreadStats (Configurator config, Map<Integer, TopThread> topThreadsMap ) throws IOException {
 		
 		LOGGER.fine("Initialising Thread Stats....");
 
         this.hotMethodProfilingEnabled = false;
 		// instantiate new ThreadUsage object used to track thread usage
-		this.threadUsage = new ThreadUsage( mbsc, topThreadsMap );
+		this.threadUsage = new ThreadUsage( config, topThreadsMap );
 		
 	}
 
-	public ThreadStats ( MBeanServerConnection mbsc, Map<Integer, TopThread> topThreadsMap, Map<Integer, BlockedThread> blockedThreadsMap ) throws IOException {
+	public ThreadStats ( Configurator config, Map<Integer, TopThread> topThreadsMap, Map<Integer, BlockedThread> blockedThreadsMap ) throws IOException {
 
 		LOGGER.fine("Initialising Thread Stats with thread contention monitoring enabled....");
 
         this.hotMethodProfilingEnabled = false;
 		// instantiate new ThreadUsage object used to track thread usage
-		this.threadUsage = new ThreadUsage(mbsc, topThreadsMap, blockedThreadsMap);
+		this.threadUsage = new ThreadUsage( config, topThreadsMap, blockedThreadsMap );
 
 	}
 
-	public  ThreadStats ( MBeanServerConnection mbsc, Map<Integer, TopThread> topThreadsMap, HotMethods hotMethods, long hotMethodPollInterval ) throws IOException {
+	public  ThreadStats ( Configurator config, Map<Integer, TopThread> topThreadsMap, HotMethods hotMethods, long hotMethodPollInterval ) throws IOException {
 
 		LOGGER.fine("Initialising Thread Stats with hot method profiling enabled....");
 
         this.hotMethodProfilingEnabled = true;
 		// instantiate new ThreadUsage object used to track thread usage
-		this.threadUsage = new ThreadUsage(mbsc, topThreadsMap, hotMethods, hotMethodPollInterval);
+		this.threadUsage = new ThreadUsage( config, topThreadsMap, hotMethods, hotMethodPollInterval );
 
 	}
 
-	public ThreadStats ( MBeanServerConnection mbsc, Map<Integer, TopThread> topThreadsMap, Map<Integer, BlockedThread> blockedThreadsMap, HotMethods hotMethods, long hotMethodPollInterval ) throws IOException {
+	public ThreadStats ( Configurator config, Map<Integer, TopThread> topThreadsMap, Map<Integer, BlockedThread> blockedThreadsMap, HotMethods hotMethods, long hotMethodPollInterval ) throws IOException {
 
 		LOGGER.fine("Initialising Thread Stats with thread contention monitoring and hot method profiling enabled....");
 
         this.hotMethodProfilingEnabled = true;
 		// instantiate new ThreadUsage object used to track thread usage
-		this.threadUsage = new ThreadUsage(mbsc, topThreadsMap, blockedThreadsMap, hotMethods, hotMethodPollInterval);
+		this.threadUsage = new ThreadUsage( config, topThreadsMap, blockedThreadsMap, hotMethods, hotMethodPollInterval );
 
 	}
 

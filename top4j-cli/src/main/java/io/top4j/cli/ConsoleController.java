@@ -53,6 +53,7 @@ public class ConsoleController  extends TimerTask {
     private final SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm:ss");
     private ThreadHelper threadHelper;
     private final static int MAX_THREAD_NAME_LENGTH = 64;
+    private final static int MAX_DISPLAY_NAME_LENGTH = 64;
     private String mainScreenId;
     private DisplayConfig displayConfig;
 
@@ -216,8 +217,12 @@ public class ConsoleController  extends TimerTask {
 
         Date date = new Date();
         StringBuffer sb = new StringBuffer();
+        String displayName = displayConfig.getDisplayName();
+        if (displayName != null && displayName.length() > MAX_DISPLAY_NAME_LENGTH) {
+            displayName = displayName.substring(0, MAX_DISPLAY_NAME_LENGTH-1);
+        }
         sb.append("top4j - " + timeFormat.format(date) + " up " + getUptime() + ",  load average: " + osMXBean.getSystemLoadAverage() + "\n");
-        sb.append("Attached to: " + displayConfig.getDisplayName() + " [PID=" + displayConfig.getJvmPid() + "]" + "\n");
+        sb.append("Attached to: " + displayName + " [PID=" + displayConfig.getJvmPid() + "]" + "\n");
         sb.append("Threads: " + threadStatsMXBean.getThreadCount() + " total,   " +
                 threadStatsMXBean.getRunnableThreadCount() + " runnable,   " +
                 threadStatsMXBean.getWaitingThreadCount() + " waiting,   " +

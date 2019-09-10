@@ -241,19 +241,19 @@ public class JVMStats implements JVMStatsMXBean {
             ThreadStats threadStatsMBean;
             if (threadContentionMonitoringEnabled && ! hotMethodProfilingEnabled) {
                 // instantiate new ThreadStats MBean with thread contention monitoring enabled
-                threadStatsMBean = new ThreadStats(config.mBeanServerConnection, topThreadsMap, blockedThreadsMap);
+                threadStatsMBean = new ThreadStats(config, topThreadsMap, blockedThreadsMap);
             }
             else if (! threadContentionMonitoringEnabled && hotMethodProfilingEnabled) {
                 // instantiate new ThreadStats MBean with hot method profiling enabled
-                threadStatsMBean = new ThreadStats(config.mBeanServerConnection, topThreadsMap, hotMethods, hotMethodPollInterval);
+                threadStatsMBean = new ThreadStats(config, topThreadsMap, hotMethods, hotMethodPollInterval);
             }
             else if (threadContentionMonitoringEnabled && hotMethodProfilingEnabled) {
                 // instantiate new ThreadStats MBean with thread contention monitoring hot method profiling enabled
-                threadStatsMBean = new ThreadStats(config.mBeanServerConnection, topThreadsMap, blockedThreadsMap, hotMethods, hotMethodPollInterval);
+                threadStatsMBean = new ThreadStats(config, topThreadsMap, blockedThreadsMap, hotMethods, hotMethodPollInterval);
             }
             else {
                 // instantiate new ThreadStats MBean
-                threadStatsMBean = new ThreadStats(config.mBeanServerConnection, topThreadsMap);
+                threadStatsMBean = new ThreadStats(config, topThreadsMap);
             }
 
             // register threadStatsMBean with MBean server

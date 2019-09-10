@@ -35,6 +35,7 @@ public class Configurator {
 	private boolean blockedThreadsStackTraceLoggingEnabled;
 	private boolean threadContentionMonitoringEnabled;
     private boolean hotMethodProfilingEnabled;
+    private boolean threadUsageCacheEnabled;
 
 	private static final Logger LOGGER = Logger.getLogger(Configurator.class.getName());
 
@@ -79,6 +80,9 @@ public class Configurator {
 
         // set hotMethodProfilingEnabled status
         this.hotMethodProfilingEnabled = Boolean.parseBoolean(config.get("hot.method.profiling.enabled"));
+
+        // set threadUsageCacheEnabled status
+        this.threadUsageCacheEnabled = Boolean.parseBoolean(config.get("thread.usage.cache.enabled"));
 	}
 
     private void loadPropsFromClasspath ( String propsFileName ) {
@@ -192,6 +196,10 @@ public class Configurator {
 
     public boolean isHotMethodStackTraceLoggingEnabled() {
         return this.topThreadsStackTraceLoggingEnabled;
+    }
+
+    public boolean isThreadUsageCacheEnabled() {
+        return this.threadUsageCacheEnabled;
     }
 
 }

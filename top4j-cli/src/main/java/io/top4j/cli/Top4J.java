@@ -40,18 +40,16 @@ import java.util.Scanner;
  */
 public class Top4J {
 
+    // set default console refresh period - how frequently in milliseconds the Top4J console screen is refreshed
+    private static int consoleRefreshPeriod = 3000;
+    // enable thread usage cache by default
+    private static boolean threadCacheEnabled = true;
+    // set default thread usage cache size
+    private static int threadCacheSize = 250;
+    // set default thread usage cache time-to-live
+    private static int threadCacheTTL = 15000;
+
     public static void main( String[] args ) throws IOException, NoSuchMethodException, ClassNotFoundException {
-
-        // set default console refresh period - how frequently in milliseconds the Top4J console screen is refreshed
-        int consoleRefreshPeriod = 3000;
-
-        /*
-         * Set default Top4J JavaAgent collector poll frequency - how frequently in milliseconds the performance metrics gathered by the Top4J JavaAgent are updated.
-         * To avoid putting undue load on the remote Java process when there are a large number of threads running within the target JVM, the collectorPollFrequency
-         * is set to 5x the consoleRefreshPeriod by default. The default behaviour can be overridden via the "-d" command line switch which allows the end-user to
-         * specify the screen refresh delay time interval (aka consoleRefreshPeriod and collectorPollFrequency)
-         */
-        int collectorPollFrequency = consoleRefreshPeriod * 5;
 
         // instantiate new consoleReader
         ConsoleReader consoleReader = new ConsoleReader();
@@ -86,7 +84,7 @@ public class Top4J {
             // automatically generate the help statement
             HelpFormatter formatter = new HelpFormatter();
             formatter.printHelp( "top4j", options );
-            System.exit(1);
+            System.exit(0);
         }
         if (cmd.hasOption("d")) {
             // user has provided a screen refresh delay interval via the command-line
@@ -98,8 +96,36 @@ public class Top4J {
             }
             // override default consoleRefreshPeriod
             consoleRefreshPeriod = Integer.parseInt(userProvidedDelayInterval) * 1000;
-            // set collectorPollFrequency to consoleRefreshPeriod
-            collectorPollFrequency = consoleRefreshPeriod;
+        }
+        if (cmd.hasOption("D")) {
+            // user has requested that the thread usage cache is disabled
+            threadCacheEnabled = false;
+        }
+        if (cmd.hasOption("C")) {
+            // user has requested that the thread usage cache is enabled
+            threadCacheEnabled = true;
+        }
+        if (cmd.hasOption("S")) {
+            // user has provided a thread usage cache size via the command-line
+            String userProvidedThreadCacheSize = cmd.getOptionValue("S");
+            if (!isNumeric(userProvidedThreadCacheSize)) {
+                // user provided thread usage cache size is *not* a number - return usage message and exit with error code
+                System.err.println("ERROR: Thread usage cache size provided via command-line argument is not a number: " + userProvidedThreadCacheSize );
+                System.exit(-1);
+            }
+            // override default threadCacheSize
+            threadCacheSize = Integer.parseInt(userProvidedThreadCacheSize);
+        }
+        if (cmd.hasOption("T")) {
+            // user has provided a thread usage cache TTL via the command-line
+            String userProvidedThreadCacheTTL = cmd.getOptionValue("T");
+            if (!isNumeric(userProvidedThreadCacheTTL)) {
+                // user provided thread usage cache TTL is *not* a number - return usage message and exit with error code
+                System.err.println("ERROR: Thread usage cache TTL provided via command-line argument is not a number: " + userProvidedThreadCacheTTL );
+                System.exit(-1);
+            }
+            // override default threadCacheTTL
+            threadCacheTTL = Integer.parseInt(userProvidedThreadCacheTTL) * 1000;
         }
         if (cmd.hasOption("p")) {
             // user has provided a JVM PID via the command-line
@@ -195,21 +221,25 @@ public class Top4J {
         int displayThreadCount = 10;
 
         // define Top4J config overrides
-        String configOverrides = "collector.poll.frequency=" + collectorPollFrequency + "," +
+        String configOverrides = "collector.poll.frequency=" + consoleRefreshPeriod + "," +
                 "log.properties.on.startup=true," +
                 "stats.logger.enabled=false," +
                 "hot.method.profiling.enabled=false," +
+                "thread.usage.cache.enabled=" + Boolean.toString(threadCacheEnabled) + "," +
+                "thread.usage.cache.size=" + threadCacheSize + "," +
+                "thread.usage.cache.ttl=" + threadCacheTTL + "," +
                 "top.thread.count=" + displayThreadCount + "," +
                 "blocked.thread.count=" + displayThreadCount;
         // initialise Top4J configurator
 		Configurator config = new Configurator( mbsc, configOverrides );
 
 		// create and start Top4J controller thread
+        System.out.println("Top4J: Initialising Java agent.");
 		Controller controller = new Controller( config );
 		controller.start();
 		System.out.println("Top4J: Java agent activated.");
 
-		// create new DisplayConfig to pass to ConsoleController
+        // create new DisplayConfig to pass to ConsoleController
         DisplayConfig displayConfig = new DisplayConfig(displayThreadCount, jvmPid, jvmDisplayName);
         // create new TimerTask to run Top4J CLI ConsoleController thread
         TimerTask consoleController = new ConsoleController(consoleReader, userInput, mbsc, displayConfig);
@@ -278,6 +308,18 @@ public class Top4J {
 
         // add p option
         options.addOption("p", "pid", true, "monitor PID");
+
+        // add C option
+        options.addOption("C", "cache-enabled", false, "Enable thread usage cache (enabled by default)");
+
+        // add D option
+        options.addOption("D", "cache-disabled", false, "Disable thread usage cache (enabled by default)");
+
+        // add S option
+        options.addOption("S", "cache-size", true, "Thread usage cache size (" + threadCacheSize + " by default)");
+
+        // add T option
+        options.addOption("T", "cache-ttl", true, "Thread usage cache time-to-live (in seconds) - " + threadCacheTTL + " by default");
 
         // return command-line options
         return options;
