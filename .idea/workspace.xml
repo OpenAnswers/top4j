@@ -2,15 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="376088a4-ef8e-48f3-874a-15ae0da20460" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change beforePath="$PROJECT_DIR$/top4j-cli/src/main/java/io/top4j/cli/ConsoleController.java" afterPath="$PROJECT_DIR$/top4j-cli/src/main/java/io/top4j/cli/ConsoleController.java" />
       <change beforePath="$PROJECT_DIR$/top4j-cli/src/main/java/io/top4j/cli/Top4J.java" afterPath="$PROJECT_DIR$/top4j-cli/src/main/java/io/top4j/cli/Top4J.java" />
-      <change beforePath="$PROJECT_DIR$/top4j-javaagent/src/main/java/io/top4j/javaagent/config/Configurator.java" afterPath="$PROJECT_DIR$/top4j-javaagent/src/main/java/io/top4j/javaagent/config/Configurator.java" />
-      <change beforePath="$PROJECT_DIR$/top4j-javaagent/src/main/java/io/top4j/javaagent/mbeans/jvm/JVMStats.java" afterPath="$PROJECT_DIR$/top4j-javaagent/src/main/java/io/top4j/javaagent/mbeans/jvm/JVMStats.java" />
-      <change beforePath="$PROJECT_DIR$/top4j-javaagent/src/main/java/io/top4j/javaagent/mbeans/jvm/threads/ThreadStats.java" afterPath="$PROJECT_DIR$/top4j-javaagent/src/main/java/io/top4j/javaagent/mbeans/jvm/threads/ThreadStats.java" />
-      <change beforePath="$PROJECT_DIR$/top4j-javaagent/src/main/java/io/top4j/javaagent/mbeans/jvm/threads/ThreadUsage.java" afterPath="$PROJECT_DIR$/top4j-javaagent/src/main/java/io/top4j/javaagent/mbeans/jvm/threads/ThreadUsage.java" />
-      <change beforePath="$PROJECT_DIR$/top4j-javaagent/src/main/resources/default-top4j.properties" afterPath="$PROJECT_DIR$/top4j-javaagent/src/main/resources/default-top4j.properties" />
-      <change beforePath="$PROJECT_DIR$/top4j-javaagent/src/test/scripts/top4j.properties" afterPath="$PROJECT_DIR$/top4j-javaagent/src/test/scripts/top4j.properties" />
     </list>
     <ignored path="top4j.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -32,13 +24,13 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="Top4J.java" pinned="false" current-in-tab="false">
+      <file leaf-file-name="Top4J.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/top4j-cli/src/main/java/io/top4j/cli/Top4J.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="272">
-              <caret line="96" column="51" lean-forward="false" selection-start-line="96" selection-start-column="51" selection-end-line="96" selection-end-column="51" />
+            <state relative-caret-position="380">
+              <caret line="321" column="132" lean-forward="false" selection-start-line="321" selection-start-column="132" selection-end-line="321" selection-end-column="132" />
               <folding>
-                <element signature="e#0#14674#0" expanded="true" />
+                <element signature="e#0#14686#0" expanded="true" />
                 <element signature="imports" expanded="true" />
               </folding>
             </state>
@@ -97,11 +89,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="default-top4j.properties" pinned="false" current-in-tab="true">
+      <file leaf-file-name="default-top4j.properties" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/top4j-javaagent/src/main/resources/default-top4j.properties">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="420">
-              <caret line="120" column="31" lean-forward="false" selection-start-line="120" selection-start-column="31" selection-end-line="120" selection-end-column="31" />
+            <state relative-caret-position="386">
+              <caret line="118" column="123" lean-forward="false" selection-start-line="118" selection-start-column="123" selection-end-line="118" selection-end-column="123" />
               <folding />
             </state>
           </provider>
@@ -235,8 +227,8 @@
         <option value="$PROJECT_DIR$/top4j-javaagent/src/main/java/io/top4j/javaagent/mbeans/jvm/JVMStats.java" />
         <option value="$PROJECT_DIR$/top4j-javaagent/src/main/java/io/top4j/javaagent/config/Configurator.java" />
         <option value="$PROJECT_DIR$/top4j-javaagent/src/main/java/io/top4j/javaagent/mbeans/jvm/threads/ThreadUsage.java" />
-        <option value="$PROJECT_DIR$/top4j-cli/src/main/java/io/top4j/cli/Top4J.java" />
         <option value="$PROJECT_DIR$/top4j-javaagent/src/main/resources/default-top4j.properties" />
+        <option value="$PROJECT_DIR$/top4j-cli/src/main/java/io/top4j/cli/Top4J.java" />
       </list>
     </option>
   </component>
@@ -1367,22 +1359,22 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/top4j-cli/src/main/java/io/top4j/cli/Top4J.java">
+    <entry file="file://$PROJECT_DIR$/top4j-javaagent/src/main/resources/default-top4j.properties">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="272">
-          <caret line="96" column="51" lean-forward="false" selection-start-line="96" selection-start-column="51" selection-end-line="96" selection-end-column="51" />
-          <folding>
-            <element signature="e#0#14674#0" expanded="true" />
-            <element signature="imports" expanded="true" />
-          </folding>
+        <state relative-caret-position="386">
+          <caret line="118" column="123" lean-forward="false" selection-start-line="118" selection-start-column="123" selection-end-line="118" selection-end-column="123" />
+          <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/top4j-javaagent/src/main/resources/default-top4j.properties">
+    <entry file="file://$PROJECT_DIR$/top4j-cli/src/main/java/io/top4j/cli/Top4J.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="420">
-          <caret line="120" column="31" lean-forward="false" selection-start-line="120" selection-start-column="31" selection-end-line="120" selection-end-column="31" />
-          <folding />
+        <state relative-caret-position="380">
+          <caret line="321" column="132" lean-forward="false" selection-start-line="321" selection-start-column="132" selection-end-line="321" selection-end-column="132" />
+          <folding>
+            <element signature="e#0#14686#0" expanded="true" />
+            <element signature="imports" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

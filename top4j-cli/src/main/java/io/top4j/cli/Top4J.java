@@ -319,7 +319,7 @@ public class Top4J {
         options.addOption("S", "cache-size", true, "Thread usage cache size (" + threadCacheSize + " by default)");
 
         // add T option
-        options.addOption("T", "cache-ttl", true, "Thread usage cache time-to-live (in seconds) - " + threadCacheTTL + " by default");
+        options.addOption("T", "cache-ttl", true, "Thread usage cache time-to-live (in seconds) - " + threadCacheTTL / 1000 + " secs by default");
 
         // return command-line options
         return options;

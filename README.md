@@ -131,6 +131,23 @@ The command-line syntax for top4j consists of:
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Monitor the JVM process ID specified.
 
+-C : Enable thread usage cache
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Switch to enable thread usage cache (enabled by default).
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The thread usage cache is a performance enhancement used to store the top thread IDs by usage (CPU and blocked time) so that only the threads with a history of high CPU usage or thread contention are updated on each thread usage update. The thread usage cache is updated periodically according to the thread cache time-to-live setting.
+
+-D : Disable thread usage cache
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Switch to disable thread usage cache (enabled by default).
+
+-S : Thread usage cache size as: -S size
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Specifies the number of top threads stored within the thread usage cache (250 by default).
+
+-T : Thread usage cache time-to-live as: -T ss (seconds)
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Specifies the number of seconds the thread usage cache will be used before it is refreshed (15 seconds by default).
+
 MBeans
 ======
 Top4J performance metrics are exposed via JMX MBean attributes. All Top4J MBeans can be found under the "io.top4j" JMX domain.
