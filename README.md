@@ -1,5 +1,7 @@
 ![Top4J Logo](/images/top4j-icon-panther-style.png)
 
+Description
+===========
 
 Top4J is a lightweight, low overhead, production-ready performance analysis tool for the Java runtime environment. As the name suggests, it works a bit like the UNIX/Linux top command but at the JVM-level exposing key performance metrics from a Java runtime perspective.
 
@@ -19,6 +21,7 @@ mvn clean package
 Release
 =======
 The Top4J continuous build and release Jenkins job can be found [here](http://hlcit001:8080/jenkins/job/top4j/).
+
 Get Started
 ===========
 **Run Top4J as a Java Agent**
