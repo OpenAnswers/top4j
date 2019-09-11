@@ -141,7 +141,7 @@ The command-line syntax for top4j consists of:
 
 -S : Thread usage cache size as: -S size
 
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Specifies the number of top threads stored within the thread usage cache (250 by default).
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Specifies the number of top threads stored within the thread usage cache (500 by default).
 
 -T : Thread usage cache time-to-live as: -T ss (seconds)
 

@@ -45,7 +45,7 @@ public class Top4J {
     // enable thread usage cache by default
     private static boolean threadCacheEnabled = true;
     // set default thread usage cache size
-    private static int threadCacheSize = 250;
+    private static int threadCacheSize = 500;
     // set default thread usage cache time-to-live
     private static int threadCacheTTL = 15000;
 
@@ -301,13 +301,13 @@ public class Top4J {
         Options options = new Options();
 
         // add d option
-        options.addOption("d", "delay", true, "delay time interval (in seconds)");
+        options.addOption("d", "delay", true, "Delay time interval (in seconds)");
 
         // add h option
-        options.addOption("h", "help", false, "print this message");
+        options.addOption("h", "help", false, "Print this message");
 
         // add p option
-        options.addOption("p", "pid", true, "monitor PID");
+        options.addOption("p", "pid", true, "Monitor PID");
 
         // add C option
         options.addOption("C", "cache-enabled", false, "Enable thread usage cache (enabled by default)");

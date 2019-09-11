@@ -2,7 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="376088a4-ef8e-48f3-874a-15ae0da20460" name="Default" comment="">
+      <change beforePath="$PROJECT_DIR$/README.md" afterPath="$PROJECT_DIR$/README.md" />
       <change beforePath="$PROJECT_DIR$/top4j-cli/src/main/java/io/top4j/cli/Top4J.java" afterPath="$PROJECT_DIR$/top4j-cli/src/main/java/io/top4j/cli/Top4J.java" />
+      <change beforePath="$PROJECT_DIR$/top4j-javaagent/src/main/java/io/top4j/javaagent/mbeans/jvm/threads/ThreadUsage.java" afterPath="$PROJECT_DIR$/top4j-javaagent/src/main/java/io/top4j/javaagent/mbeans/jvm/threads/ThreadUsage.java" />
+      <change beforePath="$PROJECT_DIR$/top4j-javaagent/src/main/resources/default-top4j.properties" afterPath="$PROJECT_DIR$/top4j-javaagent/src/main/resources/default-top4j.properties" />
     </list>
     <ignored path="top4j.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -27,8 +30,8 @@
       <file leaf-file-name="Top4J.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/top4j-cli/src/main/java/io/top4j/cli/Top4J.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="380">
-              <caret line="321" column="132" lean-forward="false" selection-start-line="321" selection-start-column="132" selection-end-line="321" selection-end-column="132" />
+            <state relative-caret-position="4613">
+              <caret line="303" column="47" lean-forward="false" selection-start-line="303" selection-start-column="47" selection-end-line="303" selection-end-column="47" />
               <folding>
                 <element signature="e#0#14686#0" expanded="true" />
                 <element signature="imports" expanded="true" />
@@ -40,50 +43,50 @@
       <file leaf-file-name="ThreadUsage.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/top4j-javaagent/src/main/java/io/top4j/javaagent/mbeans/jvm/threads/ThreadUsage.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="5682">
-              <caret line="381" column="0" lean-forward="false" selection-start-line="381" selection-start-column="0" selection-end-line="381" selection-end-column="0" />
+            <state relative-caret-position="374">
+              <caret line="223" column="40" lean-forward="false" selection-start-line="223" selection-start-column="40" selection-end-line="223" selection-end-column="40" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <element signature="e#16462#16463#0" expanded="true" />
-                <element signature="e#16495#16496#0" expanded="true" />
-                <element signature="e#16570#16571#0" expanded="true" />
-                <element signature="e#16607#16608#0" expanded="true" />
-                <element signature="e#16683#16684#0" expanded="true" />
-                <element signature="e#16719#16720#0" expanded="true" />
-                <element signature="e#22981#22982#0" expanded="true" />
-                <element signature="e#23044#23045#0" expanded="true" />
-                <element signature="e#23077#23078#0" expanded="true" />
-                <element signature="e#23102#23103#0" expanded="true" />
-                <element signature="e#23151#23152#0" expanded="true" />
-                <element signature="e#23188#23189#0" expanded="true" />
-                <element signature="e#23233#23234#0" expanded="true" />
-                <element signature="e#23264#23265#0" expanded="true" />
-                <element signature="e#23317#23318#0" expanded="true" />
-                <element signature="e#23356#23357#0" expanded="true" />
-                <element signature="e#23407#23408#0" expanded="true" />
-                <element signature="e#23444#23445#0" expanded="true" />
-                <element signature="e#23498#23499#0" expanded="true" />
-                <element signature="e#23525#23526#0" expanded="true" />
-                <element signature="e#23598#23599#0" expanded="true" />
-                <element signature="e#23639#23640#0" expanded="true" />
+                <element signature="e#17185#17186#0" expanded="true" />
+                <element signature="e#17218#17219#0" expanded="true" />
+                <element signature="e#17293#17294#0" expanded="true" />
+                <element signature="e#17330#17331#0" expanded="true" />
+                <element signature="e#17406#17407#0" expanded="true" />
+                <element signature="e#17442#17443#0" expanded="true" />
                 <element signature="e#23704#23705#0" expanded="true" />
-                <element signature="e#23744#23745#0" expanded="true" />
-                <element signature="e#23933#23934#0" expanded="true" />
-                <element signature="e#23975#23976#0" expanded="true" />
-                <element signature="e#24043#24044#0" expanded="true" />
-                <element signature="e#24105#24106#0" expanded="true" />
-                <element signature="e#24148#24149#0" expanded="true" />
-                <element signature="e#24189#24190#0" expanded="true" />
-                <element signature="e#24255#24256#0" expanded="true" />
-                <element signature="e#24315#24316#0" expanded="true" />
-                <element signature="e#24358#24359#0" expanded="true" />
-                <element signature="e#24399#24400#0" expanded="true" />
-                <element signature="e#24465#24466#0" expanded="true" />
-                <element signature="e#24525#24526#0" expanded="true" />
-                <element signature="e#24573#24574#0" expanded="true" />
-                <element signature="e#24619#24620#0" expanded="true" />
-                <element signature="e#25314#25315#0" expanded="true" />
-                <element signature="e#25352#25353#0" expanded="true" />
+                <element signature="e#23767#23768#0" expanded="true" />
+                <element signature="e#23800#23801#0" expanded="true" />
+                <element signature="e#23825#23826#0" expanded="true" />
+                <element signature="e#23874#23875#0" expanded="true" />
+                <element signature="e#23911#23912#0" expanded="true" />
+                <element signature="e#23956#23957#0" expanded="true" />
+                <element signature="e#23987#23988#0" expanded="true" />
+                <element signature="e#24040#24041#0" expanded="true" />
+                <element signature="e#24079#24080#0" expanded="true" />
+                <element signature="e#24130#24131#0" expanded="true" />
+                <element signature="e#24167#24168#0" expanded="true" />
+                <element signature="e#24221#24222#0" expanded="true" />
+                <element signature="e#24248#24249#0" expanded="true" />
+                <element signature="e#24321#24322#0" expanded="true" />
+                <element signature="e#24362#24363#0" expanded="true" />
+                <element signature="e#24427#24428#0" expanded="true" />
+                <element signature="e#24467#24468#0" expanded="true" />
+                <element signature="e#24656#24657#0" expanded="true" />
+                <element signature="e#24698#24699#0" expanded="true" />
+                <element signature="e#24766#24767#0" expanded="true" />
+                <element signature="e#24828#24829#0" expanded="true" />
+                <element signature="e#24871#24872#0" expanded="true" />
+                <element signature="e#24912#24913#0" expanded="true" />
+                <element signature="e#24978#24979#0" expanded="true" />
+                <element signature="e#25038#25039#0" expanded="true" />
+                <element signature="e#25081#25082#0" expanded="true" />
+                <element signature="e#25122#25123#0" expanded="true" />
+                <element signature="e#25188#25189#0" expanded="true" />
+                <element signature="e#25248#25249#0" expanded="true" />
+                <element signature="e#25296#25297#0" expanded="true" />
+                <element signature="e#25342#25343#0" expanded="true" />
+                <element signature="e#26037#26038#0" expanded="true" />
+                <element signature="e#26075#26076#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -92,8 +95,8 @@
       <file leaf-file-name="default-top4j.properties" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/top4j-javaagent/src/main/resources/default-top4j.properties">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="386">
-              <caret line="118" column="123" lean-forward="false" selection-start-line="118" selection-start-column="123" selection-end-line="118" selection-end-column="123" />
+            <state relative-caret-position="335">
+              <caret line="120" column="31" lean-forward="false" selection-start-line="120" selection-start-column="31" selection-end-line="120" selection-end-column="31" />
               <folding />
             </state>
           </provider>
@@ -122,7 +125,7 @@
       <file leaf-file-name="JVMStats.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/top4j-javaagent/src/main/java/io/top4j/javaagent/mbeans/jvm/JVMStats.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="408">
+            <state relative-caret-position="2856">
               <caret line="252" column="12" lean-forward="false" selection-start-line="252" selection-start-column="12" selection-end-line="252" selection-end-column="12" />
               <folding />
             </state>
@@ -161,18 +164,6 @@
               <caret line="21" column="45" lean-forward="false" selection-start-line="21" selection-start-column="45" selection-end-line="21" selection-end-column="45" />
               <folding>
                 <element signature="e#0#5521#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="ConsoleController.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/top4j-cli/src/main/java/io/top4j/cli/ConsoleController.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="306">
-              <caret line="366" column="26" lean-forward="false" selection-start-line="366" selection-start-column="26" selection-end-line="366" selection-end-column="26" />
-              <folding>
-                <element signature="e#0#18362#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -459,6 +450,18 @@
               <item name="javaagent" type="462c0819:PsiDirectoryNode" />
               <item name="mbeans" type="462c0819:PsiDirectoryNode" />
               <item name="jvm" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="top4j" type="b2602c69:ProjectViewProjectNode" />
+              <item name="top4j" type="462c0819:PsiDirectoryNode" />
+              <item name="top4j-javaagent" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="javaagent" type="462c0819:PsiDirectoryNode" />
+              <item name="mbeans" type="462c0819:PsiDirectoryNode" />
+              <item name="jvm" type="462c0819:PsiDirectoryNode" />
+              <item name="heap" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="top4j" type="b2602c69:ProjectViewProjectNode" />
@@ -1012,13 +1015,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/top4j-javaagent/src/main/java/io/top4j/javaagent/mbeans/jvm/heap/HeapStatsMXBean.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="153">
-          <caret line="9" column="25" lean-forward="false" selection-start-line="9" selection-start-column="25" selection-end-line="9" selection-end-column="25" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/top4j-javaagent/src/main/java/io/top4j/javaagent/utils/GarbageCollectorNames.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="24">
@@ -1249,7 +1245,7 @@
         <state relative-caret-position="306">
           <caret line="366" column="26" lean-forward="false" selection-start-line="366" selection-start-column="26" selection-end-line="366" selection-end-column="26" />
           <folding>
-            <element signature="e#0#18362#0" expanded="true" />
+            <element signature="e#0#18362#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -1280,14 +1276,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/top4j-javaagent/src/main/java/io/top4j/javaagent/mbeans/jvm/JVMStats.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="408">
-          <caret line="252" column="12" lean-forward="false" selection-start-line="252" selection-start-column="12" selection-end-line="252" selection-end-column="12" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/top4j-javaagent/src/main/java/io/top4j/javaagent/config/Configurator.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="510">
@@ -1309,68 +1297,86 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/top4j-javaagent/src/main/java/io/top4j/javaagent/mbeans/jvm/threads/ThreadUsage.java">
+    <entry file="file://$PROJECT_DIR$/top4j-javaagent/src/main/java/io/top4j/javaagent/mbeans/jvm/heap/HeapStatsMXBean.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="5682">
-          <caret line="381" column="0" lean-forward="false" selection-start-line="381" selection-start-column="0" selection-end-line="381" selection-end-column="0" />
+        <state relative-caret-position="295">
+          <caret line="23" column="17" lean-forward="false" selection-start-line="23" selection-start-column="17" selection-end-line="23" selection-end-column="17" />
           <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#16462#16463#0" expanded="true" />
-            <element signature="e#16495#16496#0" expanded="true" />
-            <element signature="e#16570#16571#0" expanded="true" />
-            <element signature="e#16607#16608#0" expanded="true" />
-            <element signature="e#16683#16684#0" expanded="true" />
-            <element signature="e#16719#16720#0" expanded="true" />
-            <element signature="e#22981#22982#0" expanded="true" />
-            <element signature="e#23044#23045#0" expanded="true" />
-            <element signature="e#23077#23078#0" expanded="true" />
-            <element signature="e#23102#23103#0" expanded="true" />
-            <element signature="e#23151#23152#0" expanded="true" />
-            <element signature="e#23188#23189#0" expanded="true" />
-            <element signature="e#23233#23234#0" expanded="true" />
-            <element signature="e#23264#23265#0" expanded="true" />
-            <element signature="e#23317#23318#0" expanded="true" />
-            <element signature="e#23356#23357#0" expanded="true" />
-            <element signature="e#23407#23408#0" expanded="true" />
-            <element signature="e#23444#23445#0" expanded="true" />
-            <element signature="e#23498#23499#0" expanded="true" />
-            <element signature="e#23525#23526#0" expanded="true" />
-            <element signature="e#23598#23599#0" expanded="true" />
-            <element signature="e#23639#23640#0" expanded="true" />
-            <element signature="e#23704#23705#0" expanded="true" />
-            <element signature="e#23744#23745#0" expanded="true" />
-            <element signature="e#23933#23934#0" expanded="true" />
-            <element signature="e#23975#23976#0" expanded="true" />
-            <element signature="e#24043#24044#0" expanded="true" />
-            <element signature="e#24105#24106#0" expanded="true" />
-            <element signature="e#24148#24149#0" expanded="true" />
-            <element signature="e#24189#24190#0" expanded="true" />
-            <element signature="e#24255#24256#0" expanded="true" />
-            <element signature="e#24315#24316#0" expanded="true" />
-            <element signature="e#24358#24359#0" expanded="true" />
-            <element signature="e#24399#24400#0" expanded="true" />
-            <element signature="e#24465#24466#0" expanded="true" />
-            <element signature="e#24525#24526#0" expanded="true" />
-            <element signature="e#24573#24574#0" expanded="true" />
-            <element signature="e#24619#24620#0" expanded="true" />
-            <element signature="e#25314#25315#0" expanded="true" />
-            <element signature="e#25352#25353#0" expanded="true" />
+            <element signature="e#0#1072#0" expanded="false" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/top4j-javaagent/src/main/java/io/top4j/javaagent/mbeans/jvm/JVMStats.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2856">
+          <caret line="252" column="12" lean-forward="false" selection-start-line="252" selection-start-column="12" selection-end-line="252" selection-end-column="12" />
+          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/top4j-javaagent/src/main/resources/default-top4j.properties">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="386">
-          <caret line="118" column="123" lean-forward="false" selection-start-line="118" selection-start-column="123" selection-end-line="118" selection-end-column="123" />
+        <state relative-caret-position="335">
+          <caret line="120" column="31" lean-forward="false" selection-start-line="120" selection-start-column="31" selection-end-line="120" selection-end-column="31" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/top4j-javaagent/src/main/java/io/top4j/javaagent/mbeans/jvm/threads/ThreadUsage.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="374">
+          <caret line="223" column="40" lean-forward="false" selection-start-line="223" selection-start-column="40" selection-end-line="223" selection-end-column="40" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#17185#17186#0" expanded="true" />
+            <element signature="e#17218#17219#0" expanded="true" />
+            <element signature="e#17293#17294#0" expanded="true" />
+            <element signature="e#17330#17331#0" expanded="true" />
+            <element signature="e#17406#17407#0" expanded="true" />
+            <element signature="e#17442#17443#0" expanded="true" />
+            <element signature="e#23704#23705#0" expanded="true" />
+            <element signature="e#23767#23768#0" expanded="true" />
+            <element signature="e#23800#23801#0" expanded="true" />
+            <element signature="e#23825#23826#0" expanded="true" />
+            <element signature="e#23874#23875#0" expanded="true" />
+            <element signature="e#23911#23912#0" expanded="true" />
+            <element signature="e#23956#23957#0" expanded="true" />
+            <element signature="e#23987#23988#0" expanded="true" />
+            <element signature="e#24040#24041#0" expanded="true" />
+            <element signature="e#24079#24080#0" expanded="true" />
+            <element signature="e#24130#24131#0" expanded="true" />
+            <element signature="e#24167#24168#0" expanded="true" />
+            <element signature="e#24221#24222#0" expanded="true" />
+            <element signature="e#24248#24249#0" expanded="true" />
+            <element signature="e#24321#24322#0" expanded="true" />
+            <element signature="e#24362#24363#0" expanded="true" />
+            <element signature="e#24427#24428#0" expanded="true" />
+            <element signature="e#24467#24468#0" expanded="true" />
+            <element signature="e#24656#24657#0" expanded="true" />
+            <element signature="e#24698#24699#0" expanded="true" />
+            <element signature="e#24766#24767#0" expanded="true" />
+            <element signature="e#24828#24829#0" expanded="true" />
+            <element signature="e#24871#24872#0" expanded="true" />
+            <element signature="e#24912#24913#0" expanded="true" />
+            <element signature="e#24978#24979#0" expanded="true" />
+            <element signature="e#25038#25039#0" expanded="true" />
+            <element signature="e#25081#25082#0" expanded="true" />
+            <element signature="e#25122#25123#0" expanded="true" />
+            <element signature="e#25188#25189#0" expanded="true" />
+            <element signature="e#25248#25249#0" expanded="true" />
+            <element signature="e#25296#25297#0" expanded="true" />
+            <element signature="e#25342#25343#0" expanded="true" />
+            <element signature="e#26037#26038#0" expanded="true" />
+            <element signature="e#26075#26076#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/top4j-cli/src/main/java/io/top4j/cli/Top4J.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="380">
-          <caret line="321" column="132" lean-forward="false" selection-start-line="321" selection-start-column="132" selection-end-line="321" selection-end-column="132" />
+        <state relative-caret-position="4613">
+          <caret line="303" column="47" lean-forward="false" selection-start-line="303" selection-start-column="47" selection-end-line="303" selection-end-column="47" />
           <folding>
             <element signature="e#0#14686#0" expanded="true" />
             <element signature="imports" expanded="true" />

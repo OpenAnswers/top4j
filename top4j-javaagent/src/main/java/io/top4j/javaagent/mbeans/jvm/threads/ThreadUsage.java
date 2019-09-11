@@ -72,6 +72,8 @@ public class ThreadUsage {
     private HotMethods hotMethods;
     private boolean threadCacheEnabled;
     private int threadCacheSize;
+    private int topThreadCacheSize;
+    private int blockedThreadCacheSize;
     private int threadCacheTTL;
     private long lastThreadCacheRefreshTime = 0;
     private long newThreadStartTime;
@@ -94,6 +96,8 @@ public class ThreadUsage {
             this.threadCacheEnabled = true;
             // set threadCacheSize
             this.threadCacheSize = Integer.parseInt(config.get("thread.usage.cache.size"));
+            // set topThreadCacheSize to threadCacheSize by default (if thread contention monitoring is enabled we'll split the threadCache between top and blocked threads later on)
+            this.topThreadCacheSize = threadCacheSize;
             // set threadCacheTTL
             this.threadCacheTTL = Integer.parseInt(config.get("thread.usage.cache.ttl"));
             // warm up the threadCache via this.update()
@@ -124,6 +128,12 @@ public class ThreadUsage {
             this.threadContentionMonitoringEnabled = true;
             logger.fine("Thread Contention Monitoring Enabled: " + threadMXBean.isThreadContentionMonitoringEnabled());
             this.blockedThreadsCount = blockedThreadsMap.size();
+            if (config.isThreadUsageCacheEnabled()) {
+                // split threadCache between top threads and blocked threads in a ratio of 4:1
+                this.topThreadCacheSize = (int) (threadCacheSize * 0.8);
+                this.blockedThreadCacheSize = (int) (threadCacheSize * 0.2);
+            }
+
         }
         else {
             logger.warning("Thread contention monitoring not supported by this JVM.");
@@ -159,7 +169,8 @@ public class ThreadUsage {
     public synchronized void update( ) {
 
         final long[] threadIds;
-        if (threadCacheEnabled) {
+        if ( threadCacheEnabled && (threadCount > threadCacheSize) ) {
+            logger.fine("Thread usage cache enabled....");
             // get current time in millis
             final long currentTime = System.currentTimeMillis();
             // thread cache enabled - check if cache TTL has expired before updating thread usage history
@@ -662,20 +673,24 @@ public class ThreadUsage {
     private void refreshThreadHistoryCache( ) {
 
         logger.fine("Refreshing thread history cache....");
-        int threadLimit;
+        int topThreadLimit;
+        int blockedThreadLimit;
         Set<Long> threadSet = new HashSet<>();
         // handle situation where threadCount less than threadCacheSize
         if ( threadCount < threadCacheSize ) {
-            threadLimit = (int) threadCount;
+            // we shouldn't get here but just in case.... set thread limits to a percentage of threadCount
+            topThreadLimit = (int) ( ( (int) threadCount ) * 0.8 );
+            blockedThreadLimit = (int) ( ( (int) threadCount ) * 0.2 );
         }
         else {
-            threadLimit = threadCacheSize;
+            topThreadLimit = topThreadCacheSize;
+            blockedThreadLimit = blockedThreadCacheSize;
         }
         // add top threadCacheSize thread IDs from cpuTimeMap to threadSet
-        threadSet.addAll(getTopThreads(cpuTimeMap, threadLimit));
+        threadSet.addAll(getTopThreads(cpuTimeMap, topThreadLimit));
         if (threadContentionMonitoringEnabled) {
             // add top threadCacheSize thread IDs from BlockedTimeMap to threadSet
-            threadSet.addAll(getTopThreads(blockedTimeMap, threadLimit));
+            threadSet.addAll(getTopThreads(blockedTimeMap, blockedThreadLimit));
         }
         // clear existing threadHistoryCache
         threadHistoryCache.clear();
