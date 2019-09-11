@@ -12,6 +12,8 @@ The Top4J Java Agent is invoked via the standard `java -javaagent` command line 
 The Top4J Remote Attach function is executed via the command line and attaches to a remote JVM process via the JDK tools VirtualMachine API.
 
 See "Get Started" section for more details.
+
+Top4J is part of the Open Answers [Panther](https://www.openanswers.co.uk/products/panther) suite of monitoring applications.
 Build
 =====
 ```bash
@@ -33,6 +35,7 @@ Get Started
 1. Run Top4J CLI jar specifying JVM PID as the first argument, e.g. `java -jar top4j-cli-0.0.8.jar -p 12345`, **OR** with no arguments to auto-detect running JVMs and select from a list, e.g. `java -jar top4j-cli-0.0.8.jar`
 
    **NOTE1:** The top4j CLI jar **must** be run as the target JVM process owner.
+
    **NOTE2:** The top4j CLI jar **must** be run using a Java JDK install not a JRE.
 
 Screenshots
