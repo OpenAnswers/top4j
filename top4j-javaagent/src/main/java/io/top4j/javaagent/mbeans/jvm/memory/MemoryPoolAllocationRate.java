@@ -173,6 +173,8 @@ public class MemoryPoolAllocationRate {
                 case "Tenured":
                     memoryPoolUsageUsed = memoryPoolMxBeanHelper.getTenuredHeapUsed();
                     break;
+                default:
+                    throw new RuntimeException("Unknown pool name: " + poolName);
 
             }
         } catch (Exception e) {
@@ -199,6 +201,8 @@ public class MemoryPoolAllocationRate {
                 case "Tenured":
                     memoryPoolUsageCommitted = memoryPoolMxBeanHelper.getTenuredHeapCommitted();
                     break;
+				default:
+					throw new RuntimeException("Unknown pool name: " + poolName);
 
             }
         } catch (Exception e) {
@@ -224,6 +228,8 @@ public class MemoryPoolAllocationRate {
                 case "Tenured":
                     memoryPoolCollectionUsed = memoryPoolMxBeanHelper.getTenuredCollectionUsed();
                     break;
+				default:
+					throw new RuntimeException("Unknown pool name: " + poolName);
 
             }
         } catch (Exception e) {
@@ -249,6 +255,8 @@ public class MemoryPoolAllocationRate {
 					case "Tenured":
 						gcCount = gcMXBeanHelper.getTenuredGCCount();
 						break;
+					default:
+						throw new RuntimeException("Unknown pool name: " + poolName);
 
 				}
 

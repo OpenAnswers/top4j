@@ -19,7 +19,6 @@ package io.top4j.javaagent.mbeans.jvm.threads;
 import io.top4j.javaagent.config.Configurator;
 import io.top4j.javaagent.profiler.CpuTime;
 
-import javax.management.MBeanServerConnection;
 import java.io.IOException;
 import java.util.Map;
 import java.util.logging.*;
@@ -28,7 +27,7 @@ public class ThreadStats implements ThreadStatsMXBean {
 	
 	private ThreadUsage threadUsage;
     private CpuTime cpuTime = new CpuTime();
-	private double mBeanCpuTime;
+	private volatile double mBeanCpuTime;
     private boolean hotMethodProfilingEnabled;
 
 	private static final Logger LOGGER = Logger.getLogger(ThreadStats.class.getName());

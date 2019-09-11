@@ -60,17 +60,17 @@ public class MemoryPoolUsageTracker {
 		
 		switch (poolName) {
 		
-		case "Nursery":
-			memoryPoolName = memoryPoolMxBeanHelper.getNurseryPoolName();
-			break;
-		case "Survivor":
-			memoryPoolName = memoryPoolMxBeanHelper.getSurvivorSpacePoolName();
-			break;
-		case "Tenured":
-			memoryPoolName = memoryPoolMxBeanHelper.getTenuredPoolName();
-			break;
-		default:
-			throw new IllegalArgumentException("Unsupported pool name \"" + poolName + "\" provided to MemoryPoolUsageTracker constructor");
+			case "Nursery":
+				memoryPoolName = memoryPoolMxBeanHelper.getNurseryPoolName();
+				break;
+			case "Survivor":
+				memoryPoolName = memoryPoolMxBeanHelper.getSurvivorSpacePoolName();
+				break;
+			case "Tenured":
+				memoryPoolName = memoryPoolMxBeanHelper.getTenuredPoolName();
+				break;
+			default:
+				throw new IllegalArgumentException("Unsupported pool name \"" + poolName + "\" provided to MemoryPoolUsageTracker constructor");
 			
 		}
 		
@@ -84,11 +84,11 @@ public class MemoryPoolUsageTracker {
 		
 	}
 
-	public String getPoolName() {
+	public synchronized String getPoolName() {
 		return poolName;
 	}
 
-	public void setPoolName(String memoryPoolName) {
+	public synchronized void setPoolName(String memoryPoolName) {
 		this.poolName = memoryPoolName;
 	}
 
@@ -136,11 +136,11 @@ public class MemoryPoolUsageTracker {
 		this.lastMemoryPoolCollectionUsageUsed = lastMemoryPoolCollectionUsageUsed;
 	}
 
-	public long getLastGCCount() {
+	public synchronized long getLastGCCount() {
 		return lastGCCount;
 	}
 
-	public void setLastGCCount(long lastGCCount) {
+	public synchronized void setLastGCCount(long lastGCCount) {
 		this.lastGCCount = lastGCCount;
 	}
 
@@ -194,19 +194,21 @@ public class MemoryPoolUsageTracker {
 		long memoryPoolCollectionUsed = 0;
 
         try {
-		switch (poolName) {
+			switch (poolName) {
 		
-		case "Nursery":
-			memoryPoolCollectionUsed = memoryPoolMxBeanHelper.getNurseryCollectionUsed();
-			break;
-		case "Survivor":
-			memoryPoolCollectionUsed = memoryPoolMxBeanHelper.getSurvivorCollectionUsed();
-			break;
-		case "Tenured":
-			memoryPoolCollectionUsed = memoryPoolMxBeanHelper.getTenuredCollectionUsed();
-			break;
-		
-		}
+				case "Nursery":
+					memoryPoolCollectionUsed = memoryPoolMxBeanHelper.getNurseryCollectionUsed();
+					break;
+				case "Survivor":
+					memoryPoolCollectionUsed = memoryPoolMxBeanHelper.getSurvivorCollectionUsed();
+					break;
+				case "Tenured":
+					memoryPoolCollectionUsed = memoryPoolMxBeanHelper.getTenuredCollectionUsed();
+					break;
+				default:
+					throw new RuntimeException("Unknown pool name: " + poolName);
+
+			}
         } catch (Exception e) {
             LOGGER.fine("Unable to retrieve " + poolName + " memory pool collection used due to: " + e.getMessage());
         }
@@ -230,6 +232,8 @@ public class MemoryPoolUsageTracker {
                 case "Tenured":
                     memoryPoolPeakUsed = memoryPoolMxBeanHelper.getTenuredPeakUsed();
                     break;
+				default:
+					throw new RuntimeException("Unknown pool name: " + poolName);
 
             }
         } catch (Exception e) {
@@ -253,6 +257,8 @@ public class MemoryPoolUsageTracker {
                 case "Tenured":
                     memoryPoolMxBeanHelper.resetTenuredPeakUsage();
                     break;
+				default:
+					throw new RuntimeException("Unknown pool name: " + poolName);
 
             }
         } catch (Exception e) {
@@ -277,6 +283,8 @@ public class MemoryPoolUsageTracker {
 				case "Tenured":
 					gcCount = gcMXBeanHelper.getTenuredGCCount();
 					break;
+				default:
+					throw new RuntimeException("Unknown pool name: " + poolName);
 
 			}
 		} catch (Exception e) {

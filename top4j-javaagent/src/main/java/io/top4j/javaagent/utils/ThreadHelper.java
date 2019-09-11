@@ -54,7 +54,7 @@ public class ThreadHelper {
 	public StackTraceElement[] getStackTraceElements( long threadId, int maxDepth ) {
 
 		if (threadId == 0) {
-			return null;
+			return new StackTraceElement[0];
 		}
 		if (maxDepth == 0) {
 			maxDepth = Integer.MAX_VALUE;

@@ -25,7 +25,7 @@ import java.util.logging.*;
 
 public class ThreadUsage {
 
-    private class ThreadInfo {
+    private static class ThreadInfo {
 	        long id;
             String name;
             State state;
@@ -253,14 +253,7 @@ public class ThreadUsage {
             }
             long threadBlockedTime = 0;
             if (threadContentionMonitoringEnabled) {
-                if (jmxThreadInfo != null) {
-                    threadBlockedTime = jmxThreadInfo.getBlockedTime();
-                } else {
-                    // assume thread died
-                    threadInfo.active = false;
-                    threadInfo.state = State.TERMINATED;
-                    continue;
-                }
+                threadBlockedTime = jmxThreadInfo.getBlockedTime();
             }
 
             // update ThreadInfo object
@@ -429,7 +422,7 @@ public class ThreadUsage {
     	return this.sysCpuUsage;
     }
     
-    public void updateTopThreads( ) {
+    public synchronized void updateTopThreads( ) {
     	
     	Object[] threadCpuTimeArray = cpuTimeMap.descendingKeySet().toArray();
     	int threadCounter = 1;
@@ -480,7 +473,7 @@ public class ThreadUsage {
     	
     }
 
-    public void updateBlockedThreads( ) {
+    public synchronized void updateBlockedThreads( ) {
 
         Object[] threadBlockedTimeArray = blockedTimeMap.descendingKeySet().toArray();
         int threadCounter = 1;

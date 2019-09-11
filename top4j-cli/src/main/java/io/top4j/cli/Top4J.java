@@ -167,7 +167,7 @@ public class Top4J {
             try {
                 if (jvmCount >= 10) {
                     // use Java Text Scanner to read multi-digit text string
-                    Scanner in = new Scanner(System.in);
+                    Scanner in = new Scanner(System.in, "utf-8");
                     jvmNumber = in.nextInt();
                 }
                 else {

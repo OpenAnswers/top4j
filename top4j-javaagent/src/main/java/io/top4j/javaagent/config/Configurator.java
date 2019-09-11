@@ -88,20 +88,32 @@ public class Configurator {
     private void loadPropsFromClasspath ( String propsFileName ) {
 
         Properties props = new Properties();
+        InputStream is = null;
 
         try {
             // load properties file from class path
-            InputStream is = getClass().getResourceAsStream("/" + propsFileName);
+            is = getClass().getResourceAsStream("/" + propsFileName);
             if (is != null) {
                 props.load(is);
                 // load test properties into config Map
                 loadProps(props, propsFileName);
                 LOGGER.info("Top4J: Loaded " + propsFileName + " file from classpath.");
+                // close the InputStream
+                is.close();
             }
 
         } catch (IOException e) {
 
             LOGGER.fine("Unable to load " + propsFileName + " file from the classpath.");
+        } finally {
+            try {
+                if (is != null) {
+                    // close the InputStream
+                    is.close();
+                }
+            } catch (IOException e) {
+                LOGGER.fine("Unable to close input stream.");
+            }
         }
 
     }
@@ -109,17 +121,32 @@ public class Configurator {
     private void loadPropsFromFileSystem ( String propsFileName ) {
 
         Properties props = new Properties();
+        FileInputStream fileInputStream = null;
 
         try {
             // attempt to load properties file from the file system
-            props.load(new FileInputStream(propsFileName));
+            fileInputStream = new FileInputStream(propsFileName);
+            props.load(fileInputStream);
             // load file system properties into config Map
             loadProps(props, propsFileName);
             LOGGER.info("Top4J: Loaded override properties " + propsFileName + " from file system.");
+            // close the FileInputStream
+            fileInputStream.close();
 
         } catch (IOException ex) {
 
             LOGGER.fine("No properties to load from the file system.");
+
+        } finally {
+            try {
+                if (fileInputStream != null) {
+                    // close the FileInputStream
+                    fileInputStream.close();
+                }
+            } catch (IOException e) {
+                LOGGER.fine("Unable to close file input stream.");
+            }
+
         }
 
     }

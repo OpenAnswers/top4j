@@ -128,7 +128,7 @@ public class AgentStats implements AgentStatsMXBean {
 		this.lastSystemTime = systemTime;
 	}
 	
-	private void updateIterations() {
+	private synchronized void updateIterations() {
 		
 		// update iterations
 		this.iterations++;
