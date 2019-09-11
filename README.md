@@ -11,7 +11,7 @@ The Top4J Java Agent is invoked via the standard `java -javaagent` command line 
 
 The Top4J Remote Attach function is executed via the command line and attaches to a remote JVM process via the JDK tools VirtualMachine API.
 
-See "Get Started" section for more details.
+See [Get Started](/README.md#get-started) section for more details.
 
 Top4J is part of the Open Answers [Panther](https://www.openanswers.co.uk/products/panther) suite of monitoring applications.
 Build
