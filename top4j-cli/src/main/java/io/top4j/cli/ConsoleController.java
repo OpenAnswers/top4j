@@ -56,6 +56,9 @@ public class ConsoleController  extends TimerTask {
     private final static int MAX_DISPLAY_NAME_LENGTH = 64;
     private String mainScreenId;
     private DisplayConfig displayConfig;
+    public static final String ANSI_WHITE_BACKGROUND = "\u001B[47m";
+    public static final String ANSI_BLACK = "\u001B[30m";
+    public static final String ANSI_RESET = "\u001B[0m";
 
     public ConsoleController ( ConsoleReader consoleReader, UserInput userInput, MBeanServerConnection mbsc, DisplayConfig displayConfig ) {
 
@@ -247,10 +250,9 @@ public class ConsoleController  extends TimerTask {
         StringBuffer sb = new StringBuffer();
         sb.append(createTop4JHeader());
         sb.append("\n");
-        sb.append("Top Threads:\n");
+        sb.append("TOP THREADS:\n");
         sb.append("\n");
-        sb.append("#  TID     S  %CPU  THREAD NAME\n");
-        sb.append("=  ===     =  ====  ===========\n");
+        sb.append(ANSI_WHITE_BACKGROUND + ANSI_BLACK + "#  TID     S  %CPU  THREAD NAME\t\t\t\t\t\t\t\t\n" + ANSI_RESET);
         // initialise thread counter
         int counter = 0;
         for (TopThreadMXBean topThreadMXBean : topThreadMXBeans) {
@@ -290,10 +292,9 @@ public class ConsoleController  extends TimerTask {
         StringBuffer sb = new StringBuffer();
         sb.append(createTop4JHeader());
         sb.append("\n");
-        sb.append("Blocked Threads:\n");
+        sb.append("BLOCKED THREADS:\n");
         sb.append("\n");
-        sb.append("#  TID     S  %BLOCKED  THREAD NAME\n");
-        sb.append("=  ===     =  ========  ===========\n");
+        sb.append(ANSI_WHITE_BACKGROUND + ANSI_BLACK + "#  TID     S  %BLOCKED  THREAD NAME\t\t\t\t\t\t\t\n" + ANSI_RESET);
 
         // first things first, check if there have been any blocked threads during this sample period
         Double totalThreadBlockedPercentage = 0.0;
