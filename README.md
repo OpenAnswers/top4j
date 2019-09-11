@@ -1,5 +1,5 @@
 ![Top4J Logo](/images/top4j-icon-panther-style.png)
-Format: ![Alt Text](url)
+
 
 Top4J is a lightweight, low overhead, production-ready performance analysis tool for the Java runtime environment. As the name suggests, it works a bit like the UNIX/Linux top command but at the JVM-level exposing key performance metrics from a Java runtime perspective.
 
