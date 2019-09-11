@@ -20,6 +20,7 @@ ARG_COUNT=$#
 NUM_THREADS=$1
 NUM_ITERATIONS=$2
 PAUSE_TIME=$3
+SYNCHRONISED=$4
 
 if [[ ! -f ${TOP4J_JAVAAGENT_JAR} ]]
 then
@@ -28,11 +29,11 @@ then
 	exit 1
 fi
 
-if [[ ${ARG_COUNT} -ne 3 ]]
+if [[ ${ARG_COUNT} -ne 3 ]] && [[ ${ARG_COUNT} -ne 4 ]]
 then
-	echo "USAGE: <num-threads> <num-iterations> <pause-time>"
+	echo "USAGE: <num-threads> <num-iterations> <pause-time> [synchronised]"
 	exit 1
 fi
 
-java -classpath "${TOP4J_JAVAAGENT_JAR}" -javaagent:${TOP4J_JAVAAGENT_JAR}=test.property=test,top.thread.count=10 -Djava.util.logging.config.file=logging.properties ${JAVA_OPTS} io.top4j.javaagent.test.MultiThreadedTest ${NUM_THREADS} ${NUM_ITERATIONS} ${PAUSE_TIME}
+java -classpath "${TOP4J_JAVAAGENT_JAR}" -javaagent:${TOP4J_JAVAAGENT_JAR}=test.property=test,top.thread.count=10 -Djava.util.logging.config.file=logging.properties ${JAVA_OPTS} io.top4j.javaagent.test.MultiThreadedTest ${NUM_THREADS} ${NUM_ITERATIONS} ${PAUSE_TIME} ${SYNCHRONISED}
 

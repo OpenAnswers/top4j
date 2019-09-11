@@ -26,14 +26,16 @@ public class MultiThreadedTest {
 	private int NUM_THREADS;
 	private int NUM_ITERATIONS;
 	private int PAUSE_TIME;
+	private boolean SYNCHRONISED;
 
 	private static final Logger LOGGER = Logger.getLogger(MultiThreadedTest.class.getName());
 
-	public MultiThreadedTest(int numThreads, int numIterations, int pauseTime) {
+	public MultiThreadedTest(int numThreads, int numIterations, int pauseTime, boolean synchronised) {
 
 		this.NUM_THREADS = numThreads;
 		this.NUM_ITERATIONS = numIterations;
 		this.PAUSE_TIME = pauseTime;
+		this.SYNCHRONISED = synchronised;
 
 	}
 
@@ -42,9 +44,10 @@ public class MultiThreadedTest {
 		int numThreads = 1;
 		int numIterations = 1;
 		int pauseTime = 1;
+		boolean synchronised = true;
 		LOGGER.info("Running Top4J Multithreaded Test....");
 		if (args.length == 0) {
-			LOGGER.severe("USAGE: MultiThreadedTest <num-threads> <num-iterations> <pause-time>");
+			LOGGER.severe("USAGE: MultiThreadedTest <num-threads> <num-iterations> <pause-time> [synchronised]");
 			System.exit(1);
 		}
 		else {
@@ -55,11 +58,15 @@ public class MultiThreadedTest {
 			} catch (NumberFormatException e) {
 				LOGGER.severe("Argument must be an integer");
 			}
+			if (args.length == 4) {
+				synchronised = Boolean.parseBoolean(args[3]);
+			}
 		}
 		LOGGER.info("Number of threads = " + numThreads);
 		LOGGER.info("Number of iterations = " + numIterations);
 		LOGGER.info("Pause time between iterations = " + pauseTime + " ms");
-		MultiThreadedTest multiThreadedTest = new MultiThreadedTest(numThreads, numIterations, pauseTime);
+		LOGGER.info("Synchronised = " + synchronised);
+		MultiThreadedTest multiThreadedTest = new MultiThreadedTest(numThreads, numIterations, pauseTime, synchronised);
 		multiThreadedTest.run();
 	}
 
@@ -71,7 +78,7 @@ public class MultiThreadedTest {
 
 		for(int i=0; i< NUM_THREADS; i++)
 		{
-			t[i] = new Thread(new CPUBurner(NUM_ITERATIONS, PAUSE_TIME), "CPUBurner-" + i);
+			t[i] = new Thread(new CPUBurner(NUM_ITERATIONS, PAUSE_TIME, SYNCHRONISED), "CPUBurner-" + i);
 			t[i].start();
 		}
 
@@ -100,14 +107,16 @@ public class MultiThreadedTest {
 	{
 		private final int numIterations;
 		private final int maxPauseTime;
-		private final long n = 20;
+		private final long n = 200;
 		private Random randomGenerator = new Random();
 		private Map<Integer, Long> result = new HashMap<>();
+		private boolean synchronised;
 
-		public CPUBurner(int numIterations, int maxPauseTime)
+		public CPUBurner(int numIterations, int maxPauseTime, boolean synchronised)
 		{
 			this.numIterations = numIterations;
 			this.maxPauseTime = maxPauseTime;
+			this.synchronised = synchronised;
 		}
 
 		public void run() {
@@ -131,20 +140,32 @@ public class MultiThreadedTest {
 		
 		private void doWork( int randomPause ){
 
-			synchronized (CPUBurner.class) {
-				// calculate the nth fibonacci number
-				long fibonacci = fibonacci(n);
-				LOGGER.fine("The " + n + "th Fibonacci number is calculated as " + fibonacci);
-				// then sleep for randomPause milliseconds to generate some thread contention
-				try {
-					Thread.sleep(randomPause);
-				} catch (InterruptedException ie) {
-					LOGGER.severe("Thread sleep interrupted.");
+			if (synchronised) {
+				synchronized (CPUBurner.class) {
+					// calculate the nth fibonacci number
+                    calculateFibonacciNumber(randomPause);
 				}
+			}
+			else {
 
+				// calculate the nth fibonacci number
+                calculateFibonacciNumber(randomPause);
 			}
 			
 		}
+
+		private void calculateFibonacciNumber( int randomPause ) {
+
+            // calculate the nth fibonacci number
+            long fibonacci = fibonacci(n);
+            LOGGER.fine("The " + n + "th Fibonacci number is calculated as " + fibonacci);
+            // then sleep for randomPause milliseconds to generate some thread contention / temper CPU load
+            try {
+                Thread.sleep(randomPause);
+            } catch (InterruptedException ie) {
+                LOGGER.severe("Thread sleep interrupted.");
+            }
+        }
 
         private long fibonacci(long N) {
 

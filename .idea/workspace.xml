@@ -1,7 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="376088a4-ef8e-48f3-874a-15ae0da20460" name="Default" comment="" />
+    <list default="true" id="376088a4-ef8e-48f3-874a-15ae0da20460" name="Default" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change beforePath="$PROJECT_DIR$/top4j-javaagent/src/main/java/io/top4j/javaagent/test/MultiThreadedTest.java" afterPath="$PROJECT_DIR$/top4j-javaagent/src/main/java/io/top4j/javaagent/test/MultiThreadedTest.java" />
+      <change beforePath="$PROJECT_DIR$/top4j-javaagent/src/test/scripts/runMultiThreadedTest.sh" afterPath="$PROJECT_DIR$/top4j-javaagent/src/test/scripts/runMultiThreadedTest.sh" />
+    </list>
     <ignored path="top4j.iws" />
     <ignored path=".idea/workspace.xml" />
     <ignored path="$PROJECT_DIR$/target/" />
@@ -142,18 +146,6 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="ThreadStats.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/top4j-javaagent/src/main/java/io/top4j/javaagent/mbeans/jvm/threads/ThreadStats.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="0">
-              <caret line="21" column="45" lean-forward="false" selection-start-line="21" selection-start-column="45" selection-end-line="21" selection-end-column="45" />
-              <folding>
-                <element signature="e#0#5521#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="ConsoleController.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/top4j-cli/src/main/java/io/top4j/cli/ConsoleController.java">
           <provider selected="true" editor-type-id="text-editor">
@@ -169,9 +161,11 @@
       <file leaf-file-name="MultiThreadedTest.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/top4j-javaagent/src/main/java/io/top4j/javaagent/test/MultiThreadedTest.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1343">
-              <caret line="96" column="4" lean-forward="false" selection-start-line="96" selection-start-column="4" selection-end-line="96" selection-end-column="4" />
-              <folding />
+            <state relative-caret-position="901">
+              <caret line="171" column="21" lean-forward="false" selection-start-line="171" selection-start-column="21" selection-end-line="171" selection-end-column="21" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -217,7 +211,6 @@
         <option value="$PROJECT_DIR$/top4j-cli/src/main/java/io/top4j/cli/DisplayConfig.java" />
         <option value="$PROJECT_DIR$/top4j-javaagent/src/test/java/JvmAgentTest.java" />
         <option value="$PROJECT_DIR$/top4j-cli/src/main/java/io/top4j/cli/UserInput.java" />
-        <option value="$PROJECT_DIR$/top4j-javaagent/src/main/java/io/top4j/javaagent/test/MultiThreadedTest.java" />
         <option value="$PROJECT_DIR$/top4j-javaagent/src/main/java/io/top4j/javaagent/controller/Agent.java" />
         <option value="$PROJECT_DIR$/top4j-javaagent/src/main/java/io/top4j/javaagent/mbeans/jvm/threads/ThreadStats.java" />
         <option value="$PROJECT_DIR$/top4j-javaagent/src/main/java/io/top4j/javaagent/mbeans/jvm/JVMStats.java" />
@@ -227,6 +220,7 @@
         <option value="$PROJECT_DIR$/top4j-cli/src/main/java/io/top4j/cli/Top4J.java" />
         <option value="$PROJECT_DIR$/top4j-cli/pom.xml" />
         <option value="$PROJECT_DIR$/top4j-cli/src/main/java/io/top4j/cli/ConsoleController.java" />
+        <option value="$PROJECT_DIR$/top4j-javaagent/src/main/java/io/top4j/javaagent/test/MultiThreadedTest.java" />
       </list>
     </option>
   </component>
@@ -863,12 +857,6 @@
     <servers />
   </component>
   <component name="TestHistory">
-    <history-entry file="JvmAgentTest - 2019.09.05 at 20h 50m 11s.xml">
-      <configuration name="JvmAgentTest" configurationId="JUnit" />
-    </history-entry>
-    <history-entry file="JvmAgentTest - 2019.09.05 at 20h 53m 52s.xml">
-      <configuration name="JvmAgentTest" configurationId="JUnit" />
-    </history-entry>
     <history-entry file="JvmAgentTest - 2019.09.05 at 20h 55m 19s.xml">
       <configuration name="JvmAgentTest" configurationId="JUnit" />
     </history-entry>
@@ -893,19 +881,25 @@
     <history-entry file="JvmAgentTest - 2019.09.05 at 21h 10m 32s.xml">
       <configuration name="JvmAgentTest" configurationId="JUnit" />
     </history-entry>
+    <history-entry file="JvmAgentTest - 2019.09.11 at 12h 29m 44s.xml">
+      <configuration name="JvmAgentTest" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="JvmAgentTest - 2019.09.11 at 12h 30m 10s.xml">
+      <configuration name="JvmAgentTest" configurationId="JUnit" />
+    </history-entry>
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
-    <editor active="true" />
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Palette&#9;" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Image Layers" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.31177095" sideWeight="0.51875" order="7" side_tool="true" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.31177095" sideWeight="0.5208333" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.16197917" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.31177095" sideWeight="0.48125" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.31177095" sideWeight="0.47916666" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32985386" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
@@ -915,7 +909,7 @@
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Theme Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3997879" sideWeight="0.49583334" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3997879" sideWeight="0.49375" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="true" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
@@ -923,7 +917,6 @@
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="SonarQube" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32979852" sideWeight="0.49375" order="1" side_tool="false" content_ui="tabs" />
     </layout>
@@ -941,7 +934,7 @@
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <option name="time" value="11" />
+      <option name="time" value="13" />
     </breakpoint-manager>
     <watches-manager />
   </component>
@@ -1253,7 +1246,7 @@
         <state relative-caret-position="0">
           <caret line="21" column="45" lean-forward="false" selection-start-line="21" selection-start-column="45" selection-end-line="21" selection-end-column="45" />
           <folding>
-            <element signature="e#0#5521#0" expanded="true" />
+            <element signature="e#0#5521#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -1276,16 +1269,6 @@
         <state relative-caret-position="860">
           <caret line="70" column="0" lean-forward="false" selection-start-line="70" selection-start-column="0" selection-end-line="70" selection-end-column="0" />
           <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/top4j-javaagent/src/main/java/io/top4j/javaagent/mbeans/jvm/heap/HeapStatsMXBean.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="295">
-          <caret line="23" column="17" lean-forward="false" selection-start-line="23" selection-start-column="17" selection-end-line="23" selection-end-column="17" />
-          <folding>
-            <element signature="e#0#1072#0" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1392,11 +1375,21 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/top4j-javaagent/src/main/java/io/top4j/javaagent/mbeans/jvm/heap/HeapStatsMXBean.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="153">
+          <caret line="23" column="17" lean-forward="false" selection-start-line="23" selection-start-column="17" selection-end-line="23" selection-end-column="17" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/top4j-javaagent/src/main/java/io/top4j/javaagent/test/MultiThreadedTest.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1343">
-          <caret line="96" column="4" lean-forward="false" selection-start-line="96" selection-start-column="4" selection-end-line="96" selection-end-column="4" />
-          <folding />
+        <state relative-caret-position="901">
+          <caret line="171" column="21" lean-forward="false" selection-start-line="171" selection-start-column="21" selection-end-line="171" selection-end-column="21" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
