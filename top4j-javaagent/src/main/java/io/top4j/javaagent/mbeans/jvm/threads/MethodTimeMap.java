@@ -37,9 +37,7 @@ public class MethodTimeMap {
 			// add methodTime and methodNameList to methodTimeMap
 			methodTimeMap.put(methodTime, newMethodNameList);
 			
-		}
-		
-		else {
+		} else {
 			
 			// add methodName to methodNameList
 			existingMethodNameList.add(methodName);

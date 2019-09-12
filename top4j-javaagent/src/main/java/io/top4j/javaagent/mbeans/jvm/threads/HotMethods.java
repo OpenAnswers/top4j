@@ -25,7 +25,6 @@ import java.util.logging.Logger;
 
 public class HotMethods {
 	
-	//private Map<String, Integer> invocationCounter;
 	private Map<String, StackTraceElement[]> stackTraces;
 	private Map<String, String> threadNames;
 	private Map<String, Long> threadIds;
@@ -42,7 +41,6 @@ public class HotMethods {
 
 	public HotMethods ( MBeanServerConnection mbsc, Map<Integer, HotMethod> hotMethods ) throws IOException {
 		
-		//this.invocationCounter = new HashMap<>();
 		this.stackTraces = new HashMap<>();
 		this.threadNames = new HashMap<>();
 		this.threadIds = new HashMap<>();
@@ -62,8 +60,7 @@ public class HotMethods {
                 // get hot method
                 hotMethod = ste[0].getClassName() + "." + ste[0].getMethodName();
                 LOGGER.finer("Adding hot method " + hotMethod + " to hot methods store.");
-            }
-            else {
+            } else {
                 return;
             }
 
@@ -97,14 +94,11 @@ public class HotMethods {
                         long previousHotMethodCpuTime = hotMethodCpuTime.get( hotMethod );
                         // store new hot method CPU time
                         hotMethodCpuTime.put( hotMethod, previousHotMethodCpuTime + cpuTimeDiff );
-                        //LOGGER.finer("Hot Method: " + hotMethod + ", CPU Time: " + (double) cpuTimeDiff / 1000000 + "ms");
-                    }
-                    else {
+                    } else {
                         // initialise hot method CPU time
                         hotMethodCpuTime.put( hotMethod, cpuTimeDiff );
                     }
-                }
-                else {
+                } else {
                     // initialise thread CPU time
                     threadCpuTime.put( threadId, cpuTime );
                 }
@@ -201,7 +195,6 @@ public class HotMethods {
             }
 
             // clear down hot method maps
-            //invocationCounter.clear();
             stackTraces.clear();
             threadNames.clear();
             threadIds.clear();

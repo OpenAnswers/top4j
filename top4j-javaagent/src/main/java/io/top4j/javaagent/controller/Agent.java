@@ -26,7 +26,7 @@ import javax.management.MBeanServer;
 
 public class Agent {
 	
-	private static Logger logger = Logger.getLogger(Agent.class.getName());
+	private static final Logger LOGGER = Logger.getLogger(Agent.class.getName());
 	
 	public static void premain(String agentArgs, Instrumentation inst) {
 
@@ -40,7 +40,7 @@ public class Agent {
 		Controller controller = new Controller( config );
 		controller.start( );
 
-		logger.info("Top4J: Java agent activated.");
+		LOGGER.info("Top4J: Java agent activated.");
 
 	}
 

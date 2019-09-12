@@ -42,8 +42,11 @@ public class LoggerQueue {
 	public boolean hasElements( ) {
 		
 		// test if the loggerQueue has elements
-		if (loggerQueue.isEmpty( )) return false;
-		else return true;
+		if (loggerQueue.isEmpty( )) {
+			return false;
+		} else {
+			return true;
+		}
 		
 	}
 	

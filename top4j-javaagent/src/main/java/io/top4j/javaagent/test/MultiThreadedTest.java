@@ -23,24 +23,23 @@ import java.util.logging.Logger;
 
 public class MultiThreadedTest {
 
-	private int NUM_THREADS;
-	private int NUM_ITERATIONS;
-	private int PAUSE_TIME;
-	private boolean SYNCHRONISED;
+	private int numThreads;
+	private int numIterations;
+	private int pauseTime;
+	private boolean synchronised;
 
 	private static final Logger LOGGER = Logger.getLogger(MultiThreadedTest.class.getName());
 
 	public MultiThreadedTest(int numThreads, int numIterations, int pauseTime, boolean synchronised) {
 
-		this.NUM_THREADS = numThreads;
-		this.NUM_ITERATIONS = numIterations;
-		this.PAUSE_TIME = pauseTime;
-		this.SYNCHRONISED = synchronised;
+		this.numThreads = numThreads;
+		this.numIterations = numIterations;
+		this.pauseTime = pauseTime;
+		this.synchronised = synchronised;
 
 	}
 
-	public static void main(String[] args)
-	{
+	public static void main(String[] args) {
 		int numThreads = 1;
 		int numIterations = 1;
 		int pauseTime = 1;
@@ -49,8 +48,7 @@ public class MultiThreadedTest {
 		if (args.length == 0) {
 			LOGGER.severe("USAGE: MultiThreadedTest <num-threads> <num-iterations> <pause-time> [synchronised]");
 			System.exit(1);
-		}
-		else {
+		} else {
 			try {
 				numThreads = Integer.parseInt(args[0]);
 				numIterations = Integer.parseInt(args[1]);
@@ -70,20 +68,17 @@ public class MultiThreadedTest {
 		multiThreadedTest.run();
 	}
 
-	public void run()
-	{
+	public void run() {
 		long start = System.currentTimeMillis();
 
-		Thread[] t = new Thread[NUM_THREADS];
+		Thread[] t = new Thread[numThreads];
 
-		for(int i=0; i< NUM_THREADS; i++)
-		{
-			t[i] = new Thread(new CPUBurner(NUM_ITERATIONS, PAUSE_TIME, SYNCHRONISED), "CPUBurner-" + i);
+		for(int i = 0; i< numThreads; i++) {
+			t[i] = new Thread(new CPUBurner(numIterations, pauseTime, synchronised), "CPUBurner-" + i);
 			t[i].start();
 		}
 
-		for(int i=0; i< NUM_THREADS; i++)
-		{
+		for(int i = 0; i< numThreads; i++) {
 			try
 			{
 				t[i].join();
@@ -98,22 +93,20 @@ public class MultiThreadedTest {
 
 		double seconds = (end - start) / 1000.0;
 
-		LOGGER.info("Calculations              : " + NUM_THREADS * NUM_ITERATIONS);
+		LOGGER.info("Calculations              : " + numThreads * numIterations);
 		LOGGER.info("Duration                  : " + seconds);
-		LOGGER.info("TPS                       : " + NUM_THREADS * NUM_ITERATIONS / seconds);
+		LOGGER.info("TPS                       : " + numThreads * numIterations / seconds);
 	}
 
-	private class CPUBurner implements Runnable
-	{
-		private final int numIterations;
-		private final int maxPauseTime;
-		private final long n = 200;
+	private class CPUBurner implements Runnable {
+		private int numIterations;
+		private int maxPauseTime;
+		private long n = 200;
 		private Random randomGenerator = new Random();
 		private Map<Integer, Long> result = new HashMap<>();
 		private boolean synchronised;
 
-		public CPUBurner(int numIterations, int maxPauseTime, boolean synchronised)
-		{
+		public CPUBurner(int numIterations, int maxPauseTime, boolean synchronised) {
 			this.numIterations = numIterations;
 			this.maxPauseTime = maxPauseTime;
 			this.synchronised = synchronised;
@@ -121,8 +114,7 @@ public class MultiThreadedTest {
 
 		public void run() {
 
-			for(int i=1; i<=numIterations; i++)
-			{
+			for(int i=1; i<=numIterations; i++) {
 				if (i % 100 == 0)
 				{
 					LOGGER.fine(Thread.currentThread().getName() + " : " + i);
@@ -145,8 +137,7 @@ public class MultiThreadedTest {
 					// calculate the nth fibonacci number
                     calculateFibonacciNumber(randomPause);
 				}
-			}
-			else {
+			} else {
 
 				// calculate the nth fibonacci number
                 calculateFibonacciNumber(randomPause);
@@ -167,12 +158,12 @@ public class MultiThreadedTest {
             }
         }
 
-        private long fibonacci(long N) {
+        private long fibonacci(long n) {
 
             long f = 0, g = 1;
             String fibSeq = null;
 
-            for (int i = 1; i <= N; i++) {
+            for (int i = 1; i <= n; i++) {
                 f = f + g;
                 g = f - g;
                 fibSeq = fibSeq + " " + f;

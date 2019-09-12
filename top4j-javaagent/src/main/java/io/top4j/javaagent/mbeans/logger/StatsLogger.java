@@ -37,6 +37,7 @@ import javax.management.*;
 
 import io.top4j.javaagent.config.Configurator;
 import io.top4j.javaagent.config.Constants;
+import io.top4j.javaagent.exception.MBeanInitException;
 import io.top4j.javaagent.mbeans.jvm.threads.BlockedThreadMXBean;
 import io.top4j.javaagent.mbeans.jvm.threads.HotMethodMXBean;
 import io.top4j.javaagent.mbeans.jvm.threads.TopThreadMXBean;
@@ -99,7 +100,7 @@ public final class StatsLogger implements StatsLoggerMXBean {
         try {
         	top4jStatsName = new ObjectName(Constants.DOMAIN + ":type=" + Constants.JVM_STATS_TYPE + ",*");
 		} catch (MalformedObjectNameException e) {
-			throw new Exception("JMX MalformedObjectNameException: " + e.getMessage() );
+			throw new MBeanInitException(e, "JMX MalformedObjectNameException: " + e.getMessage() );
 		}
 		Set<ObjectName> top4jMBeans = mbs.queryNames(top4jStatsName, null);
         for (ObjectName top4jMbean : top4jMBeans) {
@@ -111,11 +112,11 @@ public final class StatsLogger implements StatsLoggerMXBean {
 				top4jMbeanAttributes = mbs.getMBeanInfo(top4jMbean).getAttributes();
 				
 			} catch (IntrospectionException e) {
-                throw new Exception("JMX IntrospectionException: " + e.getMessage() );
+                throw new MBeanInitException(e, "JMX IntrospectionException: " + e.getMessage() );
 			} catch (InstanceNotFoundException e) {
-                throw new Exception("JMX InstanceNotFoundException: " + e.getMessage() );
+                throw new MBeanInitException(e, "JMX InstanceNotFoundException: " + e.getMessage() );
 			} catch (ReflectionException e) {
-                throw new Exception("JMX ReflectionException: " + e.getMessage() );
+                throw new MBeanInitException(e, "JMX ReflectionException: " + e.getMessage() );
 			}
 			// instantiate new MBean info bean
     		MBeanInfo mbeanInfo = new MBeanInfo();
@@ -173,8 +174,7 @@ public final class StatsLogger implements StatsLoggerMXBean {
 					// initialise stack trace log file
 					initStackTraceLogFile( statsType, dateStamp );
 				}
-			}
-    		else {
+			} else {
     			mbeanInfo.setStatsType(statsType);
     			// initialise stats log file
         		initStatsLogFile( statsType, dateStamp, mbeanAttributeNames );
@@ -187,7 +187,7 @@ public final class StatsLogger implements StatsLoggerMXBean {
         	
         	int topThreadCount = Integer.parseInt(config.get("top.thread.count"));
         	
-        	Map<String, TopThreadMXBean> topThreadsMXBeans = new HashMap<>();
+        	this.topThreadsMXBeans = new HashMap<>();
         	
         	for (int rank=1; rank<=topThreadCount; rank++) {
     			
@@ -200,23 +200,21 @@ public final class StatsLogger implements StatsLoggerMXBean {
     			try {
     				topThreadsObjectName = new ObjectName(Constants.DOMAIN + ":" + key);
     			} catch (MalformedObjectNameException e) {
-                    throw new Exception("JMX MalformedObjectNameException: " + e.getMessage() );
+                    throw new MBeanInitException(e, "JMX MalformedObjectNameException: " + e.getMessage() );
     			}
     			// instantiate new topThreadMXBean proxy based on topThreadsObjectName
     			TopThreadMXBean topThreadMXBean = JMX.newMBeanProxy(mbs, topThreadsObjectName, TopThreadMXBean.class);
     			// add topThreadsMBeanHelper to list of topThreadsMBeanHelpers
-    			topThreadsMXBeans.put(key, topThreadMXBean);
+    			this.topThreadsMXBeans.put(key, topThreadMXBean);
     			
     		}
-    		
-    		this.topThreadsMXBeans = topThreadsMXBeans;
-    		
+
         }
 		if (blockedThreadsStackTraceLoggingEnabled) {
 
 			int blockedThreadCount = Integer.parseInt(config.get("blocked.thread.count"));
 
-			Map<String, BlockedThreadMXBean> blockedThreadsMXBeans = new HashMap<>();
+			this.blockedThreadsMXBeans = new HashMap<>();
 
 			for (int rank=1; rank<=blockedThreadCount; rank++) {
 
@@ -229,23 +227,21 @@ public final class StatsLogger implements StatsLoggerMXBean {
 				try {
 					blockedThreadsObjectName = new ObjectName(Constants.DOMAIN + ":" + key);
 				} catch (MalformedObjectNameException e) {
-                    throw new Exception("JMX MalformedObjectNameException: " + e.getMessage() );
+                    throw new MBeanInitException(e, "JMX MalformedObjectNameException: " + e.getMessage() );
 				}
 				// instantiate new blockedThreadMXBean proxy based on blockedThreadsObjectName
 				BlockedThreadMXBean blockedThreadMXBean = JMX.newMBeanProxy(mbs, blockedThreadsObjectName, BlockedThreadMXBean.class);
 				// add blockedThreadsMBeanHelper to list of blockedThreadsMBeanHelpers
-				blockedThreadsMXBeans.put(key, blockedThreadMXBean);
+				this.blockedThreadsMXBeans.put(key, blockedThreadMXBean);
 
 			}
-
-			this.blockedThreadsMXBeans = blockedThreadsMXBeans;
 
 		}
 		if (hotMethodsStackTraceLoggingEnabled) {
 
 			int hotMethodCount = Integer.parseInt(config.get("hot.method.count"));
 
-			Map<String, HotMethodMXBean> hotMethodsMXBeans = new HashMap<>();
+			this.hotMethodsMXBeans = new HashMap<>();
 
 			for (int rank=1; rank<=hotMethodCount; rank++) {
 
@@ -258,16 +254,14 @@ public final class StatsLogger implements StatsLoggerMXBean {
 				try {
 					hotMethodsObjectName = new ObjectName(Constants.DOMAIN + ":" + key);
 				} catch (MalformedObjectNameException e) {
-                    throw new Exception("JMX MalformedObjectNameException: " + e.getMessage() );
+                    throw new MBeanInitException(e, "JMX MalformedObjectNameException: " + e.getMessage() );
 				}
 				// instantiate new hotMethodMXBean proxy based on hotMethodsObjectName
 				HotMethodMXBean hotMethodMXBean = JMX.newMBeanProxy(mbs, hotMethodsObjectName, HotMethodMXBean.class);
 				// add hotMethodsMBeanHelper to list of hotMethodsMBeanHelpers
-				hotMethodsMXBeans.put(key, hotMethodMXBean);
+				this.hotMethodsMXBeans.put(key, hotMethodMXBean);
 
 			}
-
-			this.hotMethodsMXBeans = hotMethodsMXBeans;
 
 		}
 
@@ -328,21 +322,18 @@ public final class StatsLogger implements StatsLoggerMXBean {
 					if (mbeanAttribute instanceof Double) {
 						logEntry.append(statsLoggerFieldSeparator );
 						logEntry.append(String.format("%.4f", mbeanAttribute));
-					}
-					else {
+					} else {
 						logEntry.append(statsLoggerFieldSeparator);
 						logEntry.append(mbeanAttribute );
 					}
-				}
-				
-				else {
+
+				} else {
 					if (mbeanAttribute instanceof Double) {
 						logEntry.append(",");
 						logEntry.append(mbeanAttributeName);
 						logEntry.append("=");
 						logEntry.append(String.format("%.4f", mbeanAttribute));
-					}
-					else {
+					} else {
 						logEntry.append(",");
 						logEntry.append(mbeanAttributeName);
 						logEntry.append("=");
@@ -466,14 +457,11 @@ public final class StatsLogger implements StatsLoggerMXBean {
         {
         	LOGGER.severe("The stats log directory " + statsLoggerDirectory + " could not be created as it is a normal file");
             this.statsLoggerEnabled = false;
-        }
-        else
-        {
+        } else {
             if ( !statsDir.exists() ) {
             	try {
 					createDirStatus = statsDir.mkdirs();
-            	}
-            	catch (SecurityException se) {
+            	} catch (SecurityException se) {
             		LOGGER.severe("Unable to create " + statsLoggerDirectory + ". Stats logging disabled!!");
             		this.statsLoggerEnabled = false;
             	}

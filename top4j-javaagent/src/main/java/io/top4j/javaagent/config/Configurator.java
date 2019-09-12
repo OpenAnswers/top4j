@@ -28,7 +28,7 @@ import java.util.logging.Logger;
 
 public class Configurator {
 
-    public MBeanServerConnection mBeanServerConnection;
+    private MBeanServerConnection mBeanServerConnection;
 	private Map<String, String> config = new HashMap<>();
 	private boolean statsLoggerEnabled;
 	private boolean topThreadsStackTraceLoggingEnabled;
@@ -227,6 +227,14 @@ public class Configurator {
 
     public boolean isThreadUsageCacheEnabled() {
         return this.threadUsageCacheEnabled;
+    }
+
+    public MBeanServerConnection getMBeanServerConnection() {
+        return mBeanServerConnection;
+    }
+
+    public void setMBeanServerConnection(MBeanServerConnection mBeanServerConnection) {
+        this.mBeanServerConnection = mBeanServerConnection;
     }
 
 }

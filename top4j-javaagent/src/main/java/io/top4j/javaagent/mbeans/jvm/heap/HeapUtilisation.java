@@ -16,6 +16,7 @@
 
 package io.top4j.javaagent.mbeans.jvm.heap;
 
+import io.top4j.javaagent.exception.MBeanInitException;
 import io.top4j.javaagent.mbeans.jvm.memory.MemoryPoolMXBeanHelper;
 
 import javax.management.MBeanServerConnection;
@@ -38,7 +39,7 @@ public class HeapUtilisation {
 		try {
 			this.memoryPoolMxBeanHelper = new MemoryPoolMXBeanHelper( mbsc );
 		} catch (Exception e) {
-			throw new Exception( "Failed to initialise heap utilisation stats collector due to: " + e.getMessage() );
+			throw new MBeanInitException( e, "Failed to initialise heap utilisation stats collector due to: " + e.getMessage() );
 		}
 
 	}

@@ -22,6 +22,7 @@ import java.util.logging.Logger;
 import javax.management.MBeanServerConnection;
 import javax.management.Notification;
 
+import io.top4j.javaagent.exception.MBeanInitException;
 import io.top4j.javaagent.mbeans.jvm.memory.MemoryPoolMXBeanHelper;
 import io.top4j.javaagent.mbeans.jvm.memory.MemorySurvivorBean;
 
@@ -41,14 +42,14 @@ public class CollectionUsageListener implements javax.management.NotificationLis
 		try {
 			this.memoryPoolMxBeanHelper = new MemoryPoolMXBeanHelper( mbsc );
 		} catch (Exception e) {
-			throw new Exception( "Failed to initialise Collection Usage Listener due to: " + e.getMessage() );
+			throw new MBeanInitException( e, "Failed to initialise Collection Usage Listener due to: " + e.getMessage() );
 		}
 
 		// instantiate new GarbageCollectorMXBeanHelper
 		try {
 			this.gcMXBeanHelper = new GarbageCollectorMXBeanHelper( mbsc );
 		} catch (Exception e) {
-			throw new Exception( "Failed to initialise Collection Usage Listener due to: " + e.getMessage() );
+			throw new MBeanInitException( e, "Failed to initialise Collection Usage Listener due to: " + e.getMessage() );
 		}
 	}
 	

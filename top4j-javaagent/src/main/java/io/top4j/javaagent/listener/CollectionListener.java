@@ -23,6 +23,7 @@ import javax.management.MBeanServerConnection;
 import javax.management.Notification;
 import javax.management.openmbean.CompositeData;
 
+import io.top4j.javaagent.exception.MBeanInitException;
 import io.top4j.javaagent.mbeans.jvm.gc.GarbageCollectorMXBeanHelper;
 import io.top4j.javaagent.mbeans.jvm.memory.MemoryPoolMXBeanHelper;
 import io.top4j.javaagent.mbeans.jvm.memory.MemoryPoolUsageTracker;
@@ -54,7 +55,7 @@ public class CollectionListener implements javax.management.NotificationListener
 		try {
 			this.gcMXBeanHelper = new GarbageCollectorMXBeanHelper( mbsc );
 		} catch (Exception e) {
-			throw new Exception( "Failed to initialise Collection Listener due to: " + e.getMessage() );
+			throw new MBeanInitException( e, "Failed to initialise Collection Listener due to: " + e.getMessage() );
 		}
 
 		// get survivor pool name

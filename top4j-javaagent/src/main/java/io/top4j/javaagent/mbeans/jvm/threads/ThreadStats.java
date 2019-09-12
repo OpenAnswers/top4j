@@ -87,8 +87,7 @@ public class ThreadStats implements ThreadStatsMXBean {
         // update thread stats CPU time
         if (hotMethodProfilingEnabled) {
             mBeanCpuTime = cpuTime.getMillis() + threadUsage.getHotMethods().getAndResetMBeanCpuTime();
-        }
-        else {
+        } else {
             mBeanCpuTime = cpuTime.getMillis();
         }
 

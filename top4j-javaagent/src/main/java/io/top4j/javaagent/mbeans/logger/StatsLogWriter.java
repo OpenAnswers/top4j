@@ -56,12 +56,10 @@ public class StatsLogWriter {
                 LOGGER.finer("Creating new stats log file " + fileName);
                 if (header != null) {
                     printWriter = createNewFile( file, header );
-                }
-                else {
+                } else {
                     printWriter = createNewFile( file, null );
                 }
-            }
-            else {
+            } else {
                 // create new printWriter
                 LOGGER.finer("Stats log file " + fileName + " already exists.");
                 fileOutputStream = new FileOutputStream(fileName, true);
@@ -69,8 +67,7 @@ public class StatsLogWriter {
             }
 
         } catch (IOException ioe) {
-            //LOGGER.severe("Unable to create stats log file " + fileName + " due to: " + ioe.getMessage() );
-            throw new Exception("Unable to create stats log file " + fileName + " due to: " + ioe.getMessage());
+            throw new IllegalAccessException("Unable to create stats log file " + fileName + " due to: " + ioe.getMessage());
         }
 
         // store print writer
@@ -91,8 +88,7 @@ public class StatsLogWriter {
                 printWriter.println(header);
             }
         } catch (IOException ioe) {
-            //LOGGER.severe("Unable to create stats log file " + file.getName() + " due to: " + ioe.getMessage() );
-            throw new Exception("Unable to create stats log file " + fileName + " due to: " + ioe.getMessage());
+            throw new IllegalAccessException("Unable to create stats log file " + fileName + " due to: " + ioe.getMessage());
         } finally {
             if (printWriter != null) {
                 printWriter.flush();

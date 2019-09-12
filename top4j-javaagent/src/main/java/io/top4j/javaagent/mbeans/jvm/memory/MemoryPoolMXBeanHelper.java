@@ -16,6 +16,11 @@
 
 package io.top4j.javaagent.mbeans.jvm.memory;
 
+import io.top4j.javaagent.exception.MBeanDiscoveryException;
+import io.top4j.javaagent.exception.MBeanInitException;
+import io.top4j.javaagent.exception.MBeanRuntimeException;
+
+import java.io.IOException;
 import java.lang.management.ManagementFactory;
 import java.lang.management.MemoryPoolMXBean;
 import java.lang.management.MemoryUsage;
@@ -39,41 +44,34 @@ public class MemoryPoolMXBeanHelper {
 
 	private static final Logger LOGGER = Logger.getLogger(MemoryPoolMXBeanHelper.class.getName());
 	
-	public MemoryPoolMXBeanHelper( MBeanServerConnection mbsc ) throws Exception {
+	public MemoryPoolMXBeanHelper( MBeanServerConnection mbsc ) throws MBeanInitException {
 
 		// store MBean server connection
 		this.mbsc = mbsc;
         // get and store list of MemoryPoolMXBean
-        this.memPoolMXBeans = ManagementFactory.getPlatformMXBeans( mbsc, MemoryPoolMXBean.class );
+		try {
+			this.memPoolMXBeans = ManagementFactory.getPlatformMXBeans( mbsc, MemoryPoolMXBean.class );
+		} catch (IOException e) {
+			throw new MBeanInitException( e, "JMX IOException: " + e.getMessage());
+		}
 
-		ObjectName nurseryPoolObjectName = null;
-		ObjectName survivorSpacePoolObjectName = null;
-		ObjectName tenuredPoolObjectName = null;
-		
 		// discover nursery Pool name
-		String nurseryPoolName = this.discoverNurseryPoolName();
-		this.setNurseryPoolName(nurseryPoolName);
+		this.setNurseryPoolName(this.discoverNurseryPoolName());
 		
 		// discover survivor space Pool name
-		String survivorSpacePoolName = this.discoverSurvivorSpacePoolName();
-		this.setSurvivorSpacePoolName(survivorSpacePoolName);
+		this.setSurvivorSpacePoolName(this.discoverSurvivorSpacePoolName());
 		
 		// discover tenured Pool name
-		String tenuredPoolName = this.discoverTenuredPoolName();
-		this.setTenuredPoolName(tenuredPoolName);
+		this.setTenuredPoolName(this.discoverTenuredPoolName());
 		
 		try {
-			nurseryPoolObjectName = new ObjectName("java.lang:type=MemoryPool,name=" + nurseryPoolName);
-			survivorSpacePoolObjectName = new ObjectName("java.lang:type=MemoryPool,name=" + survivorSpacePoolName);
-			tenuredPoolObjectName = new ObjectName("java.lang:type=MemoryPool,name=" + tenuredPoolName);
+			this.nurseryPoolObjectName = new ObjectName("java.lang:type=MemoryPool,name=" + nurseryPoolName);
+			this.survivorSpacePoolObjectName = new ObjectName("java.lang:type=MemoryPool,name=" + survivorSpacePoolName);
+			this.tenuredPoolObjectName = new ObjectName("java.lang:type=MemoryPool,name=" + tenuredPoolName);
 		} catch (MalformedObjectNameException e) {
-			throw new Exception( "JMX MalformedObjectNameException: " + e.getMessage() );
+			throw new MBeanInitException( e, "JMX MalformedObjectNameException: " + e.getMessage() );
 		}
 		
-		this.nurseryPoolObjectName = nurseryPoolObjectName;
-		this.survivorSpacePoolObjectName = survivorSpacePoolObjectName;
-		this.tenuredPoolObjectName = tenuredPoolObjectName;
-
 	}
 
 	public String getNurseryPoolName() {
@@ -118,9 +116,9 @@ public class MemoryPoolMXBeanHelper {
 
 	}
 	
-	private String discoverNurseryPoolName( ) throws Exception {
+	private String discoverNurseryPoolName( ) throws MBeanDiscoveryException {
 		
-		String nurseryPoolName = null;
+		String poolName = null;
 				
 		for (MemoryPoolMXBean memPoolMXBean : memPoolMXBeans) {
 			
@@ -129,21 +127,21 @@ public class MemoryPoolMXBeanHelper {
 			
     		if (    mpName.endsWith("Eden Space") ||
 					mpName.equals("Nursery")) {
-    			nurseryPoolName = mpName;
+    			poolName = mpName;
     		}
 			
 		}
-		LOGGER.fine("Nursery Pool Name = " + nurseryPoolName);
-		if (nurseryPoolName == null) {
-			throw new Exception("Unable to auto discover nursery pool name.");
+		LOGGER.fine("Nursery Pool Name = " + poolName);
+		if (poolName == null) {
+			throw new MBeanDiscoveryException("Unable to auto discover nursery pool name.");
 		}
-		return nurseryPoolName;
+		return poolName;
 		
 	}
 	
-	private String discoverSurvivorSpacePoolName( ) throws Exception {
+	private String discoverSurvivorSpacePoolName( ) throws MBeanDiscoveryException {
 		
-		String survivorSpacePoolName = null;
+		String poolName = null;
 				
 		for (MemoryPoolMXBean memPoolMXBean : memPoolMXBeans) {
 			
@@ -151,21 +149,21 @@ public class MemoryPoolMXBeanHelper {
 			LOGGER.finest("Memory Pool MX Bean Name = " + mpName);
 			
     		if (mpName.endsWith("Survivor Space")) {
-    			survivorSpacePoolName = mpName;
+    			poolName = mpName;
     		}
 			
 		}
-		LOGGER.fine("Survivor Space Pool Name = " + survivorSpacePoolName);
+		LOGGER.fine("Survivor Space Pool Name = " + poolName);
 		if (nurseryPoolName == null) {
-			throw new Exception("Unable to auto discover survivor space pool name.");
+			throw new MBeanDiscoveryException("Unable to auto discover survivor space pool name.");
 		}
-		return survivorSpacePoolName;
+		return poolName;
 		
 	}
 	
-	private String discoverTenuredPoolName( ) throws Exception {
+	private String discoverTenuredPoolName( ) throws MBeanDiscoveryException {
 		
-		String tenuredPoolName = null;
+		String poolName = null;
 				
 		for (MemoryPoolMXBean memPoolMXBean : memPoolMXBeans) {
 			
@@ -175,39 +173,39 @@ public class MemoryPoolMXBeanHelper {
 			if (    mpName.equals("Tenured Gen") ||
 					mpName.endsWith("Old Gen") ||
 					mpName.equals("Old Space")) {
-    			tenuredPoolName = mpName;
+    			poolName = mpName;
     		}
 			
 		}
-		LOGGER.fine("Tenured Pool Name = " + tenuredPoolName);
+		LOGGER.fine("Tenured Pool Name = " + poolName);
 		if (nurseryPoolName == null) {
-			throw new Exception("Unable to auto discover tenured pool name.");
+			throw new MBeanDiscoveryException("Unable to auto discover tenured pool name.");
 		}
-		return tenuredPoolName;
+		return poolName;
 		
 	}
 	
-	public long getNurseryHeapUsed( ) throws Exception {
+	public long getNurseryHeapUsed( ) throws MBeanRuntimeException {
 		
 		long nurseryHeapUsed;
-		
+
 		nurseryHeapUsed = getHeapUsed( nurseryPoolObjectName );
-		
+
 		return nurseryHeapUsed;
 		
 	}
 	
-	public long getSurvivorSpaceUsed( ) throws Exception {
+	public long getSurvivorSpaceUsed( ) throws MBeanRuntimeException {
 		
 		long survivorSpaceUsed;
-		
+
 		survivorSpaceUsed = getHeapUsed( survivorSpacePoolObjectName );
-		
+
 		return survivorSpaceUsed;
 		
 	}
 	
-	public long getTenuredHeapUsed( ) throws Exception {
+	public long getTenuredHeapUsed( ) throws MBeanRuntimeException {
 		
 		long tenuredHeapUsed;
 		
@@ -217,7 +215,7 @@ public class MemoryPoolMXBeanHelper {
 		
 	}
 	
-	private long getHeapUsed( ObjectName objectName ) throws Exception {
+	private long getHeapUsed( ObjectName objectName ) throws MBeanRuntimeException {
 		
 		long heapUsed = 0;
 		
@@ -225,19 +223,21 @@ public class MemoryPoolMXBeanHelper {
 			MemoryUsage memoryUsage = MemoryUsage.from( (CompositeData) mbsc.getAttribute( objectName, "Usage" ) );
 			heapUsed = (long) memoryUsage.getUsed();
 		} catch (AttributeNotFoundException e) {
-			throw new Exception( "JMX AttributeNotFoundException: " + e.getMessage() );
+			throw new MBeanRuntimeException( e, "JMX AttributeNotFoundException: " + e.getMessage() );
 		} catch (InstanceNotFoundException e) {
-			throw new Exception( "JMX InstanceNotFoundException: " + e.getMessage() );
+			throw new MBeanRuntimeException( e, "JMX InstanceNotFoundException: " + e.getMessage() );
 		} catch (MBeanException e) {
-			throw new Exception( "JMX MBeanException: " + e.getMessage() );
+			throw new MBeanRuntimeException( e, "JMX MBeanException: " + e.getMessage() );
 		} catch (ReflectionException e) {
-			throw new Exception( "JMX ReflectionException: " + e.getMessage() );
+			throw new MBeanRuntimeException( e, "JMX ReflectionException: " + e.getMessage() );
+		} catch (IOException e) {
+			throw new MBeanRuntimeException( e, "JMX IOException: " + e.getMessage() );
 		}
-		
+
 		return heapUsed;
 	}
 	
-	public long getNurseryHeapCommitted( ) throws Exception {
+	public long getNurseryHeapCommitted( ) throws MBeanRuntimeException {
 		
 		long nurseryHeapCommitted;
 		
@@ -247,7 +247,7 @@ public class MemoryPoolMXBeanHelper {
 		
 	}
 	
-	public long getSurvivorSpaceCommitted( ) throws Exception {
+	public long getSurvivorSpaceCommitted( ) throws MBeanRuntimeException {
 		
 		long survivorSpaceCommitted;
 		
@@ -257,7 +257,7 @@ public class MemoryPoolMXBeanHelper {
 		
 	}
 	
-	public long getTenuredHeapCommitted( ) throws Exception {
+	public long getTenuredHeapCommitted( ) throws MBeanRuntimeException {
 		
 		long tenuredHeapCommitted;
 		
@@ -267,7 +267,7 @@ public class MemoryPoolMXBeanHelper {
 		
 	}
 	
-	private long getHeapCommitted( ObjectName objectName ) throws Exception {
+	private long getHeapCommitted( ObjectName objectName ) throws MBeanRuntimeException {
 		
 		long heapCommitted = 0;
 		
@@ -275,19 +275,21 @@ public class MemoryPoolMXBeanHelper {
 			MemoryUsage memoryUsage = MemoryUsage.from( (CompositeData) mbsc.getAttribute( objectName, "Usage" ) );
 			heapCommitted = (long) memoryUsage.getCommitted();
 		} catch (AttributeNotFoundException e) {
-			throw new Exception( "JMX AttributeNotFoundException: " + e.getMessage() );
+			throw new MBeanRuntimeException( e, "JMX AttributeNotFoundException: " + e.getMessage() );
 		} catch (InstanceNotFoundException e) {
-			throw new Exception( "JMX InstanceNotFoundException: " + e.getMessage() );
+			throw new MBeanRuntimeException( e, "JMX InstanceNotFoundException: " + e.getMessage() );
 		} catch (MBeanException e) {
-			throw new Exception( "JMX MBeanException: " + e.getMessage() );
+			throw new MBeanRuntimeException( e, "JMX MBeanException: " + e.getMessage() );
 		} catch (ReflectionException e) {
-			throw new Exception( "JMX ReflectionException: " + e.getMessage() );
+			throw new MBeanRuntimeException( e, "JMX ReflectionException: " + e.getMessage() );
+		} catch (IOException e) {
+			throw new MBeanRuntimeException( e, "JMX IOException: " + e.getMessage() );
 		}
-		
+
 		return heapCommitted;
 	}
 	
-	public long getNurseryCollectionUsed( ) throws Exception {
+	public long getNurseryCollectionUsed( ) throws MBeanRuntimeException {
 		
 		long nurseryCollectionUsed;
 		
@@ -297,7 +299,7 @@ public class MemoryPoolMXBeanHelper {
 		
 	}
 	
-	public long getSurvivorCollectionUsed( ) throws Exception {
+	public long getSurvivorCollectionUsed( ) throws MBeanRuntimeException {
 		
 		long survivorCollectionUsed;
 		
@@ -307,7 +309,7 @@ public class MemoryPoolMXBeanHelper {
 		
 	}
 	
-	public long getTenuredCollectionUsed( ) throws Exception {
+	public long getTenuredCollectionUsed( ) throws MBeanRuntimeException {
 		
 		long tenuredCollectionUsed;
 		
@@ -317,7 +319,7 @@ public class MemoryPoolMXBeanHelper {
 		
 	}
 	
-	private long getCollectionUsed( ObjectName objectName ) throws Exception {
+	private long getCollectionUsed( ObjectName objectName ) throws MBeanRuntimeException {
 		
 		long collectionUsed = 0;
 		
@@ -325,19 +327,21 @@ public class MemoryPoolMXBeanHelper {
 			MemoryUsage memoryUsage = MemoryUsage.from( (CompositeData) mbsc.getAttribute( objectName, "CollectionUsage" ) );
 			collectionUsed = (long) memoryUsage.getUsed();
 		} catch (AttributeNotFoundException e) {
-			throw new Exception( "JMX AttributeNotFoundException: " + e.getMessage() );
+			throw new MBeanRuntimeException( e, "JMX AttributeNotFoundException: " + e.getMessage() );
 		} catch (InstanceNotFoundException e) {
-			throw new Exception( "JMX InstanceNotFoundException: " + e.getMessage() );
+			throw new MBeanRuntimeException( e, "JMX InstanceNotFoundException: " + e.getMessage() );
 		} catch (MBeanException e) {
-			throw new Exception( "JMX MBeanException: " + e.getMessage() );
+			throw new MBeanRuntimeException( e, "JMX MBeanException: " + e.getMessage() );
 		} catch (ReflectionException e) {
-			throw new Exception( "JMX ReflectionException: " + e.getMessage() );
+			throw new MBeanRuntimeException( e, "JMX ReflectionException: " + e.getMessage() );
+		} catch (IOException e) {
+			throw new MBeanRuntimeException( e, "JMX IOException: " + e.getMessage() );
 		}
-		
+
 		return collectionUsed;
 	}
 	
-	public long getNurseryCollectionCommitted( ) throws Exception {
+	public long getNurseryCollectionCommitted( ) throws MBeanRuntimeException {
 		
 		long nurseryCollectionCommitted;
 		
@@ -347,7 +351,7 @@ public class MemoryPoolMXBeanHelper {
 		
 	}
 	
-	public long getSurvivorCollectionCommitted( ) throws Exception {
+	public long getSurvivorCollectionCommitted( ) throws MBeanRuntimeException {
 		
 		long survivorCollectionCommitted;
 		
@@ -357,7 +361,7 @@ public class MemoryPoolMXBeanHelper {
 		
 	}
 	
-	public long getTenuredCollectionCommitted( ) throws Exception {
+	public long getTenuredCollectionCommitted( ) throws MBeanRuntimeException {
 		
 		long tenuredCollectionCommitted;
 		
@@ -367,7 +371,7 @@ public class MemoryPoolMXBeanHelper {
 		
 	}
 	
-	private long getCollectionCommitted( ObjectName objectName ) throws Exception {
+	private long getCollectionCommitted( ObjectName objectName ) throws MBeanRuntimeException {
 		
 		long collectionCommitted = 0;
 		
@@ -375,93 +379,99 @@ public class MemoryPoolMXBeanHelper {
 			MemoryUsage collectionUsage = MemoryUsage.from( (CompositeData) mbsc.getAttribute( objectName, "CollectionUsage" ) );
 			collectionCommitted = (long) collectionUsage.getCommitted();
 		} catch (AttributeNotFoundException e) {
-			throw new Exception( "JMX AttributeNotFoundException: " + e.getMessage() );
+			throw new MBeanRuntimeException( e, "JMX AttributeNotFoundException: " + e.getMessage() );
 		} catch (InstanceNotFoundException e) {
-			throw new Exception( "JMX InstanceNotFoundException: " + e.getMessage() );
+			throw new MBeanRuntimeException( e, "JMX InstanceNotFoundException: " + e.getMessage() );
 		} catch (MBeanException e) {
-			throw new Exception( "JMX MBeanException: " + e.getMessage() );
+			throw new MBeanRuntimeException( e, "JMX MBeanException: " + e.getMessage() );
 		} catch (ReflectionException e) {
-			throw new Exception( "JMX ReflectionException: " + e.getMessage() );
+			throw new MBeanRuntimeException( e, "JMX ReflectionException: " + e.getMessage() );
+		} catch (IOException e) {
+			throw new MBeanRuntimeException( e, "JMX IOException: " + e.getMessage() );
 		}
-		
+
 		return collectionCommitted;
 	}
 
-	public void setNurseryCollectionUsageThreshold( long threshold ) throws Exception {
-		
+	public void setNurseryCollectionUsageThreshold( long threshold ) throws MBeanRuntimeException {
+
 		setCollectionUsageThreshold(nurseryPoolObjectName, threshold);
 		
 	}
 	
-	public void setSurvivorCollectionUsageThreshold( long threshold ) throws Exception {
+	public void setSurvivorCollectionUsageThreshold( long threshold ) throws MBeanRuntimeException {
 		
 		setCollectionUsageThreshold(survivorSpacePoolObjectName, threshold);
 		
 	}
 	
-	public void setTenuredCollectionUsageThreshold( long threshold ) throws Exception {
+	public void setTenuredCollectionUsageThreshold( long threshold ) throws MBeanRuntimeException {
 		
 		setCollectionUsageThreshold(tenuredPoolObjectName, threshold);
 		
 	}
 	
-	private void setCollectionUsageThreshold( ObjectName objectName, long threshold ) throws Exception {
+	private void setCollectionUsageThreshold( ObjectName objectName, long threshold ) throws MBeanRuntimeException {
 	
 		Attribute collectionUsageThreshold = new Attribute("CollectionUsageThreshold", threshold);
 		try {
 			mbsc.setAttribute(objectName, collectionUsageThreshold);
 		} catch (InstanceNotFoundException e) {
-			throw new Exception( "JMX InstanceNotFoundException: " + e.getMessage() );
+			throw new MBeanRuntimeException( e, "JMX InstanceNotFoundException: " + e.getMessage() );
 		} catch (InvalidAttributeValueException e) {
-			throw new Exception( "JMX InvalidAttributeValueException: " + e.getMessage() );
+			throw new MBeanRuntimeException( e, "JMX InvalidAttributeValueException: " + e.getMessage() );
 		} catch (AttributeNotFoundException e) {
-			throw new Exception( "JMX AttributeNotFoundException: " + e.getMessage() );
+			throw new MBeanRuntimeException( e, "JMX AttributeNotFoundException: " + e.getMessage() );
 		} catch (ReflectionException e) {
-			throw new Exception( "JMX ReflectionException: " + e.getMessage() );
+			throw new MBeanRuntimeException( e, "JMX ReflectionException: " + e.getMessage() );
 		} catch (MBeanException e) {
-			throw new Exception( "JMX MBeanException: " + e.getMessage() );
+			throw new MBeanRuntimeException( e, "JMX MBeanException: " + e.getMessage() );
+		} catch (IOException e) {
+			throw new MBeanRuntimeException( e, "JMX IOException: " + e.getMessage() );
 		}
-		
+
 	}
 	
-	public void setNurseryUsageThreshold( long threshold ) throws Exception {
+	public void setNurseryUsageThreshold( long threshold ) throws MBeanRuntimeException {
 		
 		setUsageThreshold(nurseryPoolObjectName, threshold);
 		
 	}
 	
-	public void setSurvivorUsageThreshold( long threshold ) throws Exception {
+	public void setSurvivorUsageThreshold( long threshold ) throws MBeanRuntimeException {
 		
 		setUsageThreshold(survivorSpacePoolObjectName, threshold);
 		
 	}
 	
-	public void setTenuredUsageThreshold( long threshold ) throws Exception {
+	public void setTenuredUsageThreshold( long threshold ) throws MBeanRuntimeException {
 		
 		setUsageThreshold(tenuredPoolObjectName, threshold);
 		
 	}
 	
-	private void setUsageThreshold( ObjectName objectName, long threshold ) throws Exception {
+	private void setUsageThreshold( ObjectName objectName, long threshold ) throws MBeanRuntimeException {
 	
 		Attribute usageThreshold = new Attribute("UsageThreshold", threshold);
 		try {
 			mbsc.setAttribute(objectName, usageThreshold);
 		} catch (InstanceNotFoundException e) {
-			throw new Exception( "JMX InstanceNotFoundException: " + e.getMessage() );
+			throw new MBeanRuntimeException( e, "JMX InstanceNotFoundException: " + e.getMessage() );
 		} catch (InvalidAttributeValueException e) {
-			throw new Exception( "JMX InvalidAttributeValueException: " + e.getMessage() );
+			throw new MBeanRuntimeException( e, "JMX InvalidAttributeValueException: " + e.getMessage() );
 		} catch (AttributeNotFoundException e) {
-			throw new Exception( "JMX AttributeNotFoundException: " + e.getMessage() );
+			throw new MBeanRuntimeException( e, "JMX AttributeNotFoundException: " + e.getMessage() );
 		} catch (ReflectionException e) {
-			throw new Exception( "JMX ReflectionException: " + e.getMessage() );
+			throw new MBeanRuntimeException( e, "JMX ReflectionException: " + e.getMessage() );
 		} catch (MBeanException e) {
-			throw new Exception( "JMX MBeanException: " + e.getMessage() );
+			throw new MBeanRuntimeException( e, "JMX MBeanException: " + e.getMessage() );
+		} catch (IOException e) {
+			throw new MBeanRuntimeException( e, "JMX IOException: " + e.getMessage() );
 		}
-		
+
 	}
 	
-	public long getNurseryPeakUsed( ) throws Exception {
+	public long getNurseryPeakUsed( ) throws MBeanRuntimeException {
 		
 		long nurseryPeakUsed;
 		
@@ -471,7 +481,7 @@ public class MemoryPoolMXBeanHelper {
 		
 	}
 	
-	public long getSurvivorPeakUsed( ) throws Exception {
+	public long getSurvivorPeakUsed( ) throws MBeanRuntimeException {
 		
 		long survivorPeakUsed;
 		
@@ -481,7 +491,7 @@ public class MemoryPoolMXBeanHelper {
 		
 	}
 	
-	public long getTenuredPeakUsed( ) throws Exception {
+	public long getTenuredPeakUsed( ) throws MBeanRuntimeException {
 		
 		long tenuredPeakUsed;
 		
@@ -491,7 +501,7 @@ public class MemoryPoolMXBeanHelper {
 		
 	}
 	
-	private long getPeakUsed( ObjectName objectName ) throws Exception {
+	private long getPeakUsed( ObjectName objectName ) throws MBeanRuntimeException {
 		
 		long peakUsed = 0;
 		
@@ -499,48 +509,52 @@ public class MemoryPoolMXBeanHelper {
 			MemoryUsage peakMemoryUsage = MemoryUsage.from( (CompositeData) mbsc.getAttribute( objectName, "PeakUsage" ) );
 			peakUsed = (long) peakMemoryUsage.getUsed();
 		} catch (AttributeNotFoundException e) {
-			throw new Exception( "JMX AttributeNotFoundException: " + e.getMessage() );
+			throw new MBeanRuntimeException( e, "JMX AttributeNotFoundException: " + e.getMessage() );
 		} catch (InstanceNotFoundException e) {
-			throw new Exception( "JMX InstanceNotFoundException: " + e.getMessage() );
+			throw new MBeanRuntimeException( e, "JMX InstanceNotFoundException: " + e.getMessage() );
 		} catch (MBeanException e) {
-			throw new Exception( "JMX MBeanException: " + e.getMessage() );
+			throw new MBeanRuntimeException( e, "JMX MBeanException: " + e.getMessage() );
 		} catch (ReflectionException e) {
-			throw new Exception( "JMX ReflectionException: " + e.getMessage() );
+			throw new MBeanRuntimeException( e, "JMX ReflectionException: " + e.getMessage() );
+		} catch (IOException e) {
+			throw new MBeanRuntimeException( e, "JMX IOException: " + e.getMessage() );
 		}
-		
+
 		return peakUsed;
 	}
 	
-	public void resetNurseryPeakUsage( ) throws Exception {
+	public void resetNurseryPeakUsage( ) throws MBeanRuntimeException {
 		
 		resetPeakUsage( nurseryPoolObjectName );
 		
 	}
 	
-	public void resetSurvivorPeakUsage( ) throws Exception {
+	public void resetSurvivorPeakUsage( ) throws MBeanRuntimeException {
 		
 		resetPeakUsage( survivorSpacePoolObjectName );
 		
 	}
 	
-	public void resetTenuredPeakUsage( ) throws Exception {
+	public void resetTenuredPeakUsage( ) throws MBeanRuntimeException {
 		
 		resetPeakUsage( tenuredPoolObjectName );
 		
 	}
 	
-	private void resetPeakUsage( ObjectName objectName ) throws Exception {
+	private void resetPeakUsage( ObjectName objectName ) throws MBeanRuntimeException {
 		
 		try {
 			mbsc.invoke(objectName, "resetPeakUsage", null, null);
 		} catch (InstanceNotFoundException e) {
-			throw new Exception( "JMX InstanceNotFoundException: " + e.getMessage() );
+			throw new MBeanRuntimeException( e, "JMX InstanceNotFoundException: " + e.getMessage() );
 		} catch (MBeanException e) {
-			throw new Exception( "JMX MBeanException: " + e.getMessage() );
+			throw new MBeanRuntimeException( e, "JMX MBeanException: " + e.getMessage() );
 		} catch (ReflectionException e) {
-			throw new Exception( "JMX ReflectionException: " + e.getMessage() );
+			throw new MBeanRuntimeException( e, "JMX ReflectionException: " + e.getMessage() );
+		} catch (IOException e) {
+			throw new MBeanRuntimeException( e, "JMX IOException: " + e.getMessage() );
 		}
-		
+
 	}
 
 }

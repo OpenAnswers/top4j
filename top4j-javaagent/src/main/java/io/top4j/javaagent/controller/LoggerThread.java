@@ -18,6 +18,7 @@ package io.top4j.javaagent.controller;
 
 import io.top4j.javaagent.config.Configurator;
 import io.top4j.javaagent.config.Constants;
+import io.top4j.javaagent.exception.MBeanAccessException;
 import io.top4j.javaagent.mbeans.logger.StatsLoggerMXBean;
 import io.top4j.javaagent.messaging.LoggerQueue;
 
@@ -53,7 +54,7 @@ public class LoggerThread extends Thread {
         try {
             statsLoggerObjectName = new ObjectName(Constants.DOMAIN + ":" + "type=" + Constants.AGENT_TYPE + ",statsType=" + Constants.STATS_LOGGER_TYPE);
         } catch (MalformedObjectNameException e) {
-            throw new Exception( "JMX MalformedObjectNameException: " + e.getMessage() );
+            throw new MBeanAccessException( e, "JMX MalformedObjectNameException: " + e.getMessage() );
         }
         // instantiate new statsLoggerMXBean proxy based on statsLoggerObjectName
         this.statsLogger = JMX.newMBeanProxy(mbs, statsLoggerObjectName, StatsLoggerMXBean.class);
@@ -66,11 +67,9 @@ public class LoggerThread extends Thread {
         while ( !isInterrupted( ) ) {
             // poll loggerQueue for log stats notification
             String notification = loggerQueue.poll(interval);
-            if (notification != null) {
-                if (statsLoggerEnabled) {
-                    // log JVM stats
-                    statsLogger.update();
-                }
+            if (notification != null && statsLoggerEnabled) {
+                // log JVM stats
+                statsLogger.update();
             }
         }
     }

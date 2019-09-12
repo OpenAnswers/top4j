@@ -42,8 +42,7 @@ public class ThreadHelper {
         if (threadInfo != null) {
             // get stack trace
             stackTraceElements = threadInfo.getStackTrace();
-        }
-        else {
+        } else {
             // assume thread has terminated
             stackTraceElements = null;
         }
@@ -78,8 +77,8 @@ public class ThreadHelper {
 		if (stackTraceElements != null) {
 
 			return getStackTraceAsString(stackTraceElements);
-		}
-		else {
+
+		} else {
 
 			return "No stack trace available.";
 		}
@@ -104,8 +103,7 @@ public class ThreadHelper {
 			threadState = threadInfo.getThreadState().toString();
 			// get stack trace
 			stackTraceElements = threadInfo.getStackTrace();
-		}
-		else {
+		} else {
 			// assume thread has terminated
 			threadName = "TERMINATED";
 			threadState = Thread.State.TERMINATED.toString();
@@ -119,8 +117,7 @@ public class ThreadHelper {
 		if (stackTraceElements != null) {
 
 			sb.append( getStackTraceAsString(stackTraceElements) );
-		}
-		else {
+		} else {
 
 			sb.append("No stack trace available.");
 		}
@@ -151,8 +148,7 @@ public class ThreadHelper {
         if (threadInfo != null) {
             // get thread state
             return threadInfo.getThreadState();
-        }
-        else {
+        } else {
             // assume thread has terminated
             return null;
         }

@@ -16,6 +16,8 @@
 
 package io.top4j.javaagent.mbeans.jvm.gc;
 
+import io.top4j.javaagent.exception.MBeanInitException;
+
 import javax.management.MBeanServerConnection;
 import java.util.logging.Logger;
 
@@ -36,7 +38,7 @@ public class GCOverhead {
 			this.gcMXBeanHelper = new GarbageCollectorMXBeanHelper( mbsc );
 			this.gcTimeBean = new GCTimeBean( mbsc );
 		} catch (Exception e) {
-			throw new Exception( "Failed to initialise GC Overhead stats collector due to: " + e.getMessage() );
+			throw new MBeanInitException( e, "Failed to initialise GC Overhead stats collector due to: " + e.getMessage() );
 		}
 
 	}

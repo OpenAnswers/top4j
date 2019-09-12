@@ -18,6 +18,7 @@ package io.top4j.javaagent.mbeans.jvm.memory;
 
 import java.util.logging.Logger;
 
+import io.top4j.javaagent.exception.MBeanInitException;
 import io.top4j.javaagent.mbeans.jvm.gc.GarbageCollectorMXBeanHelper;
 
 import javax.management.MBeanServerConnection;
@@ -53,7 +54,7 @@ public class MemoryPoolUsageTracker {
 		try {
 			this.gcMXBeanHelper = new GarbageCollectorMXBeanHelper( mbsc );
 		} catch (Exception e) {
-			throw new Exception( "Failed to initialise Memory Pool Usage Tracker due to: " + e.getMessage() );
+			throw new MBeanInitException( e, "Failed to initialise Memory Pool Usage Tracker due to: " + e.getMessage() );
 		}
 
 		String memoryPoolName;
@@ -169,8 +170,7 @@ public class MemoryPoolUsageTracker {
 		// calculate memory pool usage since last update
 		if (poolName.equals("Survivor")) {
 			memoryPoolUsage = memoryPoolCollectionUsed * intervalGCCount;
-		}
-		else {
+		} else {
 			memoryPoolUsage = ( memoryPoolPeakUsed - lastMemoryPoolCollectionUsageUsed ) * intervalGCCount;
 		}
 		LOGGER.finer(poolName + " memoryPoolUsage = " + memoryPoolUsage);
@@ -206,7 +206,7 @@ public class MemoryPoolUsageTracker {
 					memoryPoolCollectionUsed = memoryPoolMxBeanHelper.getTenuredCollectionUsed();
 					break;
 				default:
-					throw new RuntimeException("Unknown pool name: " + poolName);
+					throw new IllegalStateException("Unknown pool name: " + poolName);
 
 			}
         } catch (Exception e) {
@@ -233,7 +233,7 @@ public class MemoryPoolUsageTracker {
                     memoryPoolPeakUsed = memoryPoolMxBeanHelper.getTenuredPeakUsed();
                     break;
 				default:
-					throw new RuntimeException("Unknown pool name: " + poolName);
+					throw new IllegalStateException("Unknown pool name: " + poolName);
 
             }
         } catch (Exception e) {
@@ -258,7 +258,7 @@ public class MemoryPoolUsageTracker {
                     memoryPoolMxBeanHelper.resetTenuredPeakUsage();
                     break;
 				default:
-					throw new RuntimeException("Unknown pool name: " + poolName);
+					throw new IllegalStateException("Unknown pool name: " + poolName);
 
             }
         } catch (Exception e) {
@@ -284,7 +284,7 @@ public class MemoryPoolUsageTracker {
 					gcCount = gcMXBeanHelper.getTenuredGCCount();
 					break;
 				default:
-					throw new RuntimeException("Unknown pool name: " + poolName);
+					throw new IllegalStateException("Unknown pool name: " + poolName);
 
 			}
 		} catch (Exception e) {

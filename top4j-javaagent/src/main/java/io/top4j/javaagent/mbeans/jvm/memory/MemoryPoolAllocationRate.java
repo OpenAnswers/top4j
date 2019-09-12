@@ -16,9 +16,11 @@
 
 package io.top4j.javaagent.mbeans.jvm.memory;
 
+import java.io.IOException;
 import java.util.logging.Logger;
 
 import io.top4j.javaagent.config.Constants;
+import io.top4j.javaagent.exception.MBeanInitException;
 import io.top4j.javaagent.mbeans.jvm.gc.GCTimeBean;
 import io.top4j.javaagent.mbeans.jvm.gc.GarbageCollectorMXBeanHelper;
 
@@ -37,7 +39,7 @@ public class MemoryPoolAllocationRate {
 	
 	private static final Logger LOGGER = Logger.getLogger(MemoryPoolAllocationRate.class.getName());
 	
-	public MemoryPoolAllocationRate ( MBeanServerConnection mbsc, String poolName, MemoryPoolUsageTracker memoryPoolUsageTracker ) throws Exception {
+	public MemoryPoolAllocationRate ( MBeanServerConnection mbsc, String poolName, MemoryPoolUsageTracker memoryPoolUsageTracker ) throws MBeanInitException {
 		
 		LOGGER.fine("Initialising " + poolName + " allocation rate....");
 		
@@ -51,7 +53,7 @@ public class MemoryPoolAllocationRate {
         try {
 		    this.memoryPoolMxBeanHelper = new MemoryPoolMXBeanHelper( mbsc );
         } catch (Exception e) {
-            throw new Exception( "Failed to initialise " + poolName + " Allocation Rate stats collector due to: " + e.getMessage() );
+            throw new MBeanInitException( e, "Failed to initialise " + poolName + " Allocation Rate stats collector due to: " + e.getMessage() );
         }
 
 		// instantiate new GarbageCollectorMXBeanHelper and GCTimeBean
@@ -59,7 +61,7 @@ public class MemoryPoolAllocationRate {
 			this.gcMXBeanHelper = new GarbageCollectorMXBeanHelper( mbsc );
 			this.gcTimeBean = new GCTimeBean( mbsc );
 		} catch (Exception e) {
-			throw new Exception( "Failed to initialise " + poolName + " Allocation Rate stats collector due to: " + e.getMessage() );
+			throw new MBeanInitException( e, "Failed to initialise " + poolName + " Allocation Rate stats collector due to: " + e.getMessage() );
 		}
 
 		String memoryPoolName;
@@ -82,9 +84,13 @@ public class MemoryPoolAllocationRate {
 		
 		LOGGER.fine("Memory Pool Name = " + memoryPoolName);
 		this.setMemoryPoolName(memoryPoolName);
-		
-		this.memoryPoolUsageBean = new MemoryPoolUsageBean( mbsc, memoryPoolName );
-		
+
+		try {
+			this.memoryPoolUsageBean = new MemoryPoolUsageBean( mbsc, memoryPoolName );
+		} catch (IOException e) {
+			throw new MBeanInitException( e, "Failed to initialise " + poolName + " Allocation Rate stats collector due to: " + e.getMessage() );
+		}
+
 	}
 	
 	/** Update Memory Pool Allocation Rate. */
@@ -130,8 +136,7 @@ public class MemoryPoolAllocationRate {
     	
 		if (intervalGCCount == 0) {
 			intervalMemoryUsageUsed = memoryPoolUsageUsed - memoryPoolUsageBean.getLastMemoryPoolUsageUsed();
-		}
-		else {
+		} else {
 			// update memoryPoolUsageTracker - just in case the CollectionListener hasn't been able to keep up with demand
 			memoryPoolUsageTracker.update();
 			intervalMemoryUsageUsed = memoryPoolUsageTracker.getAndResetMemoryPoolIntervalUsage();
@@ -174,7 +179,7 @@ public class MemoryPoolAllocationRate {
                     memoryPoolUsageUsed = memoryPoolMxBeanHelper.getTenuredHeapUsed();
                     break;
                 default:
-                    throw new RuntimeException("Unknown pool name: " + poolName);
+                    throw new IllegalStateException("Unknown pool name: " + poolName);
 
             }
         } catch (Exception e) {
@@ -202,7 +207,7 @@ public class MemoryPoolAllocationRate {
                     memoryPoolUsageCommitted = memoryPoolMxBeanHelper.getTenuredHeapCommitted();
                     break;
 				default:
-					throw new RuntimeException("Unknown pool name: " + poolName);
+					throw new IllegalStateException("Unknown pool name: " + poolName);
 
             }
         } catch (Exception e) {
@@ -229,7 +234,7 @@ public class MemoryPoolAllocationRate {
                     memoryPoolCollectionUsed = memoryPoolMxBeanHelper.getTenuredCollectionUsed();
                     break;
 				default:
-					throw new RuntimeException("Unknown pool name: " + poolName);
+					throw new IllegalStateException("Unknown pool name: " + poolName);
 
             }
         } catch (Exception e) {
@@ -256,7 +261,7 @@ public class MemoryPoolAllocationRate {
 						gcCount = gcMXBeanHelper.getTenuredGCCount();
 						break;
 					default:
-						throw new RuntimeException("Unknown pool name: " + poolName);
+						throw new IllegalStateException("Unknown pool name: " + poolName);
 
 				}
 

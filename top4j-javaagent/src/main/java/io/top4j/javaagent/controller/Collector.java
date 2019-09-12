@@ -26,6 +26,7 @@ import javax.management.ObjectName;
 
 import io.top4j.javaagent.config.Configurator;
 import io.top4j.javaagent.config.Constants;
+import io.top4j.javaagent.exception.MBeanAccessException;
 import io.top4j.javaagent.mbeans.jvm.JVMStatsMXBean;
 
 public class Collector extends TimerTask {
@@ -33,7 +34,7 @@ public class Collector extends TimerTask {
 	private JVMStatsMXBean jvmStats;
 	private boolean statsLoggerEnabled;
 
-	public Collector ( Configurator config ) throws Exception {
+	public Collector ( Configurator config ) throws MBeanAccessException {
 		
         this.statsLoggerEnabled = config.isStatsLoggerEnabled();
         
@@ -47,7 +48,7 @@ public class Collector extends TimerTask {
 			this.jvmStats = JMX.newMBeanProxy(mbs, jvmStatsObjectName, JVMStatsMXBean.class);
 
 		} catch (MalformedObjectNameException e) {
-			throw new Exception( "JMX MalformedObjectNameException: " + e.getMessage() );
+			throw new MBeanAccessException( e, "JMX MalformedObjectNameException: " + e.getMessage() );
 		}
 		
 	}
@@ -71,7 +72,7 @@ public class Collector extends TimerTask {
 		
 	}
 
-    public void updateStats( ) {
+    private void updateStats( ) {
     	
     	// update JVM stats
     	jvmStats.update();

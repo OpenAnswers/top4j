@@ -17,6 +17,8 @@
 package io.top4j.javaagent.utils;
 
 import io.top4j.javaagent.config.Constants;
+import io.top4j.javaagent.exception.MBeanInitException;
+import io.top4j.javaagent.exception.MBeanRuntimeException;
 
 import java.lang.management.ManagementFactory;
 
@@ -38,28 +40,28 @@ public class MBeanHelper {
 	private MBeanServer mbs = ManagementFactory.getPlatformMBeanServer();
 	private ObjectName objectName;
 	
-	public MBeanHelper ( String type, String statsType ) throws Exception {
+	public MBeanHelper ( String type, String statsType ) throws MBeanInitException {
 		
 		ObjectName objectName = null;
 		
 		try {
 			objectName = new ObjectName(Constants.DOMAIN + ":type=" + type + ",statsType=" + statsType);
 		} catch (MalformedObjectNameException e) {
-			throw new Exception( "JMX MalformedObjectNameException: " + e.getMessage() );
+			throw new MBeanInitException( e, "JMX MalformedObjectNameException: " + e.getMessage() );
 		}
 
 		this.objectName = objectName;
 
 	}
 	
-	public MBeanHelper ( String type, String statsType, String rank ) throws Exception {
+	public MBeanHelper ( String type, String statsType, String rank ) throws MBeanInitException {
 		
 		ObjectName objectName = null;
 		
 		try {
 			objectName = new ObjectName(Constants.DOMAIN + ":type=" + type + ",statsType=" + statsType + ",rank=" + rank);
 		} catch (MalformedObjectNameException e) {
-			throw new Exception( "JMX MalformedObjectNameException: " + e.getMessage() );
+			throw new MBeanInitException( e, "JMX MalformedObjectNameException: " + e.getMessage() );
 		}
 		
 		this.objectName = objectName;
@@ -72,66 +74,66 @@ public class MBeanHelper {
 	
 	}
 	
-	public void registerMBean ( Object obj ) throws Exception {
+	public void registerMBean ( Object obj ) throws MBeanInitException {
 
 		try {
 			mbs.registerMBean(obj, objectName);
 		} catch (InstanceAlreadyExistsException e) {
-			throw new Exception( "JMX InstanceAlreadyExistsException: " + e.getMessage() );
+			throw new MBeanInitException( e, "JMX InstanceAlreadyExistsException: " + e.getMessage() );
 		} catch (MBeanRegistrationException e) {
-			throw new Exception( "JMX MBeanRegistrationException: " + e.getMessage() );
+			throw new MBeanInitException( e, "JMX MBeanRegistrationException: " + e.getMessage() );
 		} catch (NotCompliantMBeanException e) {
-			throw new Exception( "JMX NotCompliantMBeanException: " + e.getMessage() );
+			throw new MBeanInitException( e, "JMX NotCompliantMBeanException: " + e.getMessage() );
 		}
 		
 	}
 	
-	public void updateMBeanAttribute ( String name, Object value ) throws Exception {
+	public void updateMBeanAttribute ( String name, Object value ) throws MBeanRuntimeException {
 		
 		// update objectName MBean attribute
     	Attribute mbeanAttribute = new Attribute(name, value );
     	try {
 			mbs.setAttribute(objectName, mbeanAttribute);
 		} catch (InstanceNotFoundException e) {
-			throw new Exception( "JMX InstanceNotFoundException: " + e.getMessage() );
+			throw new MBeanRuntimeException( e, "JMX InstanceNotFoundException: " + e.getMessage() );
 		} catch (InvalidAttributeValueException e) {
-			throw new Exception( "JMX InvalidAttributeValueException: " + e.getMessage() );
+			throw new MBeanRuntimeException( e, "JMX InvalidAttributeValueException: " + e.getMessage() );
 		} catch (AttributeNotFoundException e) {
-			throw new Exception( "JMX AttributeNotFoundException: " + e.getMessage() );
+			throw new MBeanRuntimeException( e, "JMX AttributeNotFoundException: " + e.getMessage() );
 		} catch (ReflectionException e) {
-			throw new Exception( "JMX ReflectionException: " + e.getMessage() );
+			throw new MBeanRuntimeException( e, "JMX ReflectionException: " + e.getMessage() );
 		} catch (MBeanException e) {
-			throw new Exception( "JMX MBeanException: " + e.getMessage() );
+			throw new MBeanRuntimeException( e, "JMX MBeanException: " + e.getMessage() );
 		}
     	
 	}
 	
-	public void invokeMBeanOperation ( String operationName ) throws Exception {
+	public void invokeMBeanOperation ( String operationName ) throws MBeanRuntimeException {
 		
 		// invoke objectName MBean operation
 		try {
 			mbs.invoke(objectName, operationName, null, null);
 		} catch (InstanceNotFoundException e) {
-			throw new Exception( "JMX InstanceNotFoundException: " + e.getMessage() );
+			throw new MBeanRuntimeException( e, "JMX InstanceNotFoundException: " + e.getMessage() );
 		} catch (ReflectionException e) {
-			throw new Exception( "JMX ReflectionException: " + e.getMessage() );
+			throw new MBeanRuntimeException( e, "JMX ReflectionException: " + e.getMessage() );
 		} catch (MBeanException e) {
-			throw new Exception( "JMX MBeanException: " + e.getMessage() );
+			throw new MBeanRuntimeException( e, "JMX MBeanException: " + e.getMessage() );
 		}
 	}
 	
-	public String invokeMBeanOperation ( String operationName, Object[] params, String[] signature ) throws Exception {
+	public String invokeMBeanOperation ( String operationName, Object[] params, String[] signature ) throws MBeanRuntimeException {
 		
 		String output = null;
 		// invoke objectName MBean operation
 		try {
 			output = (String) mbs.invoke(objectName, operationName, params, signature);
 		} catch (InstanceNotFoundException e) {
-			throw new Exception( "JMX InstanceNotFoundException: " + e.getMessage() );
+			throw new MBeanRuntimeException( e, "JMX InstanceNotFoundException: " + e.getMessage() );
 		} catch (ReflectionException e) {
-			throw new Exception( "JMX ReflectionException: " + e.getMessage() );
+			throw new MBeanRuntimeException( e, "JMX ReflectionException: " + e.getMessage() );
 		} catch (MBeanException e) {
-			throw new Exception( "JMX MBeanException: " + e.getMessage() );
+			throw new MBeanRuntimeException( e, "JMX MBeanException: " + e.getMessage() );
 		}
 		
 		return output;

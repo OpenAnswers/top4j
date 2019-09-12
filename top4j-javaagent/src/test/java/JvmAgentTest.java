@@ -16,6 +16,8 @@
 
 import io.top4j.javaagent.config.Constants;
 import io.top4j.javaagent.controller.Agent;
+import io.top4j.javaagent.exception.MBeanInitException;
+import io.top4j.javaagent.exception.MBeanRuntimeException;
 import io.top4j.javaagent.test.MultiThreadedTest;
 import org.junit.Test;
 import static org.junit.Assert.assertEquals;
@@ -64,7 +66,7 @@ public class JvmAgentTest {
         try {
             initMBeanObjectNames();
         } catch (Exception e) {
-            throw new Exception( "Failed to initialise MBean object names due to: " + e.getMessage() );
+            throw new MBeanInitException( e, "Failed to initialise MBean object names due to: " + e.getMessage() );
         }
     }
 
@@ -76,7 +78,7 @@ public class JvmAgentTest {
         try {
             runMBeanAssertions();
         } catch (Exception e) {
-            throw new Exception( "Failed to run MBean assertions due to: " + e.getMessage() );
+            throw new MBeanRuntimeException( e, "Failed to run MBean assertions due to: " + e.getMessage() );
         }
     }
 
@@ -112,7 +114,7 @@ public class JvmAgentTest {
         try {
         	top4jStatsName = new ObjectName(Constants.DOMAIN + ":type=" + Constants.JVM_STATS_TYPE + ",*");
 		} catch (MalformedObjectNameException e) {
-            throw new Exception( "JMX MalformedObjectNameException: " + e.getMessage() );
+            throw new MBeanInitException( e, "JMX MalformedObjectNameException: " + e.getMessage() );
 		}
 		Set<ObjectName> top4jMBeans = mbs.queryNames(top4jStatsName, null);
         for (ObjectName top4jMbean : top4jMBeans) {
@@ -135,13 +137,13 @@ public class JvmAgentTest {
             try {
 					mbeanAttribute = mbs.getAttribute(mbeanObjectNames.get(data.statsType), data.attributeName);
 				} catch (AttributeNotFoundException e) {
-                    throw new Exception( "JMX AttributeNotFoundException for MBean " + data.statsType + ": " + e.getMessage() );
+                    throw new MBeanRuntimeException( e, "JMX AttributeNotFoundException for MBean " + data.statsType + ": " + e.getMessage() );
 				} catch (InstanceNotFoundException e) {
-                    throw new Exception( "JMX InstanceNotFoundException for MBean " + data.statsType + ": " + e.getMessage() );
+                    throw new MBeanRuntimeException( e, "JMX InstanceNotFoundException for MBean " + data.statsType + ": " + e.getMessage() );
 				} catch (MBeanException e) {
-                    throw new Exception( "JMX MBeanException for MBean " + data.statsType + ": " + e.getMessage() );
+                    throw new MBeanRuntimeException( e, "JMX MBeanException for MBean " + data.statsType + ": " + e.getMessage() );
 				} catch (ReflectionException e) {
-                    throw new Exception( "JMX ReflectionException for MBean " + data.statsType + ": " + e.getMessage() );
+                    throw new MBeanRuntimeException( e, "JMX ReflectionException for MBean " + data.statsType + ": " + e.getMessage() );
 				}
             switch (data.attributeType) {
 

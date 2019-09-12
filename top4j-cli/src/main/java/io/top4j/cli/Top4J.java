@@ -49,7 +49,20 @@ public class Top4J {
     // set default thread usage cache time-to-live
     private static int threadCacheTTL = 15000;
 
-    public static void main( String[] args ) throws IOException, NoSuchMethodException, ClassNotFoundException {
+    public static void main( String[] args ) throws Exception {
+
+        // run Top4J CLI
+        System.exit(new Top4J().execute(args));
+    }
+
+    /**
+     * Run Top4J CLI
+     *
+     * @param args Command line arguments
+     * @return Exit code
+     * @throws Exception Allow any exceptions
+     */
+    private int execute(String[] args) throws Exception {
 
         // instantiate new consoleReader
         ConsoleReader consoleReader = new ConsoleReader();
@@ -76,7 +89,7 @@ public class Top4J {
             cmd = parser.parse( options, args);
         } catch (ParseException e) {
             System.err.println("ERROR: There was a problem parsing command-line arguments. Reason: " + e.getMessage() );
-            System.exit(-1);
+            return 1;
         }
 
         // interrogate command-line args
@@ -84,7 +97,7 @@ public class Top4J {
             // automatically generate the help statement
             HelpFormatter formatter = new HelpFormatter();
             formatter.printHelp( "top4j", options );
-            System.exit(0);
+            return 0;
         }
         if (cmd.hasOption("d")) {
             // user has provided a screen refresh delay interval via the command-line
@@ -92,7 +105,7 @@ public class Top4J {
             if (!isNumeric(userProvidedDelayInterval)) {
                 // user provided delay interval is *not* a number - return usage message and exit with error code
                 System.err.println("ERROR: Delay interval provided via command-line argument is not a number: " + userProvidedDelayInterval );
-                System.exit(-1);
+                return 1;
             }
             // override default consoleRefreshPeriod
             consoleRefreshPeriod = Integer.parseInt(userProvidedDelayInterval) * 1000;
@@ -111,7 +124,7 @@ public class Top4J {
             if (!isNumeric(userProvidedThreadCacheSize)) {
                 // user provided thread usage cache size is *not* a number - return usage message and exit with error code
                 System.err.println("ERROR: Thread usage cache size provided via command-line argument is not a number: " + userProvidedThreadCacheSize );
-                System.exit(-1);
+                return 1;
             }
             // override default threadCacheSize
             threadCacheSize = Integer.parseInt(userProvidedThreadCacheSize);
@@ -122,7 +135,7 @@ public class Top4J {
             if (!isNumeric(userProvidedThreadCacheTTL)) {
                 // user provided thread usage cache TTL is *not* a number - return usage message and exit with error code
                 System.err.println("ERROR: Thread usage cache TTL provided via command-line argument is not a number: " + userProvidedThreadCacheTTL );
-                System.exit(-1);
+                return 1;
             }
             // override default threadCacheTTL
             threadCacheTTL = Integer.parseInt(userProvidedThreadCacheTTL) * 1000;
@@ -133,12 +146,11 @@ public class Top4J {
             if (!isNumeric(userProvidedJvmPid)) {
                 // user provided JVM PID is *not* a number - return usage message and exit with error code
                 System.err.println("ERROR: JVM PID provided via command-line argument is not a number: " + userProvidedJvmPid );
-                System.exit(-1);
+                return 1;
             }
             // user has provided a command-line arg and it's a valid number - use the arg as the jvmPid
             jvmPid = Integer.parseInt(userProvidedJvmPid);
-        }
-        else {
+        } else {
             // user has not provided a JVM PID via command-line args - attempt to detect running JVMs and provide list of PIDs to select from
             // generate list of running Java processes
             List<JavaProcess> jvms = javaProcessManager.list();
@@ -157,8 +169,7 @@ public class Top4J {
             // prompt user to enter a number
             if (jvmCount >= 10) {
                 System.out.print("Please type a JVM number between 0 and " + (jvmCount - 1) + " and hit enter: ");
-            }
-            else {
+            } else {
                 System.out.print("Please select a JVM number between 0 and " + (jvmCount - 1) + ": ");
             }
             // initialise jvmNumber used to store user input as an Integer
@@ -169,8 +180,7 @@ public class Top4J {
                     // use Java Text Scanner to read multi-digit text string
                     Scanner in = new Scanner(System.in, "utf-8");
                     jvmNumber = in.nextInt();
-                }
-                else {
+                } else {
                     // use System Console to read single digit character
                     String input = System.console().readLine();
                     jvmNumber = Integer.parseInt( input );
@@ -180,7 +190,7 @@ public class Top4J {
                 if (!(jvmNumber >= 0 && jvmNumber <= jvmCount-1)) {
                     // user has entered an out-of-bounds jvmNumber - return error message and exit with error code
                     System.err.println("ERROR: Please enter a JVM number between 0 and " + (jvmCount-1));
-                    System.exit(-1);
+                    return 1;
                 }
                 // set jvmPid according to user selection
                 jvmPid = jvms.get(jvmNumber).getProcessId();
@@ -190,7 +200,7 @@ public class Top4J {
             catch (Exception e) {
                 // user has entered an invalid jvmNumber - return error message and exit with error code
                 System.err.println("ERROR: Please enter a JVM number between 0 and " + (jvmCount-1));
-                System.exit(-1);
+                return 1;
             }
         }
 
@@ -202,7 +212,7 @@ public class Top4J {
         if (jvm == null) {
             System.err.println("ERROR: JVM not found with PID " + jvmPid);
             System.err.println("HINT: If the JVM is running, check that top4j is running as the JVM process owner");
-            System.exit(-1);
+            return 1;
         }
         // start JMX management agent within target jvm
         jvm.startManagementAgent();
@@ -249,7 +259,6 @@ public class Top4J {
         timer.scheduleAtFixedRate(consoleController, 0, consoleRefreshPeriod);
 
         while (true) {
-            //String input = consoleReader.readLine();
             Integer input = consoleReader.readCharacter();
             Character inputChar = (char) Integer.valueOf(input).intValue();
             String inputText = inputChar.toString();
@@ -259,19 +268,16 @@ public class Top4J {
                     consoleReader.println();
                     consoleReader.flush();
                 } catch (IOException e) {
-                    e.printStackTrace();
-                    System.exit(1);
+                    return 1;
                 }
                 // exit Top4J
-                System.exit(0);
+                return 0;
             }
             if (Character.isDigit( inputChar )) {
                 userInput.setIsDigit(true);
-            }
-            else if (inputText.equals("m")) {
+            } else if (inputText.equals("m")) {
                 userInput.setIsDigit(false);
-            }
-            else {
+            } else {
                 userInput.setIsDigit(false);
                 userInput.setScreenId(inputText);
             }

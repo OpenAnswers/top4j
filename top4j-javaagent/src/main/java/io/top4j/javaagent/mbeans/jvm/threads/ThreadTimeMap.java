@@ -41,9 +41,7 @@ public class ThreadTimeMap {
 			// add threadTime and threadIdList to threadTimeMap
 			threadTimeMap.put(threadTime, newThreadIdList);
 			
-		}
-		
-		else {
+		} else {
 			
 			// add threadId to threadIdList
 			existingThreadIdList.add(threadId);

@@ -16,6 +16,11 @@
 
 package io.top4j.javaagent.mbeans.jvm.gc;
 
+import io.top4j.javaagent.exception.MBeanDiscoveryException;
+import io.top4j.javaagent.exception.MBeanInitException;
+import io.top4j.javaagent.exception.MBeanRuntimeException;
+
+import java.io.IOException;
 import java.lang.management.GarbageCollectorMXBean;
 import java.lang.management.ManagementFactory;
 import java.util.ArrayList;
@@ -35,34 +40,30 @@ public class GarbageCollectorMXBeanHelper {
 
 	private static final Logger LOGGER = Logger.getLogger(GarbageCollectorMXBeanHelper.class.getName());
 
-	public GarbageCollectorMXBeanHelper( MBeanServerConnection mbsc ) throws Exception {
+	public GarbageCollectorMXBeanHelper( MBeanServerConnection mbsc ) throws MBeanInitException {
 
 		// store MBean server connection
 		this.mbsc = mbsc;
         // get and store list of GarbageCollectorMXBean's
-        this.gcbeans = ManagementFactory.getPlatformMXBeans( mbsc, GarbageCollectorMXBean.class );
+		try {
+			this.gcbeans = ManagementFactory.getPlatformMXBeans( mbsc, GarbageCollectorMXBean.class );
+		} catch (IOException e) {
+			throw new MBeanInitException( e, "JMX IOException: " + e.getMessage() );
+		}
 
-		ObjectName nurseryCollectorObjectName = null;
-		ObjectName tenuredCollectorObjectName = null;
-		
 		// discover nursery collector name
-		String nurseryCollectorName = this.discoverNurseryCollectorName();
-		this.setNurseryCollectorName(nurseryCollectorName);
+		this.setNurseryCollectorName(this.discoverNurseryCollectorName());
 		
 		// discover tenured collector name
-		String tenuredCollectorName = this.discoverTenuredCollectorName();
-		this.setTenuredCollectorName(tenuredCollectorName);
+		this.setTenuredCollectorName(this.discoverTenuredCollectorName());
 		
 		try {
-			nurseryCollectorObjectName = new ObjectName("java.lang:type=GarbageCollector,name=" + nurseryCollectorName);
-			tenuredCollectorObjectName = new ObjectName("java.lang:type=GarbageCollector,name=" + tenuredCollectorName);
+			this.nurseryCollectorObjectName = new ObjectName("java.lang:type=GarbageCollector,name=" + nurseryCollectorName);
+			this.tenuredCollectorObjectName = new ObjectName("java.lang:type=GarbageCollector,name=" + tenuredCollectorName);
 		} catch (MalformedObjectNameException e) {
-			throw new Exception( "JMX MalformedObjectNameException: " + e.getMessage() );
+			throw new MBeanInitException( e, "JMX MalformedObjectNameException: " + e.getMessage() );
 		}
 		
-		this.nurseryCollectorObjectName = nurseryCollectorObjectName;
-		this.tenuredCollectorObjectName = tenuredCollectorObjectName;
-
 	}
 	
 	public String getNurseryCollectorName() {
@@ -96,9 +97,9 @@ public class GarbageCollectorMXBeanHelper {
 
 	}
 	
-	private String discoverNurseryCollectorName( ) throws Exception {
+	private String discoverNurseryCollectorName( ) throws MBeanDiscoveryException {
 		
-		String nurseryCollectorName = null;
+		String collectorName = null;
 		
 		for (GarbageCollectorMXBean gcbean : gcbeans) {
 			String name = gcbean.getName();
@@ -108,19 +109,19 @@ public class GarbageCollectorMXBeanHelper {
                     name.endsWith("Young Collector") ||
                     name.equals("ParNew") ||
                     name.equals("G1 Young Generation")) {
-				nurseryCollectorName = name;
+				collectorName = name;
 			}
 		}
-		LOGGER.fine("Nursery Collector Name = " + nurseryCollectorName);
-		if (nurseryCollectorName == null) {
-			throw new Exception("Unable to auto discover nursery collector name.");
+		LOGGER.fine("Nursery Collector Name = " + collectorName);
+		if (collectorName == null) {
+			throw new MBeanDiscoveryException("Unable to auto discover nursery collector name.");
 		}
-		return nurseryCollectorName;
+		return collectorName;
 	}
 
-	private String discoverTenuredCollectorName( ) throws Exception {
+	private String discoverTenuredCollectorName( ) throws MBeanDiscoveryException {
 		
-		String tenuredCollectorName = null;
+		String collectorName = null;
 		
 		for (GarbageCollectorMXBean gcbean : gcbeans) {
 			String name = gcbean.getName();
@@ -130,14 +131,14 @@ public class GarbageCollectorMXBeanHelper {
                     name.endsWith("Old Collector") ||
                     name.equals("ConcurrentMarkSweep") ||
                     name.equals("G1 Old Generation")) {
-				tenuredCollectorName = name;
+				collectorName = name;
 			}
 		}
-		LOGGER.fine("Tenured Collector Name = " + tenuredCollectorName);
-		if (tenuredCollectorName == null) {
-			throw new Exception("Unable to auto discover tenured collector name.");
+		LOGGER.fine("Tenured Collector Name = " + collectorName);
+		if (collectorName == null) {
+			throw new MBeanDiscoveryException("Unable to auto discover tenured collector name.");
 		}
-		return tenuredCollectorName;
+		return collectorName;
 	}
 	
 	public long getGCTime( ) {
@@ -155,7 +156,7 @@ public class GarbageCollectorMXBeanHelper {
 		
 	}
 	
-	public long getNurseryGCTime( ) throws Exception {
+	public long getNurseryGCTime( ) throws MBeanRuntimeException {
 		
 		long nurseryGCTime;
 		
@@ -165,7 +166,7 @@ public class GarbageCollectorMXBeanHelper {
 		
 	}
 	
-	public long getTenuredGCTime( ) throws Exception {
+	public long getTenuredGCTime( ) throws MBeanRuntimeException {
 		
 		long tenuredGCTime;
 		
@@ -175,26 +176,28 @@ public class GarbageCollectorMXBeanHelper {
 		
 	}
 	
-	private long getCollectionTime( ObjectName objectName ) throws Exception {
+	private long getCollectionTime( ObjectName objectName ) throws MBeanRuntimeException {
 		
 		long collectionTime = 0;
 		
 		try {
 			collectionTime = (long) mbsc.getAttribute( objectName, "CollectionTime" );
 		} catch (AttributeNotFoundException e) {
-			throw new Exception( "JMX AttributeNotFoundException: " + e.getMessage() );
+			throw new MBeanRuntimeException( e, "JMX AttributeNotFoundException: " + e.getMessage() );
 		} catch (InstanceNotFoundException e) {
-			throw new Exception( "JMX InstanceNotFoundException: " + e.getMessage() );
+			throw new MBeanRuntimeException( e, "JMX InstanceNotFoundException: " + e.getMessage() );
 		} catch (MBeanException e) {
-			throw new Exception( "JMX MBeanException: " + e.getMessage() );
+			throw new MBeanRuntimeException( e, "JMX MBeanException: " + e.getMessage() );
 		} catch (ReflectionException e) {
-			throw new Exception( "JMX ReflectionException: " + e.getMessage() );
+			throw new MBeanRuntimeException( e, "JMX ReflectionException: " + e.getMessage() );
+		} catch (IOException e) {
+			throw new MBeanRuntimeException( e, "JMX IOException: " + e.getMessage() );
 		}
-		
+
 		return collectionTime;
 	}
 	
-	public long getNurseryGCCount( ) throws Exception {
+	public long getNurseryGCCount( ) throws MBeanRuntimeException {
 		
 		long nurseryGCCount;
 		
@@ -204,7 +207,7 @@ public class GarbageCollectorMXBeanHelper {
 		
 	}
 	
-	public long getTenuredGCCount( ) throws Exception {
+	public long getTenuredGCCount( ) throws MBeanRuntimeException {
 		
 		long tenuredGCCount = 0;
 		
@@ -214,22 +217,24 @@ public class GarbageCollectorMXBeanHelper {
 		
 	}
 	
-	private long getCollectionCount( ObjectName objectName ) throws Exception {
+	private long getCollectionCount( ObjectName objectName ) throws MBeanRuntimeException {
 		
 		long collectionCount = 0;
 		
 		try {
 			collectionCount = (long) mbsc.getAttribute( objectName, "CollectionCount" );
 		} catch (AttributeNotFoundException e) {
-			throw new Exception( "JMX AttributeNotFoundException: " + e.getMessage() );
+			throw new MBeanRuntimeException( e, "JMX AttributeNotFoundException: " + e.getMessage() );
 		} catch (InstanceNotFoundException e) {
-			throw new Exception( "JMX InstanceNotFoundException: " + e.getMessage() );
+			throw new MBeanRuntimeException( e, "JMX InstanceNotFoundException: " + e.getMessage() );
 		} catch (MBeanException e) {
-			throw new Exception( "JMX MBeanException: " + e.getMessage() );
+			throw new MBeanRuntimeException( e, "JMX MBeanException: " + e.getMessage() );
 		} catch (ReflectionException e) {
-			throw new Exception( "JMX ReflectionException: " + e.getMessage() );
+			throw new MBeanRuntimeException( e, "JMX ReflectionException: " + e.getMessage() );
+		} catch (IOException e) {
+			throw new MBeanRuntimeException( e, "JMX IOException: " + e.getMessage() );
 		}
-		
+
 		return collectionCount;
 	}
 

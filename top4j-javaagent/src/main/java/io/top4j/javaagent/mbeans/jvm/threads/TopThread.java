@@ -66,8 +66,7 @@ public class TopThread implements TopThreadMXBean {
 		if (threadState != null) {
 			// return current thread state
             return threadState;
-		}
-        else {
+		} else {
             // return cached thread state
             return this.threadState;
         }

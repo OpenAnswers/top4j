@@ -56,9 +56,11 @@ public class ConsoleController  extends TimerTask {
     private final static int MAX_DISPLAY_NAME_LENGTH = 64;
     private String mainScreenId;
     private DisplayConfig displayConfig;
-    public static final String ANSI_WHITE_BACKGROUND = "\u001B[47m";
-    public static final String ANSI_BLACK = "\u001B[30m";
-    public static final String ANSI_RESET = "\u001B[0m";
+    private static final String ANSI_WHITE_BACKGROUND = "\u001B[47m";
+    private static final String ANSI_BLACK = "\u001B[30m";
+    private static final String ANSI_RESET = "\u001B[0m";
+    private static final String INIT_ERROR_MESSAGE = "A problem occurred attempting to initialise Top4J CLI Console Controller: ";
+
 
     public ConsoleController ( ConsoleReader consoleReader, UserInput userInput, MBeanServerConnection mbsc, DisplayConfig displayConfig ) {
 
@@ -69,8 +71,9 @@ public class ConsoleController  extends TimerTask {
         try {
             this.threadHelper = new ThreadHelper( mbsc );
         } catch (IOException e) {
-            e.printStackTrace();
-            System.exit(1);
+            String errorMessage = INIT_ERROR_MESSAGE + e.getMessage();
+            System.err.println(errorMessage);
+            throw new IllegalStateException(errorMessage, e);
         }
 
         // create GCStats objectName
@@ -78,8 +81,9 @@ public class ConsoleController  extends TimerTask {
         try {
             gcStatsObjectName = new ObjectName(Constants.DOMAIN + ":type=" + Constants.JVM_STATS_TYPE + ",statsType=" + Constants.GC_STATS_TYPE );
         } catch (MalformedObjectNameException e) {
-            e.printStackTrace();
-            System.exit(1);
+            String errorMessage = INIT_ERROR_MESSAGE + e.getMessage();
+            System.err.println(errorMessage);
+            throw new IllegalStateException(errorMessage, e);
         }
         // instantiate new gcStatsMXBean proxy based on gcStatsObjectName
         this.gcStatsMXBean = JMX.newMBeanProxy(localMBS, gcStatsObjectName, GCStatsMXBean.class);
@@ -89,8 +93,9 @@ public class ConsoleController  extends TimerTask {
         try {
             memoryStatsObjectName = new ObjectName(Constants.DOMAIN + ":type=" + Constants.JVM_STATS_TYPE + ",statsType=" + Constants.MEMORY_STATS_TYPE );
         } catch (MalformedObjectNameException e) {
-            e.printStackTrace();
-            System.exit(1);
+            String errorMessage = INIT_ERROR_MESSAGE + e.getMessage();
+            System.err.println(errorMessage);
+            throw new IllegalStateException(errorMessage, e);
         }
         // instantiate new memoryStatsMXBean proxy based on memoryStatsObjectName
         this.memoryStatsMXBean = JMX.newMBeanProxy(localMBS, memoryStatsObjectName, MemoryStatsMXBean.class);
@@ -100,8 +105,9 @@ public class ConsoleController  extends TimerTask {
         try {
             heapStatsObjectName = new ObjectName(Constants.DOMAIN + ":type=" + Constants.JVM_STATS_TYPE + ",statsType=" + Constants.HEAP_STATS_TYPE );
         } catch (MalformedObjectNameException e) {
-            e.printStackTrace();
-            System.exit(1);
+            String errorMessage = INIT_ERROR_MESSAGE + e.getMessage();
+            System.err.println(errorMessage);
+            throw new IllegalStateException(errorMessage, e);
         }
         // instantiate new heapStatsMXBean proxy based on heapStatsObjectName
         this.heapStatsMXBean = JMX.newMBeanProxy(localMBS, heapStatsObjectName, HeapStatsMXBean.class);
@@ -111,8 +117,9 @@ public class ConsoleController  extends TimerTask {
         try {
             threadStatsObjectName = new ObjectName(Constants.DOMAIN + ":type=" + Constants.JVM_STATS_TYPE + ",statsType=" + Constants.THREADS_STATS_TYPE );
         } catch (MalformedObjectNameException e) {
-            e.printStackTrace();
-            System.exit(1);
+            String errorMessage = INIT_ERROR_MESSAGE + e.getMessage();
+            System.err.println(errorMessage);
+            throw new IllegalStateException(errorMessage, e);
         }
         // instantiate new threadStatsMXBean proxy based on threadStatsObjectName
         this.threadStatsMXBean = JMX.newMBeanProxy(localMBS, threadStatsObjectName, ThreadStatsMXBean.class);
@@ -125,8 +132,9 @@ public class ConsoleController  extends TimerTask {
             try {
                 topThreadObjectName = new ObjectName(Constants.DOMAIN + ":type=" + Constants.JVM_STATS_TYPE + ",statsType=" + Constants.TOP_THREAD_STATS_TYPE + ",rank=" + rank);
             } catch (MalformedObjectNameException e) {
-                e.printStackTrace();
-                System.exit(1);
+                String errorMessage = INIT_ERROR_MESSAGE + e.getMessage();
+                System.err.println(errorMessage);
+                throw new IllegalStateException(errorMessage, e);
             }
             // instantiate and store topThreadMXBean proxy based on topThreadObjectName
             this.topThreadMXBeans.add(JMX.newMBeanProxy(localMBS, topThreadObjectName, TopThreadMXBean.class));
@@ -140,8 +148,9 @@ public class ConsoleController  extends TimerTask {
             try {
                 blockedThreadObjectName = new ObjectName(Constants.DOMAIN + ":type=" + Constants.JVM_STATS_TYPE + ",statsType=" + Constants.BLOCKED_THREAD_STATS_TYPE + ",rank=" + rank);
             } catch (MalformedObjectNameException e) {
-                e.printStackTrace();
-                System.exit(1);
+                String errorMessage = INIT_ERROR_MESSAGE + e.getMessage();
+                System.err.println(errorMessage);
+                throw new IllegalStateException(errorMessage, e);
             }
             // instantiate and store blockedThreadMXBean proxy based on blockedThreadObjectName
             this.blockedThreadMXBeans.add(JMX.newMBeanProxy(localMBS, blockedThreadObjectName, BlockedThreadMXBean.class));
@@ -152,8 +161,9 @@ public class ConsoleController  extends TimerTask {
         try {
             runtimeMXBeanObjectName = new ObjectName(ManagementFactory.RUNTIME_MXBEAN_NAME);
         } catch (MalformedObjectNameException e) {
-            e.printStackTrace();
-            System.exit(1);
+            String errorMessage = INIT_ERROR_MESSAGE + e.getMessage();
+            System.err.println(errorMessage);
+            throw new IllegalStateException(errorMessage, e);
         }
         // instantiate new runtimeMXBean proxy based on runtimeMXBeanObjectName
         this.runtimeMXBean = JMX.newMBeanProxy(mbsc, runtimeMXBeanObjectName, RuntimeMXBean.class);
@@ -163,8 +173,9 @@ public class ConsoleController  extends TimerTask {
         try {
             osMXBeanObjectName = new ObjectName(ManagementFactory.OPERATING_SYSTEM_MXBEAN_NAME);
         } catch (MalformedObjectNameException e) {
-            e.printStackTrace();
-            System.exit(1);
+            String errorMessage = INIT_ERROR_MESSAGE + e.getMessage();
+            System.err.println(errorMessage);
+            throw new IllegalStateException(errorMessage, e);
         }
         // instantiate new osMXBean proxy based on osMXBeanObjectName
         this.osMXBean = JMX.newMBeanProxy(mbsc, osMXBeanObjectName, OperatingSystemMXBean.class);
@@ -178,7 +189,7 @@ public class ConsoleController  extends TimerTask {
         if (! isMBSConnectionAlive()) {
             // the connection to the remote MBean Server has been lost - we have no choice but to exit gracefully
             System.err.println("ERROR: The connection to the remote MBean Server has been lost. Check if the target JVM is still running.");
-            System.exit(-1);
+            System.exit(1);
         }
         // retrieve user provided screenId from userInput shared object
         String screenId = this.userInput.getScreenId();
@@ -190,12 +201,10 @@ public class ConsoleController  extends TimerTask {
         if ( userInput.isDigit() ) {
             // create thread stack trace screen
             screen = createThreadStackTraceScreen(Integer.valueOf(userText).intValue());
-        }
-        else if ( screenId.equals("b") ) {
+        } else if ( screenId.equals("b") ) {
             // create blocked threads screen
             screen = createBlockedThreadsScreen();
-        }
-        else {
+        } else {
             // create top threads screen
             screen = createTopThreadsScreen();
         }
@@ -204,14 +213,10 @@ public class ConsoleController  extends TimerTask {
             consoleReader.clearScreen();
             consoleReader.println(screen);
             consoleReader.println();
-            //consoleReader.println("Terminal Width: " + new Integer(consoleReader.getTerminal().getWidth()).toString());
-            //consoleReader.println("Terminal Height: " + new Integer(consoleReader.getTerminal().getHeight()).toString());
-            //consoleReader.println();
-            //consoleReader.println("Test text: " + userInput.getText());
-            //consoleReader.println();
             consoleReader.flush();
         } catch (IOException e) {
-            e.printStackTrace();
+            String errorMessage = "A problem occurred attempting to refresh Top4J CLI Console: " + e.getMessage();
+            System.err.println(errorMessage);
             System.exit(1);
         }
     }
@@ -219,7 +224,7 @@ public class ConsoleController  extends TimerTask {
     private String createTop4JHeader() {
 
         Date date = new Date();
-        StringBuffer sb = new StringBuffer();
+        StringBuilder sb = new StringBuilder();
         String displayName = displayConfig.getDisplayName();
         if (displayName != null && displayName.length() > MAX_DISPLAY_NAME_LENGTH) {
             displayName = displayName.substring(0, MAX_DISPLAY_NAME_LENGTH-1);
@@ -247,12 +252,12 @@ public class ConsoleController  extends TimerTask {
 
     private String createTopThreadsScreen() {
 
-        StringBuffer sb = new StringBuffer();
+        StringBuilder sb = new StringBuilder();
         sb.append(createTop4JHeader());
         sb.append("\n");
         sb.append("TOP THREADS:\n");
         sb.append("\n");
-        sb.append(ANSI_WHITE_BACKGROUND + ANSI_BLACK + "#  TID     S  %CPU  THREAD NAME\t\t\t\t\t\t\t\t\n" + ANSI_RESET);
+        sb.append(highlightHeading("#  TID     S  %CPU  THREAD NAME"));
         // initialise thread counter
         int counter = 0;
         for (TopThreadMXBean topThreadMXBean : topThreadMXBeans) {
@@ -289,12 +294,12 @@ public class ConsoleController  extends TimerTask {
 
     private String createBlockedThreadsScreen() {
 
-        StringBuffer sb = new StringBuffer();
+        StringBuilder sb = new StringBuilder();
         sb.append(createTop4JHeader());
         sb.append("\n");
         sb.append("BLOCKED THREADS:\n");
         sb.append("\n");
-        sb.append(ANSI_WHITE_BACKGROUND + ANSI_BLACK + "#  TID     S  %BLOCKED  THREAD NAME\t\t\t\t\t\t\t\n" + ANSI_RESET);
+        sb.append(highlightHeading("#  TID     S  %BLOCKED  THREAD NAME"));
 
         // first things first, check if there have been any blocked threads during this sample period
         Double totalThreadBlockedPercentage = 0.0;
@@ -347,12 +352,11 @@ public class ConsoleController  extends TimerTask {
     private String createThreadStackTraceScreen( int threadNumber ) {
 
         Date date = new Date();
-        StringBuffer sb = new StringBuffer();
+        StringBuilder sb = new StringBuilder();
         long threadId;
         if (mainScreenId.equals("b")) {
             threadId = blockedThreadIds.get(threadNumber);
-        }
-        else {
+        } else {
             threadId = topThreadIds.get(threadNumber);
         }
         sb.append("top4j - " + timeFormat.format(date) + " up " + getUptime() + ",  load average: " + osMXBean.getSystemLoadAverage() + "\n");
@@ -369,8 +373,7 @@ public class ConsoleController  extends TimerTask {
         String uptime;
         if (uptimeSecs > 86400) {
             uptime = uptimeSecs / 86400 + " days";
-        }
-        else {
+        } else {
             uptime = uptimeSecs + " secs";
         }
         return uptime;
@@ -378,7 +381,9 @@ public class ConsoleController  extends TimerTask {
 
     private String abbreviateThreadState( Thread.State state ) {
 
-        if (state == null) return "X";
+        if (state == null) {
+            return "X";
+        }
         String abbreviatedState;
         switch (state) {
 
@@ -422,6 +427,26 @@ public class ConsoleController  extends TimerTask {
            isAlive = false;
         }
         return isAlive;
+    }
+
+    /**
+     *
+     *   Highlight heading using ANSI escape characters
+     */
+
+    private String highlightHeading( String heading ) {
+        int consoleWidth = new Integer(consoleReader.getTerminal().getWidth());
+        StringBuilder sb = new StringBuilder();
+        // prepend heading with ANSI escape characters
+        sb.append(ANSI_WHITE_BACKGROUND + ANSI_BLACK + heading);
+        // pad heading to consoleWidth
+        for (int i = heading.length(); i < consoleWidth; i++) {
+            sb.append(" ");
+        }
+        // reset text highlighting at end of heading
+        sb.append(ANSI_RESET);
+        return sb.toString();
+
     }
 
 }
