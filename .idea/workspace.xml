@@ -2,40 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="376088a4-ef8e-48f3-874a-15ae0da20460" name="Default" comment="">
-      <change beforePath="" afterPath="$PROJECT_DIR$/top4j-javaagent/src/main/java/io/top4j/javaagent/exception/MBeanAccessException.java" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/top4j-javaagent/src/main/java/io/top4j/javaagent/exception/MBeanDiscoveryException.java" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/top4j-javaagent/src/main/java/io/top4j/javaagent/exception/MBeanInitException.java" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/top4j-javaagent/src/main/java/io/top4j/javaagent/exception/MBeanRuntimeException.java" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change beforePath="$PROJECT_DIR$/top4j-cli/src/main/java/io/top4j/cli/ConsoleController.java" afterPath="$PROJECT_DIR$/top4j-cli/src/main/java/io/top4j/cli/ConsoleController.java" />
-      <change beforePath="$PROJECT_DIR$/top4j-cli/src/main/java/io/top4j/cli/Top4J.java" afterPath="$PROJECT_DIR$/top4j-cli/src/main/java/io/top4j/cli/Top4J.java" />
-      <change beforePath="$PROJECT_DIR$/top4j-javaagent/src/main/java/io/top4j/javaagent/config/Configurator.java" afterPath="$PROJECT_DIR$/top4j-javaagent/src/main/java/io/top4j/javaagent/config/Configurator.java" />
-      <change beforePath="$PROJECT_DIR$/top4j-javaagent/src/main/java/io/top4j/javaagent/controller/Agent.java" afterPath="$PROJECT_DIR$/top4j-javaagent/src/main/java/io/top4j/javaagent/controller/Agent.java" />
-      <change beforePath="$PROJECT_DIR$/top4j-javaagent/src/main/java/io/top4j/javaagent/controller/Collector.java" afterPath="$PROJECT_DIR$/top4j-javaagent/src/main/java/io/top4j/javaagent/controller/Collector.java" />
-      <change beforePath="$PROJECT_DIR$/top4j-javaagent/src/main/java/io/top4j/javaagent/controller/LoggerThread.java" afterPath="$PROJECT_DIR$/top4j-javaagent/src/main/java/io/top4j/javaagent/controller/LoggerThread.java" />
-      <change beforePath="$PROJECT_DIR$/top4j-javaagent/src/main/java/io/top4j/javaagent/listener/CollectionListener.java" afterPath="$PROJECT_DIR$/top4j-javaagent/src/main/java/io/top4j/javaagent/listener/CollectionListener.java" />
-      <change beforePath="$PROJECT_DIR$/top4j-javaagent/src/main/java/io/top4j/javaagent/mbeans/jvm/JVMStats.java" afterPath="$PROJECT_DIR$/top4j-javaagent/src/main/java/io/top4j/javaagent/mbeans/jvm/JVMStats.java" />
-      <change beforePath="$PROJECT_DIR$/top4j-javaagent/src/main/java/io/top4j/javaagent/mbeans/jvm/gc/CollectionUsageListener.java" afterPath="$PROJECT_DIR$/top4j-javaagent/src/main/java/io/top4j/javaagent/mbeans/jvm/gc/CollectionUsageListener.java" />
-      <change beforePath="$PROJECT_DIR$/top4j-javaagent/src/main/java/io/top4j/javaagent/mbeans/jvm/gc/GCOverhead.java" afterPath="$PROJECT_DIR$/top4j-javaagent/src/main/java/io/top4j/javaagent/mbeans/jvm/gc/GCOverhead.java" />
-      <change beforePath="$PROJECT_DIR$/top4j-javaagent/src/main/java/io/top4j/javaagent/mbeans/jvm/gc/GCPauseTime.java" afterPath="$PROJECT_DIR$/top4j-javaagent/src/main/java/io/top4j/javaagent/mbeans/jvm/gc/GCPauseTime.java" />
-      <change beforePath="$PROJECT_DIR$/top4j-javaagent/src/main/java/io/top4j/javaagent/mbeans/jvm/gc/GarbageCollectorMXBeanHelper.java" afterPath="$PROJECT_DIR$/top4j-javaagent/src/main/java/io/top4j/javaagent/mbeans/jvm/gc/GarbageCollectorMXBeanHelper.java" />
-      <change beforePath="$PROJECT_DIR$/top4j-javaagent/src/main/java/io/top4j/javaagent/mbeans/jvm/heap/HeapUtilisation.java" afterPath="$PROJECT_DIR$/top4j-javaagent/src/main/java/io/top4j/javaagent/mbeans/jvm/heap/HeapUtilisation.java" />
-      <change beforePath="$PROJECT_DIR$/top4j-javaagent/src/main/java/io/top4j/javaagent/mbeans/jvm/memory/MemoryPoolAllocationRate.java" afterPath="$PROJECT_DIR$/top4j-javaagent/src/main/java/io/top4j/javaagent/mbeans/jvm/memory/MemoryPoolAllocationRate.java" />
-      <change beforePath="$PROJECT_DIR$/top4j-javaagent/src/main/java/io/top4j/javaagent/mbeans/jvm/memory/MemoryPoolMXBeanHelper.java" afterPath="$PROJECT_DIR$/top4j-javaagent/src/main/java/io/top4j/javaagent/mbeans/jvm/memory/MemoryPoolMXBeanHelper.java" />
-      <change beforePath="$PROJECT_DIR$/top4j-javaagent/src/main/java/io/top4j/javaagent/mbeans/jvm/memory/MemoryPoolUsageTracker.java" afterPath="$PROJECT_DIR$/top4j-javaagent/src/main/java/io/top4j/javaagent/mbeans/jvm/memory/MemoryPoolUsageTracker.java" />
-      <change beforePath="$PROJECT_DIR$/top4j-javaagent/src/main/java/io/top4j/javaagent/mbeans/jvm/threads/HotMethods.java" afterPath="$PROJECT_DIR$/top4j-javaagent/src/main/java/io/top4j/javaagent/mbeans/jvm/threads/HotMethods.java" />
-      <change beforePath="$PROJECT_DIR$/top4j-javaagent/src/main/java/io/top4j/javaagent/mbeans/jvm/threads/MethodTimeMap.java" afterPath="$PROJECT_DIR$/top4j-javaagent/src/main/java/io/top4j/javaagent/mbeans/jvm/threads/MethodTimeMap.java" />
-      <change beforePath="$PROJECT_DIR$/top4j-javaagent/src/main/java/io/top4j/javaagent/mbeans/jvm/threads/ThreadStats.java" afterPath="$PROJECT_DIR$/top4j-javaagent/src/main/java/io/top4j/javaagent/mbeans/jvm/threads/ThreadStats.java" />
-      <change beforePath="$PROJECT_DIR$/top4j-javaagent/src/main/java/io/top4j/javaagent/mbeans/jvm/threads/ThreadTimeMap.java" afterPath="$PROJECT_DIR$/top4j-javaagent/src/main/java/io/top4j/javaagent/mbeans/jvm/threads/ThreadTimeMap.java" />
       <change beforePath="$PROJECT_DIR$/top4j-javaagent/src/main/java/io/top4j/javaagent/mbeans/jvm/threads/ThreadUsage.java" afterPath="$PROJECT_DIR$/top4j-javaagent/src/main/java/io/top4j/javaagent/mbeans/jvm/threads/ThreadUsage.java" />
-      <change beforePath="$PROJECT_DIR$/top4j-javaagent/src/main/java/io/top4j/javaagent/mbeans/jvm/threads/TopThread.java" afterPath="$PROJECT_DIR$/top4j-javaagent/src/main/java/io/top4j/javaagent/mbeans/jvm/threads/TopThread.java" />
-      <change beforePath="$PROJECT_DIR$/top4j-javaagent/src/main/java/io/top4j/javaagent/mbeans/logger/StatsLogWriter.java" afterPath="$PROJECT_DIR$/top4j-javaagent/src/main/java/io/top4j/javaagent/mbeans/logger/StatsLogWriter.java" />
-      <change beforePath="$PROJECT_DIR$/top4j-javaagent/src/main/java/io/top4j/javaagent/mbeans/logger/StatsLogger.java" afterPath="$PROJECT_DIR$/top4j-javaagent/src/main/java/io/top4j/javaagent/mbeans/logger/StatsLogger.java" />
-      <change beforePath="$PROJECT_DIR$/top4j-javaagent/src/main/java/io/top4j/javaagent/messaging/LoggerQueue.java" afterPath="$PROJECT_DIR$/top4j-javaagent/src/main/java/io/top4j/javaagent/messaging/LoggerQueue.java" />
-      <change beforePath="$PROJECT_DIR$/top4j-javaagent/src/main/java/io/top4j/javaagent/test/MultiThreadedTest.java" afterPath="$PROJECT_DIR$/top4j-javaagent/src/main/java/io/top4j/javaagent/test/MultiThreadedTest.java" />
-      <change beforePath="$PROJECT_DIR$/top4j-javaagent/src/main/java/io/top4j/javaagent/utils/MBeanHelper.java" afterPath="$PROJECT_DIR$/top4j-javaagent/src/main/java/io/top4j/javaagent/utils/MBeanHelper.java" />
-      <change beforePath="$PROJECT_DIR$/top4j-javaagent/src/main/java/io/top4j/javaagent/utils/ThreadHelper.java" afterPath="$PROJECT_DIR$/top4j-javaagent/src/main/java/io/top4j/javaagent/utils/ThreadHelper.java" />
-      <change beforePath="$PROJECT_DIR$/top4j-javaagent/src/test/java/JvmAgentTest.java" afterPath="$PROJECT_DIR$/top4j-javaagent/src/test/java/JvmAgentTest.java" />
     </list>
     <ignored path="top4j.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -57,46 +24,46 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="ThreadUsage.java" pinned="false" current-in-tab="false">
+      <file leaf-file-name="ThreadUsage.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/top4j-javaagent/src/main/java/io/top4j/javaagent/mbeans/jvm/threads/ThreadUsage.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="389">
-              <caret line="89" column="90" lean-forward="false" selection-start-line="89" selection-start-column="90" selection-end-line="89" selection-end-column="90" />
+            <state relative-caret-position="338">
+              <caret line="476" column="0" lean-forward="true" selection-start-line="476" selection-start-column="0" selection-end-line="476" selection-end-column="0" />
               <folding>
-                <element signature="e#23412#23413#0" expanded="true" />
-                <element signature="e#23475#23476#0" expanded="true" />
-                <element signature="e#23508#23509#0" expanded="true" />
-                <element signature="e#23533#23534#0" expanded="true" />
-                <element signature="e#23582#23583#0" expanded="true" />
-                <element signature="e#23619#23620#0" expanded="true" />
-                <element signature="e#23664#23665#0" expanded="true" />
-                <element signature="e#23695#23696#0" expanded="true" />
-                <element signature="e#23748#23749#0" expanded="true" />
-                <element signature="e#23787#23788#0" expanded="true" />
-                <element signature="e#23838#23839#0" expanded="true" />
-                <element signature="e#23875#23876#0" expanded="true" />
-                <element signature="e#23929#23930#0" expanded="true" />
-                <element signature="e#23956#23957#0" expanded="true" />
-                <element signature="e#24029#24030#0" expanded="true" />
-                <element signature="e#24070#24071#0" expanded="true" />
-                <element signature="e#24135#24136#0" expanded="true" />
-                <element signature="e#24175#24176#0" expanded="true" />
-                <element signature="e#24364#24365#0" expanded="true" />
-                <element signature="e#24406#24407#0" expanded="true" />
-                <element signature="e#24474#24475#0" expanded="true" />
-                <element signature="e#24536#24537#0" expanded="true" />
-                <element signature="e#24579#24580#0" expanded="true" />
-                <element signature="e#24620#24621#0" expanded="true" />
-                <element signature="e#24686#24687#0" expanded="true" />
-                <element signature="e#24746#24747#0" expanded="true" />
-                <element signature="e#24789#24790#0" expanded="true" />
-                <element signature="e#24830#24831#0" expanded="true" />
-                <element signature="e#24896#24897#0" expanded="true" />
-                <element signature="e#24956#24957#0" expanded="true" />
-                <element signature="e#25004#25005#0" expanded="true" />
-                <element signature="e#25050#25051#0" expanded="true" />
-                <element signature="e#25745#25746#0" expanded="true" />
-                <element signature="e#25783#25784#0" expanded="true" />
+                <element signature="e#23360#23361#0" expanded="true" />
+                <element signature="e#23423#23424#0" expanded="true" />
+                <element signature="e#23456#23457#0" expanded="true" />
+                <element signature="e#23481#23482#0" expanded="true" />
+                <element signature="e#23530#23531#0" expanded="true" />
+                <element signature="e#23567#23568#0" expanded="true" />
+                <element signature="e#23612#23613#0" expanded="true" />
+                <element signature="e#23643#23644#0" expanded="true" />
+                <element signature="e#23696#23697#0" expanded="true" />
+                <element signature="e#23735#23736#0" expanded="true" />
+                <element signature="e#23786#23787#0" expanded="true" />
+                <element signature="e#23823#23824#0" expanded="true" />
+                <element signature="e#23877#23878#0" expanded="true" />
+                <element signature="e#23904#23905#0" expanded="true" />
+                <element signature="e#23977#23978#0" expanded="true" />
+                <element signature="e#24018#24019#0" expanded="true" />
+                <element signature="e#24083#24084#0" expanded="true" />
+                <element signature="e#24123#24124#0" expanded="true" />
+                <element signature="e#24312#24313#0" expanded="true" />
+                <element signature="e#24354#24355#0" expanded="true" />
+                <element signature="e#24422#24423#0" expanded="true" />
+                <element signature="e#24484#24485#0" expanded="true" />
+                <element signature="e#24527#24528#0" expanded="true" />
+                <element signature="e#24568#24569#0" expanded="true" />
+                <element signature="e#24634#24635#0" expanded="true" />
+                <element signature="e#24694#24695#0" expanded="true" />
+                <element signature="e#24737#24738#0" expanded="true" />
+                <element signature="e#24778#24779#0" expanded="true" />
+                <element signature="e#24844#24845#0" expanded="true" />
+                <element signature="e#24904#24905#0" expanded="true" />
+                <element signature="e#24952#24953#0" expanded="true" />
+                <element signature="e#24998#24999#0" expanded="true" />
+                <element signature="e#25693#25694#0" expanded="true" />
+                <element signature="e#25731#25732#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -146,7 +113,7 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="MemoryPoolUsageTracker.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="MemoryPoolUsageTracker.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/top4j-javaagent/src/main/java/io/top4j/javaagent/mbeans/jvm/memory/MemoryPoolUsageTracker.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="-136">
@@ -269,7 +236,6 @@
         <option value="$PROJECT_DIR$/top4j-javaagent/src/main/java/io/top4j/javaagent/mbeans/jvm/threads/HotMethods.java" />
         <option value="$PROJECT_DIR$/top4j-javaagent/src/main/java/io/top4j/javaagent/messaging/LoggerQueue.java" />
         <option value="$PROJECT_DIR$/top4j-javaagent/src/main/java/io/top4j/javaagent/mbeans/jvm/JVMStats.java" />
-        <option value="$PROJECT_DIR$/top4j-javaagent/src/main/java/io/top4j/javaagent/mbeans/jvm/threads/ThreadUsage.java" />
         <option value="$PROJECT_DIR$/top4j-javaagent/src/main/java/io/top4j/javaagent/config/Configurator.java" />
         <option value="$PROJECT_DIR$/top4j-cli/src/main/java/io/top4j/cli/ConsoleController.java" />
         <option value="$PROJECT_DIR$/top4j-javaagent/src/main/java/io/top4j/javaagent/controller/Collector.java" />
@@ -278,6 +244,7 @@
         <option value="$PROJECT_DIR$/top4j-javaagent/src/main/java/io/top4j/javaagent/utils/MBeanHelper.java" />
         <option value="$PROJECT_DIR$/top4j-javaagent/src/main/java/io/top4j/javaagent/mbeans/jvm/memory/MemoryPoolAllocationRate.java" />
         <option value="$PROJECT_DIR$/top4j-javaagent/src/main/java/io/top4j/javaagent/mbeans/jvm/memory/MemoryPoolUsageTracker.java" />
+        <option value="$PROJECT_DIR$/top4j-javaagent/src/main/java/io/top4j/javaagent/mbeans/jvm/threads/ThreadUsage.java" />
       </list>
     </option>
   </component>
@@ -1005,6 +972,7 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
+    <editor active="true" />
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
@@ -1012,7 +980,7 @@
       <window_info id="Image Layers" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.31177095" sideWeight="0.525" order="7" side_tool="true" content_ui="tabs" />
-      <window_info id="Maven Projects" active="true" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.16197917" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.16197917" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.31177095" sideWeight="0.475" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32985386" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
@@ -1443,49 +1411,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/top4j-javaagent/src/main/java/io/top4j/javaagent/mbeans/jvm/threads/ThreadUsage.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="389">
-          <caret line="89" column="90" lean-forward="false" selection-start-line="89" selection-start-column="90" selection-end-line="89" selection-end-column="90" />
-          <folding>
-            <element signature="e#23412#23413#0" expanded="true" />
-            <element signature="e#23475#23476#0" expanded="true" />
-            <element signature="e#23508#23509#0" expanded="true" />
-            <element signature="e#23533#23534#0" expanded="true" />
-            <element signature="e#23582#23583#0" expanded="true" />
-            <element signature="e#23619#23620#0" expanded="true" />
-            <element signature="e#23664#23665#0" expanded="true" />
-            <element signature="e#23695#23696#0" expanded="true" />
-            <element signature="e#23748#23749#0" expanded="true" />
-            <element signature="e#23787#23788#0" expanded="true" />
-            <element signature="e#23838#23839#0" expanded="true" />
-            <element signature="e#23875#23876#0" expanded="true" />
-            <element signature="e#23929#23930#0" expanded="true" />
-            <element signature="e#23956#23957#0" expanded="true" />
-            <element signature="e#24029#24030#0" expanded="true" />
-            <element signature="e#24070#24071#0" expanded="true" />
-            <element signature="e#24135#24136#0" expanded="true" />
-            <element signature="e#24175#24176#0" expanded="true" />
-            <element signature="e#24364#24365#0" expanded="true" />
-            <element signature="e#24406#24407#0" expanded="true" />
-            <element signature="e#24474#24475#0" expanded="true" />
-            <element signature="e#24536#24537#0" expanded="true" />
-            <element signature="e#24579#24580#0" expanded="true" />
-            <element signature="e#24620#24621#0" expanded="true" />
-            <element signature="e#24686#24687#0" expanded="true" />
-            <element signature="e#24746#24747#0" expanded="true" />
-            <element signature="e#24789#24790#0" expanded="true" />
-            <element signature="e#24830#24831#0" expanded="true" />
-            <element signature="e#24896#24897#0" expanded="true" />
-            <element signature="e#24956#24957#0" expanded="true" />
-            <element signature="e#25004#25005#0" expanded="true" />
-            <element signature="e#25050#25051#0" expanded="true" />
-            <element signature="e#25745#25746#0" expanded="true" />
-            <element signature="e#25783#25784#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/top4j-javaagent/src/main/java/io/top4j/javaagent/mbeans/jvm/JVMStats.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="323">
@@ -1551,6 +1476,49 @@
         <state relative-caret-position="-136">
           <caret line="235" column="50" lean-forward="false" selection-start-line="235" selection-start-column="50" selection-end-line="235" selection-end-column="50" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/top4j-javaagent/src/main/java/io/top4j/javaagent/mbeans/jvm/threads/ThreadUsage.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="338">
+          <caret line="476" column="0" lean-forward="true" selection-start-line="476" selection-start-column="0" selection-end-line="476" selection-end-column="0" />
+          <folding>
+            <element signature="e#23360#23361#0" expanded="true" />
+            <element signature="e#23423#23424#0" expanded="true" />
+            <element signature="e#23456#23457#0" expanded="true" />
+            <element signature="e#23481#23482#0" expanded="true" />
+            <element signature="e#23530#23531#0" expanded="true" />
+            <element signature="e#23567#23568#0" expanded="true" />
+            <element signature="e#23612#23613#0" expanded="true" />
+            <element signature="e#23643#23644#0" expanded="true" />
+            <element signature="e#23696#23697#0" expanded="true" />
+            <element signature="e#23735#23736#0" expanded="true" />
+            <element signature="e#23786#23787#0" expanded="true" />
+            <element signature="e#23823#23824#0" expanded="true" />
+            <element signature="e#23877#23878#0" expanded="true" />
+            <element signature="e#23904#23905#0" expanded="true" />
+            <element signature="e#23977#23978#0" expanded="true" />
+            <element signature="e#24018#24019#0" expanded="true" />
+            <element signature="e#24083#24084#0" expanded="true" />
+            <element signature="e#24123#24124#0" expanded="true" />
+            <element signature="e#24312#24313#0" expanded="true" />
+            <element signature="e#24354#24355#0" expanded="true" />
+            <element signature="e#24422#24423#0" expanded="true" />
+            <element signature="e#24484#24485#0" expanded="true" />
+            <element signature="e#24527#24528#0" expanded="true" />
+            <element signature="e#24568#24569#0" expanded="true" />
+            <element signature="e#24634#24635#0" expanded="true" />
+            <element signature="e#24694#24695#0" expanded="true" />
+            <element signature="e#24737#24738#0" expanded="true" />
+            <element signature="e#24778#24779#0" expanded="true" />
+            <element signature="e#24844#24845#0" expanded="true" />
+            <element signature="e#24904#24905#0" expanded="true" />
+            <element signature="e#24952#24953#0" expanded="true" />
+            <element signature="e#24998#24999#0" expanded="true" />
+            <element signature="e#25693#25694#0" expanded="true" />
+            <element signature="e#25731#25732#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

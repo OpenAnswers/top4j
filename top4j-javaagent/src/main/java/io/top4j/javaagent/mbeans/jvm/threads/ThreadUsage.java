@@ -474,7 +474,6 @@ public class ThreadUsage {
         List<Long> threadIds;
         State threadState;
         long threadBlockedTime;
-        java.lang.management.ThreadInfo threadInfo;
         int blockedThreadLimit;
         // handle situation where threadCount less than blockedThreadsCount
         if ( threadCount < blockedThreadsCount ) {
