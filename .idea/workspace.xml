@@ -3,20 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="376088a4-ef8e-48f3-874a-15ae0da20460" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/top4j-cli/src/main/java/io/top4j/cli/ConsoleController.java" afterPath="$PROJECT_DIR$/top4j-cli/src/main/java/io/top4j/cli/ConsoleController.java" />
-      <change beforePath="$PROJECT_DIR$/top4j-cli/src/main/java/io/top4j/cli/Top4J.java" afterPath="$PROJECT_DIR$/top4j-cli/src/main/java/io/top4j/cli/Top4J.java" />
-      <change beforePath="$PROJECT_DIR$/top4j-cli/src/main/java/io/top4j/cli/UserInput.java" afterPath="$PROJECT_DIR$/top4j-cli/src/main/java/io/top4j/cli/UserInput.java" />
-      <change beforePath="$PROJECT_DIR$/top4j-javaagent/src/main/java/io/top4j/javaagent/controller/LoggerThread.java" afterPath="$PROJECT_DIR$/top4j-javaagent/src/main/java/io/top4j/javaagent/controller/LoggerThread.java" />
-      <change beforePath="$PROJECT_DIR$/top4j-javaagent/src/main/java/io/top4j/javaagent/mbeans/StatsMXBean.java" afterPath="$PROJECT_DIR$/top4j-javaagent/src/main/java/io/top4j/javaagent/mbeans/StatsMXBean.java" />
-      <change beforePath="$PROJECT_DIR$/top4j-javaagent/src/main/java/io/top4j/javaagent/mbeans/jvm/heap/HeapStatsMXBean.java" afterPath="$PROJECT_DIR$/top4j-javaagent/src/main/java/io/top4j/javaagent/mbeans/jvm/heap/HeapStatsMXBean.java" />
-      <change beforePath="$PROJECT_DIR$/top4j-javaagent/src/main/java/io/top4j/javaagent/mbeans/jvm/threads/BlockedThreadMXBean.java" afterPath="$PROJECT_DIR$/top4j-javaagent/src/main/java/io/top4j/javaagent/mbeans/jvm/threads/BlockedThreadMXBean.java" />
-      <change beforePath="$PROJECT_DIR$/top4j-javaagent/src/main/java/io/top4j/javaagent/mbeans/jvm/threads/HotMethod.java" afterPath="$PROJECT_DIR$/top4j-javaagent/src/main/java/io/top4j/javaagent/mbeans/jvm/threads/HotMethod.java" />
-      <change beforePath="$PROJECT_DIR$/top4j-javaagent/src/main/java/io/top4j/javaagent/mbeans/jvm/threads/HotMethodMXBean.java" afterPath="$PROJECT_DIR$/top4j-javaagent/src/main/java/io/top4j/javaagent/mbeans/jvm/threads/HotMethodMXBean.java" />
-      <change beforePath="$PROJECT_DIR$/top4j-javaagent/src/main/java/io/top4j/javaagent/mbeans/jvm/threads/HotMethodTracker.java" afterPath="$PROJECT_DIR$/top4j-javaagent/src/main/java/io/top4j/javaagent/mbeans/jvm/threads/HotMethodTracker.java" />
-      <change beforePath="$PROJECT_DIR$/top4j-javaagent/src/main/java/io/top4j/javaagent/mbeans/logger/StatsLogWriter.java" afterPath="$PROJECT_DIR$/top4j-javaagent/src/main/java/io/top4j/javaagent/mbeans/logger/StatsLogWriter.java" />
-      <change beforePath="$PROJECT_DIR$/top4j-javaagent/src/main/java/io/top4j/javaagent/mbeans/logger/StatsLoggerMXBean.java" afterPath="$PROJECT_DIR$/top4j-javaagent/src/main/java/io/top4j/javaagent/mbeans/logger/StatsLoggerMXBean.java" />
-      <change beforePath="$PROJECT_DIR$/top4j-javaagent/src/main/java/io/top4j/javaagent/utils/GarbageCollectorNames.java" afterPath="$PROJECT_DIR$/top4j-javaagent/src/main/java/io/top4j/javaagent/utils/GarbageCollectorNames.java" />
-      <change beforePath="$PROJECT_DIR$/top4j-javaagent/src/main/java/io/top4j/javaagent/utils/MemoryPoolNames.java" afterPath="$PROJECT_DIR$/top4j-javaagent/src/main/java/io/top4j/javaagent/utils/MemoryPoolNames.java" />
-      <change beforePath="$PROJECT_DIR$/top4j-javaagent/src/main/java/io/top4j/javaagent/utils/ThreadHelper.java" afterPath="$PROJECT_DIR$/top4j-javaagent/src/main/java/io/top4j/javaagent/utils/ThreadHelper.java" />
     </list>
     <ignored path="top4j.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -68,9 +54,35 @@
       <file leaf-file-name="ConsoleController.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/top4j-cli/src/main/java/io/top4j/cli/ConsoleController.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="578">
-              <caret line="68" column="7" lean-forward="false" selection-start-line="68" selection-start-column="7" selection-end-line="68" selection-end-column="7" />
+            <state relative-caret-position="289">
+              <caret line="189" column="37" lean-forward="false" selection-start-line="189" selection-start-column="37" selection-end-line="189" selection-end-column="37" />
               <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="MBeanRuntimeException.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/top4j-javaagent/src/main/java/io/top4j/javaagent/exception/MBeanRuntimeException.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="136">
+              <caret line="22" column="51" lean-forward="false" selection-start-line="22" selection-start-column="51" selection-end-line="22" selection-end-column="51" />
+              <folding>
+                <element signature="e#847#848#0" expanded="true" />
+                <element signature="e#871#872#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ScreenUpdateException.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/top4j-cli/src/main/java/io/top4j/cli/exception/ScreenUpdateException.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="0">
+              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+              <folding>
+                <element signature="e#805#806#0" expanded="true" />
+                <element signature="e#835#836#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -90,46 +102,6 @@
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="51">
               <caret line="3" column="10" lean-forward="false" selection-start-line="3" selection-start-column="10" selection-end-line="3" selection-end-column="10" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="MultiThreadedTest.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/top4j-javaagent/src/main/java/io/top4j/javaagent/test/MultiThreadedTest.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="0">
-              <caret line="101" column="16" lean-forward="false" selection-start-line="101" selection-start-column="16" selection-end-line="101" selection-end-column="16" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="JvmAgentTest.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/top4j-javaagent/src/test/java/JvmAgentTest.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="306">
-              <caret line="120" column="34" lean-forward="false" selection-start-line="120" selection-start-column="34" selection-end-line="120" selection-end-column="34" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="top4j-test.properties" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/top4j-javaagent/src/test/resources/top4j-test.properties">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="0">
-              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="default-top4j.properties" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/top4j-javaagent/src/main/resources/default-top4j.properties">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="255">
-              <caret line="15" column="25" lean-forward="false" selection-start-line="15" selection-start-column="25" selection-end-line="15" selection-end-column="25" />
               <folding />
             </state>
           </provider>
@@ -214,7 +186,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/README.md" />
         <option value="$PROJECT_DIR$/top4j-javaagent/src/test/resources/top4j-test.properties" />
         <option value="$PROJECT_DIR$/top4j-javaagent/src/main/java/Test.java" />
         <option value="$PROJECT_DIR$/top4j-javaagent/src/main/java/io/top4j/javaagent/test/Test.java" />
@@ -264,6 +235,7 @@
         <option value="$PROJECT_DIR$/top4j-cli/src/main/java/io/top4j/cli/Top4J.java" />
         <option value="$PROJECT_DIR$/top4j-javaagent/src/main/resources/default-top4j.properties" />
         <option value="$PROJECT_DIR$/pom.xml" />
+        <option value="$PROJECT_DIR$/top4j-cli/src/main/java/io/top4j/cli/exception/ScreenUpdateException.java" />
         <option value="$PROJECT_DIR$/top4j-cli/src/main/java/io/top4j/cli/ConsoleController.java" />
       </list>
     </option>
@@ -375,6 +347,96 @@
             <path>
               <item name="top4j" type="b2602c69:ProjectViewProjectNode" />
               <item name="top4j" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="top4j" type="b2602c69:ProjectViewProjectNode" />
+              <item name="top4j" type="462c0819:PsiDirectoryNode" />
+              <item name="top4j-cli" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="top4j" type="b2602c69:ProjectViewProjectNode" />
+              <item name="top4j" type="462c0819:PsiDirectoryNode" />
+              <item name="top4j-cli" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="top4j" type="b2602c69:ProjectViewProjectNode" />
+              <item name="top4j" type="462c0819:PsiDirectoryNode" />
+              <item name="top4j-cli" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="top4j" type="b2602c69:ProjectViewProjectNode" />
+              <item name="top4j" type="462c0819:PsiDirectoryNode" />
+              <item name="top4j-cli" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="top4j" type="b2602c69:ProjectViewProjectNode" />
+              <item name="top4j" type="462c0819:PsiDirectoryNode" />
+              <item name="top4j-cli" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="top4j" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="top4j" type="b2602c69:ProjectViewProjectNode" />
+              <item name="top4j" type="462c0819:PsiDirectoryNode" />
+              <item name="top4j-cli" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="top4j" type="462c0819:PsiDirectoryNode" />
+              <item name="cli" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="top4j" type="b2602c69:ProjectViewProjectNode" />
+              <item name="top4j" type="462c0819:PsiDirectoryNode" />
+              <item name="top4j-javaagent" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="top4j" type="b2602c69:ProjectViewProjectNode" />
+              <item name="top4j" type="462c0819:PsiDirectoryNode" />
+              <item name="top4j-javaagent" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="top4j" type="b2602c69:ProjectViewProjectNode" />
+              <item name="top4j" type="462c0819:PsiDirectoryNode" />
+              <item name="top4j-javaagent" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="top4j" type="b2602c69:ProjectViewProjectNode" />
+              <item name="top4j" type="462c0819:PsiDirectoryNode" />
+              <item name="top4j-javaagent" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="top4j" type="b2602c69:ProjectViewProjectNode" />
+              <item name="top4j" type="462c0819:PsiDirectoryNode" />
+              <item name="top4j-javaagent" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="javaagent" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="top4j" type="b2602c69:ProjectViewProjectNode" />
+              <item name="top4j" type="462c0819:PsiDirectoryNode" />
+              <item name="top4j-javaagent" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="javaagent" type="462c0819:PsiDirectoryNode" />
+              <item name="exception" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="top4j" type="b2602c69:ProjectViewProjectNode" />
@@ -803,14 +865,6 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/top4j-javaagent/src/main/java/io/top4j/javaagent/mbeans/StatsMXBean.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="187">
-          <caret line="25" column="23" lean-forward="false" selection-start-line="25" selection-start-column="23" selection-end-line="25" selection-end-column="23" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/top4j-javaagent/src/main/java/io/top4j/javaagent/mbeans/agent/AgentStats.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
@@ -878,45 +932,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/top4j-javaagent/src/main/java/io/top4j/javaagent/exception/MBeanInitException.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="221">
-          <caret line="27" column="0" lean-forward="false" selection-start-line="27" selection-start-column="0" selection-end-line="27" selection-end-column="0" />
-          <folding>
-            <element signature="e#865#866#0" expanded="false" />
-            <element signature="e#889#890#0" expanded="false" />
-            <element signature="e#951#952#0" expanded="false" />
-            <element signature="e#984#985#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/top4j-javaagent/src/main/java/io/top4j/javaagent/exception/MBeanRuntimeException.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="238">
-          <caret line="28" column="23" lean-forward="false" selection-start-line="28" selection-start-column="23" selection-end-line="28" selection-end-column="23" />
-          <folding>
-            <element signature="e#847#848#0" expanded="false" />
-            <element signature="e#871#872#0" expanded="false" />
-            <element signature="e#936#937#0" expanded="false" />
-            <element signature="e#969#970#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/top4j-javaagent/src/main/java/io/top4j/javaagent/exception/MBeanAccessException.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="238">
-          <caret line="28" column="53" lean-forward="false" selection-start-line="28" selection-start-column="53" selection-end-line="28" selection-end-column="53" />
-          <folding>
-            <element signature="e#845#846#0" expanded="false" />
-            <element signature="e#869#870#0" expanded="false" />
-            <element signature="e#933#934#0" expanded="false" />
-            <element signature="e#966#967#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/top4j-javaagent/src/main/java/io/top4j/javaagent/listener/CollectionListener.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="493">
@@ -954,19 +969,6 @@
         <state relative-caret-position="391">
           <caret line="41" column="44" lean-forward="false" selection-start-line="41" selection-start-column="44" selection-end-line="41" selection-end-column="44" />
           <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/top4j-javaagent/src/main/java/io/top4j/javaagent/exception/MBeanDiscoveryException.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="51">
-          <caret line="17" column="0" lean-forward="false" selection-start-line="17" selection-start-column="0" selection-end-line="17" selection-end-column="0" />
-          <folding>
-            <element signature="e#820#821#0" expanded="false" />
-            <element signature="e#850#851#0" expanded="false" />
-            <element signature="e#921#922#0" expanded="false" />
-            <element signature="e#958#959#0" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1289,10 +1291,56 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/top4j-javaagent/src/main/java/io/top4j/javaagent/exception/MBeanInitException.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="187">
+          <caret line="27" column="0" lean-forward="false" selection-start-line="27" selection-start-column="0" selection-end-line="27" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/top4j-javaagent/src/main/java/io/top4j/javaagent/exception/MBeanDiscoveryException.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="68">
+          <caret line="18" column="13" lean-forward="false" selection-start-line="18" selection-start-column="13" selection-end-line="18" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/top4j-javaagent/src/main/java/io/top4j/javaagent/exception/MBeanAccessException.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="204">
+          <caret line="28" column="53" lean-forward="false" selection-start-line="28" selection-start-column="53" selection-end-line="28" selection-end-column="53" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/top4j-javaagent/src/main/java/io/top4j/javaagent/exception/MBeanRuntimeException.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="136">
+          <caret line="22" column="51" lean-forward="false" selection-start-line="22" selection-start-column="51" selection-end-line="22" selection-end-column="51" />
+          <folding>
+            <element signature="e#847#848#0" expanded="true" />
+            <element signature="e#871#872#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/top4j-cli/src/main/java/io/top4j/cli/exception/ScreenUpdateException.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding>
+            <element signature="e#805#806#0" expanded="true" />
+            <element signature="e#835#836#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/top4j-cli/src/main/java/io/top4j/cli/ConsoleController.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="578">
-          <caret line="68" column="7" lean-forward="false" selection-start-line="68" selection-start-column="7" selection-end-line="68" selection-end-column="7" />
+        <state relative-caret-position="289">
+          <caret line="189" column="37" lean-forward="false" selection-start-line="189" selection-start-column="37" selection-end-line="189" selection-end-column="37" />
           <folding />
         </state>
       </provider>

@@ -16,6 +16,7 @@
 
 package io.top4j.cli;
 
+import io.top4j.cli.exception.ScreenUpdateException;
 import io.top4j.javaagent.config.Constants;
 import io.top4j.javaagent.mbeans.jvm.heap.HeapStatsMXBean;
 import io.top4j.javaagent.mbeans.jvm.memory.MemoryStatsMXBean;
@@ -181,11 +182,24 @@ public class ConsoleController  extends TimerTask {
     @Override
     public void run() {
 
+        try {
+            // update console screen
+            updateScreen();
+
+        } catch (ScreenUpdateException e) {
+            // something went wrong - print error message and exit gracefully
+            System.err.println(e.getMessage());
+            System.exit(1);
+        }
+
+    }
+
+    private void updateScreen() throws ScreenUpdateException {
+
         // first things first, check MBean Server Connection is still alive
         if (! isMBSConnectionAlive()) {
             // the connection to the remote MBean Server has been lost - we have no choice but to exit gracefully
-            System.err.println("ERROR: The connection to the remote MBean Server has been lost. Check if the target JVM is still running.");
-            System.exit(1);
+            throw new ScreenUpdateException("ERROR: The connection to the remote MBean Server has been lost. Check if the target JVM is still running.");
         }
         // retrieve user provided screenId from userInput shared object
         String screenId = this.userInput.getScreenId();
@@ -194,26 +208,25 @@ public class ConsoleController  extends TimerTask {
         // store mainScreenId
         mainScreenId = screenId;
         String screen;
-        if ( userInput.isDigit() ) {
-            // create thread stack trace screen
-            screen = createThreadStackTraceScreen(Integer.valueOf(userText).intValue());
-        } else if ( screenId.equals("b") ) {
-            // create blocked threads screen
-            screen = createBlockedThreadsScreen();
-        } else {
-            // create top threads screen
-            screen = createTopThreadsScreen();
-        }
         try {
+            if ( userInput.isDigit() ) {
+                // create thread stack trace screen
+                screen = createThreadStackTraceScreen(Integer.valueOf(userText).intValue());
+            } else if ( screenId.equals("b") ) {
+                // create blocked threads screen
+                screen = createBlockedThreadsScreen();
+            } else {
+                // create top threads screen
+                screen = createTopThreadsScreen();
+            }
             // print screen
             consoleReader.clearScreen();
             consoleReader.println(screen);
             consoleReader.println();
             consoleReader.flush();
-        } catch (IOException e) {
-            String errorMessage = "A problem occurred attempting to refresh Top4J CLI Console: " + e.getMessage();
-            System.err.println(errorMessage);
-            System.exit(1);
+        } catch (Exception e) {
+            // throw ScreenUpdateException
+            throw new ScreenUpdateException("ERROR: A problem occurred attempting to refresh Top4J CLI Console: " + e.getMessage());
         }
     }
 
@@ -431,13 +444,15 @@ public class ConsoleController  extends TimerTask {
      */
 
     private String highlightHeading( String heading ) {
-        int consoleWidth = new Integer(consoleReader.getTerminal().getWidth());
+        int consoleWidth = consoleReader.getTerminal().getWidth();
         StringBuilder sb = new StringBuilder();
         // prepend heading with ANSI escape characters
         sb.append(ANSI_WHITE_BACKGROUND + ANSI_BLACK + heading);
-        // pad heading to consoleWidth
-        for (int i = heading.length(); i < consoleWidth; i++) {
-            sb.append(" ");
+        if (consoleWidth > heading.length()) {
+            // pad heading to consoleWidth
+            for (int i = heading.length(); i < consoleWidth; i++) {
+                sb.append(" ");
+            }
         }
         // reset text highlighting at end of heading
         sb.append(ANSI_RESET);
