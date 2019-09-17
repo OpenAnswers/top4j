@@ -12,6 +12,22 @@
   </description>
   <url>http://top4j.io</url>
 
+  <licenses>
+    <license>
+      <name>The Apache License, Version 2.0</name>
+      <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+    </license>
+  </licenses>
+
+  <developers>
+    <developer>
+      <name>Ryan Young</name>
+      <email>ryan@openanswers.co.uk</email>
+      <organization>Open Answers</organization>
+      <organizationUrl>https://www.openanswers.co.uk/</organizationUrl>
+    </developer>
+  </developers>
+
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <!-- Default distributionManagement proprties which can be overridden in a settings.xml profile: -->
