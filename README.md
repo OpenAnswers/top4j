@@ -5,38 +5,51 @@ Description
 
 Top4J is a lightweight, low overhead, production-ready performance analysis tool for the Java runtime environment. As the name suggests, it works a bit like the UNIX/Linux top command but at the JVM-level exposing key performance metrics from a Java runtime perspective.
 
-Top4J has two modes of operation: Java Agent and Remote Attach CLI.
+Top4J has two modes of operation: Remote Attach command-line interface (CLI) and Java Agent.
+
+The Top4J Remote Attach function is executed via the command line and attaches to a remote JVM process via the JDK tools [VirtualMachine API](https://docs.oracle.com/javase/8/docs/jdk/api/attach/spec/com/sun/tools/attach/VirtualMachine.html).
 
 The Top4J Java Agent is invoked via the standard `java -javaagent` command line argument and runs as a background thread inside the target JVM.
-
-The Top4J Remote Attach function is executed via the command line and attaches to a remote JVM process via the JDK tools VirtualMachine API.
 
 See [Get Started](/README.md#get-started) section for more details.
 
 Top4J is part of the Open Answers [Panther](https://www.openanswers.co.uk/products/panther) suite of monitoring applications.
+
+Getting Started
+===============
+
+Prerequisites
+-------------
+
+The Top4J CLI jar **must** be run using a Java JDK install not a JRE.
+
+**Supported JDKs:**
+
+Oracle JDK 7, 8, 11
+OpenJDK 7, 8, 11
+
+There are no prerequisites for running the Top4J Java Agent (aside from downloading and installing the Top4J Java Agent jar file).
+
+Run Top4J via CLI Remote Attach
+-------------------------------
+
+1. Download and install the [Top4J CLI jar](http://hlcit003:8081/nexus/content/repositories/releases/io/top4j/top4j-cli/0.0.8/top4j-cli-0.0.8.jar) within an appropriate location on the local file system.
+1. Run Top4J CLI jar specifying the target JVM PID as the first argument, e.g. `java -jar top4j-cli-0.0.8.jar -p 12345`, **OR** with no arguments to auto-detect running JVMs and select from a list, e.g. `java -jar top4j-cli-0.0.8.jar`
+
+   **NOTE:** The Top4J CLI jar **must** be run as the target JVM process owner.
+
+Run Top4J as a Java Agent
+-------------------------
+
+1. Download and install the [Top4J Java Agent jar](http://hlcit003:8081/nexus/content/repositories/releases/io/top4j/top4j-javaagent/0.0.8/top4j-javaagent-0.0.8.jar) within an appropriate location on the local file system.
+1. Add -javaagent command line argument to JVM startup args, e.g. `java -javaagent:<path-to-top4j-jar>/top4j-javaagent-0.0.8.jar <java-class-name>`
+
 Build
-=====
+-----
 ```bash
 git clone git@gitlab.openans.co.uk:open-answers/top4j.git
 mvn clean package
 ```
-Release
-=======
-The Top4J continuous build and release Jenkins job can be found [here](http://hlcit001:8080/jenkins/job/top4j/).
-
-Get Started
-===========
-**Run Top4J as a Java Agent**
-1. Download and install the [Top4J Java Agent jar](http://hlcit003:8081/nexus/content/repositories/releases/io/top4j/top4j-javaagent/0.0.8/top4j-javaagent-0.0.8.jar) within an appropriate location on the local file system.
-1. Add -javaagent command line argument to JVM startup args, e.g. `java -javaagent:<path-to-top4j-jar>/top4j-javaagent-0.0.8.jar <java-class-name>`
-
-**Run Top4J via CLI Remote Attach feature**
-1. Download and install the [Top4J CLI jar](http://hlcit003:8081/nexus/content/repositories/releases/io/top4j/top4j-cli/0.0.8/top4j-cli-0.0.8.jar) within an appropriate location on the local file system.
-1. Run Top4J CLI jar specifying JVM PID as the first argument, e.g. `java -jar top4j-cli-0.0.8.jar -p 12345`, **OR** with no arguments to auto-detect running JVMs and select from a list, e.g. `java -jar top4j-cli-0.0.8.jar`
-
-   **NOTE1:** The top4j CLI jar **must** be run as the target JVM process owner.
-
-   **NOTE2:** The top4j CLI jar **must** be run using a Java JDK install not a JRE.
 
 Screenshots
 ===========
@@ -134,8 +147,8 @@ The command-line syntax for top4j consists of:
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Specifies the number of seconds the thread usage cache will be used before it is refreshed (15 seconds by default).
 
-MBeans
-======
+JMX Interface
+=============
 Top4J performance metrics are exposed via JMX MBean attributes. All Top4J MBeans can be found under the "io.top4j" JMX domain.
 A complete list of Top4J MBeans and their associated attributes is documented below. The MBean Object Name is provided in square brackets.
 **All MBeans**
@@ -279,4 +292,39 @@ A complete list of Top4J MBeans and their associated attributes is documented be
 **getStackTrace(int maxDepth):** Get stack trace for thread with a maximum frame depth of maxDepth.
 
 **getStackTraceWithContext(int maxDepth):** Get stack trace for thread with context, e.g. thread name and thread state, with a maximum frame depth of maxDepth.
+
+Release
+=======
+The Top4J continuous build and release Jenkins job can be found [here](http://hlcit001:8080/jenkins/job/top4j/).
+
+Contributing
+============
+
+Please read [CONTRIBUTING.md](/CONTRIBUTING.md]) for details on our code of conduct, and the process for submitting pull requests to us.
+
+Versioning
+==========
+
+We use [SemVer](http://semver.org/) for versioning. For the versions available, see the [tags on this repository](https://github.com/OpenAnswers/top4j/tags).
+
+Authors
+=======
+
+* **Ryan Young** - *Initial work* - [Open Answers](https://github.com/OpenAnswers)
+
+See also the list of [contributors](https://github.com/OpenAnswers/top4j/contributors) who participated in this project.
+
+License
+=======
+
+This project is licensed under the Apache License 2.0 - see the [LICENSE.md](LICENSE.md) file for details
+
+Acknowledgments
+===============
+
+This project makes use of some excellent open source libraries including:
+
+* [JMXTerm](https://docs.cyclopsgroup.org/jmxterm)
+* [JLine](https://github.com/jline/jline2)
+* [Apache Commons](https://commons.apache.org/)
 
