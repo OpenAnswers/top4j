@@ -18,8 +18,11 @@ package io.top4j.cli;
 
 import io.top4j.javaagent.config.Configurator;
 import io.top4j.javaagent.controller.Controller;
+import io.top4j.vm.Jdk9JavaProcessManager;
 import jline.console.ConsoleReader;
 import org.apache.commons.cli.*;
+import org.apache.commons.lang3.JavaVersion;
+import org.apache.commons.lang3.SystemUtils;
 import org.cyclopsgroup.jmxterm.JavaProcess;
 import org.cyclopsgroup.jmxterm.JavaProcessManager;
 import org.cyclopsgroup.jmxterm.jdk6.Jdk6JavaProcessManager;
@@ -71,8 +74,14 @@ public class Top4J {
         UserInput userInput = new UserInput();
 
         // instantiate javaProcessManager
-        ClassLoader classLoader = JConsoleClassLoaderFactory.getClassLoader();
-        JavaProcessManager javaProcessManager = new Jdk6JavaProcessManager(classLoader);
+        JavaProcessManager javaProcessManager;
+        if (isJava9Plus()) {
+            javaProcessManager = new Jdk9JavaProcessManager();
+        }
+        else {
+            ClassLoader classLoader = JConsoleClassLoaderFactory.getClassLoader();
+            javaProcessManager = new Jdk6JavaProcessManager(classLoader);
+        }
 
         // initialise jvmPid variable used to store JVM process ID
         int jvmPid = 0;
@@ -330,5 +339,9 @@ public class Top4J {
         // return command-line options
         return options;
 
+    }
+
+    private static boolean isJava9Plus() {
+        return SystemUtils.isJavaVersionAtLeast(JavaVersion.JAVA_9);
     }
 }
