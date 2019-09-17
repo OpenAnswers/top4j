@@ -2,13 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="376088a4-ef8e-48f3-874a-15ae0da20460" name="Default" comment="">
-      <change beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_apache_commons_commons_lang3_3_8_1.xml" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/top4j-cli/src/main/java/io/top4j/vm/Jdk9JavaProcess.java" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/top4j-cli/src/main/java/io/top4j/vm/Jdk9JavaProcessManager.java" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change beforePath="$PROJECT_DIR$/top4j-cli/pom.xml" afterPath="$PROJECT_DIR$/top4j-cli/pom.xml" />
       <change beforePath="$PROJECT_DIR$/top4j-cli/src/main/java/io/top4j/cli/Top4J.java" afterPath="$PROJECT_DIR$/top4j-cli/src/main/java/io/top4j/cli/Top4J.java" />
-      <change beforePath="$PROJECT_DIR$/top4j-cli/top4j-cli.iml" afterPath="$PROJECT_DIR$/top4j-cli/top4j-cli.iml" />
     </list>
     <ignored path="top4j.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -33,11 +27,12 @@
       <file leaf-file-name="Top4J.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/top4j-cli/src/main/java/io/top4j/cli/Top4J.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="5627">
-              <caret line="345" column="3" lean-forward="false" selection-start-line="345" selection-start-column="3" selection-end-line="345" selection-end-column="3" />
+            <state relative-caret-position="170">
+              <caret line="234" column="31" lean-forward="false" selection-start-line="234" selection-start-column="31" selection-end-line="234" selection-end-column="31" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <element signature="e#15048#15049#0" expanded="true" />
+                <element signature="e#15456#15457#0" expanded="true" />
+                <element signature="e#15531#15532#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -1549,11 +1544,12 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/top4j-cli/src/main/java/io/top4j/cli/Top4J.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="5627">
-          <caret line="345" column="3" lean-forward="false" selection-start-line="345" selection-start-column="3" selection-end-line="345" selection-end-column="3" />
+        <state relative-caret-position="170">
+          <caret line="234" column="31" lean-forward="false" selection-start-line="234" selection-start-column="31" selection-end-line="234" selection-end-column="31" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#15048#15049#0" expanded="true" />
+            <element signature="e#15456#15457#0" expanded="true" />
+            <element signature="e#15531#15532#0" expanded="true" />
           </folding>
         </state>
       </provider>

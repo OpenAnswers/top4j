@@ -51,6 +51,8 @@ public class Top4J {
     private static int threadCacheSize = 500;
     // set default thread usage cache time-to-live
     private static int threadCacheTTL = 15000;
+    // set default start up verbosity
+    private static boolean verbose = false;
 
     public static void main( String[] args ) throws Exception {
 
@@ -118,6 +120,10 @@ public class Top4J {
             }
             // override default consoleRefreshPeriod
             consoleRefreshPeriod = Integer.parseInt(userProvidedDelayInterval) * 1000;
+        }
+        if (cmd.hasOption("v")) {
+            // enable verbose start up messages
+            verbose = true;
         }
         if (cmd.hasOption("D")) {
             // user has requested that the thread usage cache is disabled
@@ -226,9 +232,12 @@ public class Top4J {
         // start JMX management agent within target jvm
         jvm.startManagementAgent();
 
-        // print JMX connector URL
+        // get JMX connector URL
         String connectorAddr = jvm.toUrl();
-        System.out.println("....using Connector URL = " + connectorAddr );
+        if (verbose) {
+            // print JMX connector URL
+            System.out.println("....using Connector URL = " + connectorAddr );
+        }
 
         // use JMX connector URL to connect to JMX service and establish MBean server connection
         JMXServiceURL serviceURL = new JMXServiceURL(connectorAddr);
@@ -241,7 +250,7 @@ public class Top4J {
 
         // define Top4J config overrides
         String configOverrides = "collector.poll.frequency=" + consoleRefreshPeriod + "," +
-                "log.properties.on.startup=true," +
+                "log.properties.on.startup=" + verbose + "," +
                 "stats.logger.enabled=false," +
                 "hot.method.profiling.enabled=false," +
                 "thread.usage.cache.enabled=" + Boolean.toString(threadCacheEnabled) + "," +
@@ -323,6 +332,9 @@ public class Top4J {
 
         // add p option
         options.addOption("p", "pid", true, "Monitor PID");
+
+        // add v option
+        options.addOption("v", "verbose", false, "Print configuration properties on start up");
 
         // add C option
         options.addOption("C", "cache-enabled", false, "Enable thread usage cache (enabled by default)");
