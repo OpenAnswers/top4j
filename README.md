@@ -26,6 +26,7 @@ The Top4J CLI jar **must** be run using a Java JDK install not a JRE.
 **Supported JDKs:**
 
 Oracle JDK 7, 8, 11
+
 OpenJDK 7, 8, 11
 
 There are no prerequisites for running the Top4J Java Agent (aside from downloading and installing the Top4J Java Agent jar file).
@@ -300,7 +301,7 @@ The Top4J continuous build and release Jenkins job can be found [here](http://hl
 Contributing
 ============
 
-Please read [CONTRIBUTING.md](/CONTRIBUTING.md]) for details on our code of conduct, and the process for submitting pull requests to us.
+Please read [CONTRIBUTING.md](/CONTRIBUTING.md) for details on our code of conduct, and the process for submitting pull requests to us.
 
 Versioning
 ==========
@@ -317,7 +318,7 @@ See also the list of [contributors](https://github.com/OpenAnswers/top4j/contrib
 License
 =======
 
-This project is licensed under the Apache License 2.0 - see the [LICENSE.md](LICENSE.md) file for details
+This project is licensed under the Apache License 2.0 - see the [LICENSE.md](/LICENSE.md) file for details
 
 Acknowledgments
 ===============
