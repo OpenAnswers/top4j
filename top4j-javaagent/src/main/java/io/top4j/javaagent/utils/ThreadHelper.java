@@ -23,9 +23,6 @@ import java.lang.management.ThreadInfo;
 import java.lang.management.ThreadMXBean;
 import java.lang.Thread.State;
 
-/**
- * Created by ryan on 17/05/15.
- */
 public class ThreadHelper {
 
     ThreadMXBean threadMXBean;

@@ -16,9 +16,6 @@
 
 package io.top4j.javaagent.mbeans.jvm.threads;
 
-/**
- * Created by ryan on 17/05/15.
- */
 public interface BlockedThreadMXBean {
 
     public void setThreadName( String threadName );

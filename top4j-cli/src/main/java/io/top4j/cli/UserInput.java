@@ -16,9 +16,6 @@
 
 package io.top4j.cli;
 
-/**
- * Created by ryan on 02/02/16.
- */
 public class UserInput {
 
     private volatile String text = "t";

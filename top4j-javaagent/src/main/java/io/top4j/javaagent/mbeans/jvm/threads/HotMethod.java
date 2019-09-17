@@ -21,9 +21,6 @@ import io.top4j.javaagent.utils.ThreadHelper;
 import javax.management.MBeanServerConnection;
 import java.io.IOException;
 
-/**
- * Created by ryan on 27/07/15.
- */
 public class HotMethod implements HotMethodMXBean {
 
     volatile private String methodName;

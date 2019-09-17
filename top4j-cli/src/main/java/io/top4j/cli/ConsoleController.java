@@ -32,9 +32,6 @@ import java.lang.management.*;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
-/**
- * Created by ryan on 02/02/16.
- */
 public class ConsoleController  extends TimerTask {
 
     private final ConsoleReader consoleReader;
@@ -60,7 +57,6 @@ public class ConsoleController  extends TimerTask {
     private static final String ANSI_BLACK = "\u001B[30m";
     private static final String ANSI_RESET = "\u001B[0m";
     private static final String INIT_ERROR_MESSAGE = "A problem occurred attempting to initialise Top4J CLI Console Controller: ";
-
 
     public ConsoleController ( ConsoleReader consoleReader, UserInput userInput, MBeanServerConnection mbsc, DisplayConfig displayConfig ) {
 

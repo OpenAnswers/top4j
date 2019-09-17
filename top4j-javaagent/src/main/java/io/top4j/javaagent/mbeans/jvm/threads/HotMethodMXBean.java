@@ -16,9 +16,6 @@
 
 package io.top4j.javaagent.mbeans.jvm.threads;
 
-/**
- * Created by ryan on 27/07/15.
- */
 public interface HotMethodMXBean {
 
 	void setMethodName( String methodName );

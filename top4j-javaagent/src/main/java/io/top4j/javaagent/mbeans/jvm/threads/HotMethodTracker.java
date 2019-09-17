@@ -22,9 +22,6 @@ import java.util.Map;
 import java.util.TimerTask;
 import java.util.logging.Logger;
 
-/**
- * Created by ryan on 02/08/15.
- */
 public class HotMethodTracker extends TimerTask {
 
     private Map<Integer, TopThread> topThreadMap;

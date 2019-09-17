@@ -22,9 +22,6 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.logging.Logger;
 
-/**
- * Created by ryan on 28/01/16.
- */
 public class StatsLogWriter {
 
     private PrintWriter printWriter;

@@ -22,9 +22,6 @@ import javax.management.MBeanServer;
 import java.lang.management.ManagementFactory;
 import java.util.List;
 
-/**
- * Created by ryan on 02/06/15.
- */
 public class GarbageCollectorNames {
 
     public static void main ( String[] args ) {

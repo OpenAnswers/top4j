@@ -38,9 +38,6 @@ import java.util.Timer;
 import java.util.TimerTask;
 import java.util.Scanner;
 
-/**
- * Created by ryan on 02/07/16.
- */
 public class Top4J {
 
     // set default console refresh period - how frequently in milliseconds the Top4J console screen is refreshed

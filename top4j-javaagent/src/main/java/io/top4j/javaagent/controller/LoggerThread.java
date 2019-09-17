@@ -29,9 +29,6 @@ import javax.management.ObjectName;
 import java.lang.management.ManagementFactory;
 import java.util.logging.Logger;
 
-/**
- * Created by ryan on 07/09/15.
- */
 public class LoggerThread extends Thread {
 
     private LoggerQueue loggerQueue;
