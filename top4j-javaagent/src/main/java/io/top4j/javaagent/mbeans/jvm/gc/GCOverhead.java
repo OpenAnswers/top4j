@@ -61,11 +61,6 @@ public class GCOverhead {
     	gcTimeBean.setLastGCTime(gcTime);
     	gcTimeBean.setLastSystemTime(systemTime);
 
-		System.out.println("GC Overhead system time: " + systemTime);
-		if (String.valueOf(systemTime).endsWith("0")) {
-			throw new RuntimeException("Random error thrown by GC Overhead update!!!");
-		}
-
     }
 
 	public double getGcOverhead( ) {
