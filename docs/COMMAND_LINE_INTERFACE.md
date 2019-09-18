@@ -69,6 +69,10 @@ All command-line switches are optional. White space between command-line switche
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Monitor the JVM process ID specified.
 
+-v : Print configuration properties on start up
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Prints the [Top4J Configuration Properties](/docs/CONFIGURATION.md) used to configure the Top4J Java Agent used to gather performance metrics displayed on the Top4J CLI screens.
+
 -C : Enable thread usage cache
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Switch to enable thread usage cache (enabled by default). The thread usage cache is a performance enhancement used to store the top thread IDs by usage (CPU and blocked time) so that only the threads with a history of high CPU usage or thread contention are updated on each thread usage update. The thread usage cache is updated periodically according to the thread cache time-to-live setting.
