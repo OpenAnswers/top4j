@@ -2,9 +2,12 @@ Logging
 =======
 The Top4J Java Agent can be configured to log performance metrics to the local file system.
 
-This feature is disabled by default but can be easily enabled via the Top4J configuration property `stats.logger.enabled`.
+This feature is disabled by default but can be easily enabled via the Top4J configuration property `stats.logger.enabled=true`.
 
-The default behaviour can be overridden by creating a custom top4j.properties file containing `stats.logger.enabled=true` (see the [Top4J Configuration](/CONFIGURATION.md) for more details) or as an additional argument to the `java -javaagent` command-line argument, for example....
+The `stats.logger.enabled` override property can be set in one of two ways:
+
+1. By creating a custom top4j.properties file containing `stats.logger.enabled=true` - see the [Top4J Configuration](/CONFIGURATION.md) documentation for more details.
+1. By adding an additional argument to the `java -javaagent` command-line argument, for example....
 
 ```bash
 java -javaagent:<path-to-top4j-jar>/top4j-javaagent-0.0.8.jar=stats.logger.enabled=true <java-class-name>
