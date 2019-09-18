@@ -34,21 +34,21 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="README.md" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/README.md">
+      <file leaf-file-name="LOGGING.md" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/docs/LOGGING.md">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="187">
-              <caret line="77" column="0" lean-forward="false" selection-start-line="77" selection-start-column="0" selection-end-line="77" selection-end-column="0" />
+            <state relative-caret-position="408">
+              <caret line="24" column="0" lean-forward="false" selection-start-line="24" selection-start-column="0" selection-end-line="24" selection-end-column="0" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="LOGGING.md" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/docs/LOGGING.md">
+      <file leaf-file-name="README.md" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/README.md">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="391">
-              <caret line="23" column="48" lean-forward="false" selection-start-line="23" selection-start-column="48" selection-end-line="23" selection-end-column="48" />
+            <state relative-caret-position="221">
+              <caret line="54" column="18" lean-forward="false" selection-start-line="54" selection-start-column="18" selection-end-line="54" selection-end-column="18" />
               <folding />
             </state>
           </provider>
@@ -317,56 +317,6 @@
             <path>
               <item name="top4j" type="b2602c69:ProjectViewProjectNode" />
               <item name="top4j" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="top4j" type="b2602c69:ProjectViewProjectNode" />
-              <item name="top4j" type="462c0819:PsiDirectoryNode" />
-              <item name="docs" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="top4j" type="b2602c69:ProjectViewProjectNode" />
-              <item name="top4j" type="462c0819:PsiDirectoryNode" />
-              <item name="top4j-javaagent" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="top4j" type="b2602c69:ProjectViewProjectNode" />
-              <item name="top4j" type="462c0819:PsiDirectoryNode" />
-              <item name="top4j-javaagent" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="top4j" type="b2602c69:ProjectViewProjectNode" />
-              <item name="top4j" type="462c0819:PsiDirectoryNode" />
-              <item name="top4j-javaagent" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="top4j" type="b2602c69:ProjectViewProjectNode" />
-              <item name="top4j" type="462c0819:PsiDirectoryNode" />
-              <item name="top4j-javaagent" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="top4j" type="b2602c69:ProjectViewProjectNode" />
-              <item name="top4j" type="462c0819:PsiDirectoryNode" />
-              <item name="top4j-javaagent" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="javaagent" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="top4j" type="b2602c69:ProjectViewProjectNode" />
-              <item name="top4j" type="462c0819:PsiDirectoryNode" />
-              <item name="top4j-javaagent" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="javaagent" type="462c0819:PsiDirectoryNode" />
-              <item name="config" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="top4j" type="b2602c69:ProjectViewProjectNode" />
@@ -1245,14 +1195,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/docs/LOGGING.md">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="391">
-          <caret line="23" column="48" lean-forward="false" selection-start-line="23" selection-start-column="48" selection-end-line="23" selection-end-column="48" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/docs/CONFIGURATION.md">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="374">
@@ -1261,10 +1203,18 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/docs/LOGGING.md">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="408">
+          <caret line="24" column="0" lean-forward="false" selection-start-line="24" selection-start-column="0" selection-end-line="24" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/README.md">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="187">
-          <caret line="77" column="0" lean-forward="false" selection-start-line="77" selection-start-column="0" selection-end-line="77" selection-end-column="0" />
+        <state relative-caret-position="221">
+          <caret line="54" column="18" lean-forward="false" selection-start-line="54" selection-start-column="18" selection-end-line="54" selection-end-column="18" />
           <folding />
         </state>
       </provider>

@@ -52,7 +52,7 @@ java -jar top4j-cli-0.0.8.jar
 1) org.sonar.server.app.WebServer C:\Users\ryan\AppData\Local\Temp\sq-process6076250228712711580properties [PID=9840]
 2) io.top4j.javaagent.test.MultiThreadedTest 1000 100 1000 [PID=28756]
 3) org.sonar.search.SearchServer C:\Users\ryan\AppData\Local\Temp\sq-process647990075843669775properties [PID=10876]
-4) top4j-cli-0.0.9-SNAPSHOT.jar [PID=7884]
+4) top4j-cli-0.0.8.jar [PID=7884]
 
 Please select a JVM number between 0 and 4:
 ```
