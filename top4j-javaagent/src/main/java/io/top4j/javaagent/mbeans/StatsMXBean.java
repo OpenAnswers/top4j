@@ -24,4 +24,12 @@ public interface StatsMXBean {
 
     double getMBeanCpuTime();
 
+    void setEnabled(boolean enabled);
+
+    boolean getEnabled();
+
+    void setFailureReason(String failureReason);
+
+    String getFailureReason();
+
 }

@@ -62,7 +62,7 @@ public class Collector extends TimerTask {
     		// log stats
     		logStats( );
     	}
-		
+
 	}
 	
 	private void logStats( ) {

@@ -15,7 +15,7 @@
 #      ./runMultiThreadedTest.sh 10 100 10
 #
 
-TOP4J_JAVAAGENT_JAR=`ls -1 ../../../target/top4j-javaagent-*.jar | tail -1`
+TOP4J_JAVAAGENT_JAR=`ls -1rt ../../../target/top4j-javaagent-*.jar | tail -1`
 ARG_COUNT=$#
 NUM_THREADS=$1
 NUM_ITERATIONS=$2

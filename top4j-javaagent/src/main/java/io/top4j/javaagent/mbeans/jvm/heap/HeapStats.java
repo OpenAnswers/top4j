@@ -16,6 +16,7 @@
 
 package io.top4j.javaagent.mbeans.jvm.heap;
 
+import io.top4j.javaagent.exception.MBeanRuntimeException;
 import io.top4j.javaagent.profiler.CpuTime;
 
 import javax.management.MBeanServerConnection;
@@ -26,6 +27,8 @@ public class HeapStats implements HeapStatsMXBean {
 	private HeapUtilisation heapUtilisation;
     private CpuTime cpuTime = new CpuTime();
 	private double mBeanCpuTime;
+	private boolean enabled = true;
+	private String failureReason;
 
 	private static final Logger LOGGER = Logger.getLogger(HeapStats.class.getName());
 
@@ -40,6 +43,22 @@ public class HeapStats implements HeapStatsMXBean {
 	
 	/** Update Heap stats. */
     public synchronized void update( ) {
+
+		if (enabled) {
+			try {
+				// update heap stats
+				updateHeapStats();
+			} catch (Exception e) {
+				// something went wrong - record failure reason and disable any further updates
+				this.failureReason = e.getMessage();
+				this.enabled = false;
+				LOGGER.severe("TOP4J ERROR: Failed to update HeapStats MBean due to: " + e.getMessage());
+				LOGGER.severe("TOP4J ERROR: Further HeapStats MBean updates will be disabled from now on.");
+			}
+		}
+	}
+
+	private synchronized void updateHeapStats( ) throws MBeanRuntimeException {
 
         // initialise thread CPU timer
     	cpuTime.init();
@@ -92,6 +111,26 @@ public class HeapStats implements HeapStatsMXBean {
 	@Override
 	public double getTenuredHeapUtil() {
 		return this.heapUtilisation.getTenuredHeapUtil();
+	}
+
+	@Override
+	public void setEnabled(boolean enabled) {
+		this.enabled = enabled;
+	}
+
+	@Override
+	public boolean getEnabled() {
+		return this.enabled;
+	}
+
+	@Override
+	public void setFailureReason(String failureReason) {
+		this.failureReason = failureReason;
+	}
+
+	@Override
+	public String getFailureReason() {
+		return this.failureReason;
 	}
 
 }

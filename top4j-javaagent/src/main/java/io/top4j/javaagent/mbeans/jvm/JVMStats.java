@@ -53,7 +53,9 @@ public class JVMStats implements JVMStatsMXBean {
     private List<StatsMXBean> jvmStatsMBeans = new ArrayList<>();
 	private MBeanServer mbs = ManagementFactory.getPlatformMBeanServer();
     private Configurator config;
-	
+    private boolean enabled = true;
+    private String failureReason;
+
 	private static final Logger LOGGER = Logger.getLogger(JVMStats.class.getName());
 	
 	public JVMStats ( Configurator config, LoggerQueue loggerQueue ) {
@@ -87,6 +89,22 @@ public class JVMStats implements JVMStatsMXBean {
 	
 	/** Update JVM stats. */
     public synchronized void update( ) {
+
+        if (enabled) {
+            try {
+                // update JVM stats
+                updateJvmStats();
+            } catch (Exception e) {
+                // something went wrong - record failure reason and disable any further updates
+                this.failureReason = e.getMessage();
+                this.enabled = false;
+                LOGGER.severe("TOP4J ERROR: Failed to update JVMStats MBean due to: " + e.getMessage());
+                LOGGER.severe("TOP4J ERROR: Further JVMStats MBean updates will be disabled from now on.");
+            }
+        }
+    }
+
+    private synchronized void updateJvmStats( ) {
 
         // initialise thread CPU timer
     	cpuTime.init();
@@ -367,6 +385,26 @@ public class JVMStats implements JVMStatsMXBean {
         } catch (Exception e) {
             LOGGER.severe("Failed to initialise stats logger MBean due to: " + e.getMessage());
         }
+    }
+
+    @Override
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
+    }
+
+    @Override
+    public boolean getEnabled() {
+        return this.enabled;
+    }
+
+    @Override
+    public void setFailureReason(String failureReason) {
+        this.failureReason = failureReason;
+    }
+
+    @Override
+    public String getFailureReason() {
+        return this.failureReason;
     }
 
 }

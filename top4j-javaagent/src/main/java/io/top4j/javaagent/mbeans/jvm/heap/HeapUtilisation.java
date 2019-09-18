@@ -17,6 +17,7 @@
 package io.top4j.javaagent.mbeans.jvm.heap;
 
 import io.top4j.javaagent.exception.MBeanInitException;
+import io.top4j.javaagent.exception.MBeanRuntimeException;
 import io.top4j.javaagent.mbeans.jvm.memory.MemoryPoolMXBeanHelper;
 
 import javax.management.MBeanServerConnection;
@@ -45,20 +46,20 @@ public class HeapUtilisation {
 	}
 	
 	/** Update Heap Utilisation. */
-    public void update( ) {
+    public void update( ) throws MBeanRuntimeException {
 
 		// update eden space util
 		long edenSpaceUsed = 0;
 		try {
 			edenSpaceUsed = memoryPoolMxBeanHelper.getNurseryCollectionUsed();
 		} catch (Exception e) {
-			LOGGER.fine("WARNING: Unable to retrieve nursery collection used from MemoryPool MBean due to: " + e.getMessage() );
+			throw new MBeanRuntimeException(e, "ERROR: Unable to retrieve nursery collection used from MemoryPool MBean due to: " + e.getMessage() );
 		}
 		long edenSpaceCommitted = 0;
 		try {
 			edenSpaceCommitted = memoryPoolMxBeanHelper.getNurseryCollectionCommitted();
 		} catch (Exception e) {
-			LOGGER.fine("WARNING: Unable to retrieve nursery collection committed from MemoryPool MBean due to: " + e.getMessage() );
+			throw new MBeanRuntimeException(e, "ERROR: Unable to retrieve nursery collection committed from MemoryPool MBean due to: " + e.getMessage() );
 		}
 		LOGGER.finer("Eden Collection Used = " + edenSpaceUsed);
 		LOGGER.finer("Eden Collection Committed = " + edenSpaceCommitted);
@@ -72,13 +73,13 @@ public class HeapUtilisation {
 		try {
 			survivorSpaceUsed = memoryPoolMxBeanHelper.getSurvivorCollectionUsed();
 		} catch (Exception e) {
-			LOGGER.fine("WARNING: Unable to retrieve survivor collection used from MemoryPool MBean due to: " + e.getMessage() );
+			throw new MBeanRuntimeException(e, "ERROR: Unable to retrieve survivor collection used from MemoryPool MBean due to: " + e.getMessage() );
 		}
 		long survivorSpaceCommitted = 0;
 		try {
 			survivorSpaceCommitted = memoryPoolMxBeanHelper.getSurvivorCollectionCommitted();
 		} catch (Exception e) {
-			LOGGER.fine("WARNING: Unable to retrieve survivor collection committed from MemoryPool MBean due to: " + e.getMessage());
+			throw new MBeanRuntimeException(e, "ERROR: Unable to retrieve survivor collection committed from MemoryPool MBean due to: " + e.getMessage());
 		}
 		LOGGER.finer("Survivor Collection Used = " + survivorSpaceUsed);
 		LOGGER.finer("Survivor Collection Committed = " + survivorSpaceCommitted);
@@ -92,13 +93,13 @@ public class HeapUtilisation {
 		try {
 			tenuredHeapUsed = memoryPoolMxBeanHelper.getTenuredCollectionUsed();
 		} catch (Exception e) {
-			LOGGER.fine("WARNING: Unable to retrieve tenured collection used from MemoryPool MBean due to: " + e.getMessage());
+			throw new MBeanRuntimeException(e, "ERROR: Unable to retrieve tenured collection used from MemoryPool MBean due to: " + e.getMessage());
 		}
 		long tenuredHeapCommitted = 0;
 		try {
 			tenuredHeapCommitted = memoryPoolMxBeanHelper.getTenuredCollectionCommitted();
 		} catch (Exception e) {
-			LOGGER.fine("WARNING: Unable to retrieve tenured collection committed from MemoryPool MBean due to: " + e.getMessage());
+			throw new MBeanRuntimeException(e, "ERROR: Unable to retrieve tenured collection committed from MemoryPool MBean due to: " + e.getMessage());
 		}
 		LOGGER.finer("Tenured Collection Used = " + tenuredHeapUsed);
 		LOGGER.finer("Tenured Collection Committed = " + tenuredHeapCommitted);
@@ -108,7 +109,7 @@ public class HeapUtilisation {
 				try {
 					tenuredHeapUsed = memoryPoolMxBeanHelper.getTenuredHeapUsed();
 				} catch (Exception e) {
-					LOGGER.fine("WARNING: Unable to retrieve tenured heap used from MemoryPool MBean due to: " + e.getMessage());
+					throw new MBeanRuntimeException(e, "ERROR: Unable to retrieve tenured heap used from MemoryPool MBean due to: " + e.getMessage());
 				}
 				LOGGER.finer("Tenured Heap Used = " + tenuredHeapUsed);
 			}

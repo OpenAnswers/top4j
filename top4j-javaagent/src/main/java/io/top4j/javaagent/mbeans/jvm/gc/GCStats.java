@@ -28,6 +28,8 @@ public class GCStats implements GCStatsMXBean {
 	private GCPauseTime gcPauseTime;
 	private CpuTime cpuTime = new CpuTime();
 	private double mBeanCpuTime;
+	private boolean enabled = true;
+	private String failureReason;
 	
 	private static final Logger LOGGER = Logger.getLogger(GCStats.class.getName());
 	
@@ -48,6 +50,23 @@ public class GCStats implements GCStatsMXBean {
 	
 	/** Update GC stats. */
     public synchronized void update( ) {
+
+		if (enabled) {
+			try {
+				// update GC stats
+				updateGCStats();
+			} catch (Exception e) {
+				// something went wrong - record failure reason and disable any further updates
+				this.failureReason = e.getMessage();
+				this.enabled = false;
+				LOGGER.severe("TOP4J ERROR: Failed to update GCStats MBean due to: " + e.getMessage());
+				LOGGER.severe("TOP4J ERROR: Further GCStats MBean updates will be disabled from now on.");
+			}
+		}
+
+	}
+
+	private synchronized void updateGCStats( ) {
 
         // initialise thread CPU timer
     	cpuTime.init();
@@ -73,6 +92,26 @@ public class GCStats implements GCStatsMXBean {
 	@Override
 	public double getMBeanCpuTime() {
 		return mBeanCpuTime;
+	}
+
+	@Override
+	public void setEnabled(boolean enabled) {
+		this.enabled = enabled;
+	}
+
+	@Override
+	public boolean getEnabled() {
+		return this.enabled;
+	}
+
+	@Override
+	public void setFailureReason(String failureReason) {
+		this.failureReason = failureReason;
+	}
+
+	@Override
+	public String getFailureReason() {
+		return this.failureReason;
 	}
 
 	@Override

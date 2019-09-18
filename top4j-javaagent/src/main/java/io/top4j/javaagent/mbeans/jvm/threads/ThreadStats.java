@@ -29,6 +29,8 @@ public class ThreadStats implements ThreadStatsMXBean {
     private CpuTime cpuTime = new CpuTime();
 	private volatile double mBeanCpuTime;
     private boolean hotMethodProfilingEnabled;
+	private boolean enabled = true;
+	private String failureReason;
 
 	private static final Logger LOGGER = Logger.getLogger(ThreadStats.class.getName());
 	
@@ -75,6 +77,22 @@ public class ThreadStats implements ThreadStatsMXBean {
 
 	/** Update Thread stats. */
     public synchronized void update( ) {
+
+		if (enabled) {
+			try {
+				// update thread stats
+				updateThreadStats();
+			} catch (Exception e) {
+				// something went wrong - record failure reason and disable any further updates
+				this.failureReason = e.getMessage();
+				this.enabled = false;
+				LOGGER.severe("TOP4J ERROR: Failed to update ThreadStats MBean due to: " + e.getMessage());
+				LOGGER.severe("TOP4J ERROR: Further ThreadStats MBean updates will be disabled from now on.");
+			}
+		}
+	}
+
+	private synchronized void updateThreadStats( ) {
 
         // initialise thread CPU timer
     	cpuTime.init();
@@ -181,6 +199,26 @@ public class ThreadStats implements ThreadStatsMXBean {
 	@Override
 	public void setTimedWaitingThreadCount(long timedWaitingThreadCount) {
 		this.threadUsage.setTimedWaitingThreadCount(timedWaitingThreadCount);
+	}
+
+	@Override
+	public void setEnabled(boolean enabled) {
+		this.enabled = enabled;
+	}
+
+	@Override
+	public boolean getEnabled() {
+		return this.enabled;
+	}
+
+	@Override
+	public void setFailureReason(String failureReason) {
+		this.failureReason = failureReason;
+	}
+
+	@Override
+	public String getFailureReason() {
+		return this.failureReason;
 	}
 
 }

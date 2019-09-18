@@ -35,6 +35,8 @@ public class AgentStats implements AgentStatsMXBean {
 	private long lastSystemTime;
 	private CpuTime cpuTime = new CpuTime();
 	private List<StatsMXBean> jvmStatsMBeans;
+	private boolean enabled = true;
+	private String failureReason;
 
 	private static final Logger LOGGER = Logger.getLogger(AgentStats.class.getName());
 	
@@ -88,6 +90,23 @@ public class AgentStats implements AgentStatsMXBean {
 	@Override
 	/* Update Agent Stats */
 	public synchronized void update() {
+
+		if (enabled) {
+			try {
+				// update Agent stats
+				updateAgentStats();
+			} catch (Exception e) {
+				// something went wrong - record failure reason and disable any further updates
+				this.failureReason = e.getMessage();
+				this.enabled = false;
+				LOGGER.severe("TOP4J ERROR: Failed to update AgentStats MBean due to: " + e.getMessage());
+				LOGGER.severe("TOP4J ERROR: Further AgentStats MBean updates will be disabled from now on.");
+			}
+		}
+
+	}
+
+	private synchronized void updateAgentStats( ) {
 
 		// initialise thread CPU timer
 		cpuTime.init();
@@ -167,6 +186,26 @@ public class AgentStats implements AgentStatsMXBean {
 	@Override
 	public double getMBeanCpuTime() {
 		return mBeanCpuTime;
+	}
+
+	@Override
+	public void setEnabled(boolean enabled) {
+		this.enabled = enabled;
+	}
+
+	@Override
+	public boolean getEnabled() {
+		return this.enabled;
+	}
+
+	@Override
+	public void setFailureReason(String failureReason) {
+		this.failureReason = failureReason;
+	}
+
+	@Override
+	public String getFailureReason() {
+		return this.failureReason;
 	}
 
 }

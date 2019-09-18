@@ -70,6 +70,8 @@ public final class StatsLogger implements StatsLoggerMXBean {
 	private String lastDateStamp;
 	private Map<String, StatsLogWriter> statsLogWriter = new HashMap<>();
     private CpuTime cpuTime = new CpuTime();
+	private boolean enabled = true;
+	private String failureReason;
 
 	private static final Logger LOGGER = Logger.getLogger(StatsLogger.class.getName());
 	
@@ -268,7 +270,23 @@ public final class StatsLogger implements StatsLoggerMXBean {
     }
 
     @Override
-    public void update() {
+    public synchronized void update() {
+
+		if (enabled) {
+			try {
+				// update stats logger
+				updateStatsLogger();
+			} catch (Exception e) {
+				// something went wrong - record failure reason and disable any further updates
+				this.failureReason = e.getMessage();
+				this.enabled = false;
+				LOGGER.severe("TOP4J ERROR: Failed to update StatsLogger MBean due to: " + e.getMessage());
+				LOGGER.severe("TOP4J ERROR: Further StatsLogger MBean updates will be disabled from now on.");
+			}
+		}
+	}
+
+	private synchronized void updateStatsLogger( ) {
 
         // initialise thread CPU timer
         cpuTime.init();
@@ -553,4 +571,25 @@ public final class StatsLogger implements StatsLoggerMXBean {
     public double getMBeanCpuTime() {
         return mBeanCpuTime;
     }
+
+	@Override
+	public void setEnabled(boolean enabled) {
+		this.enabled = enabled;
+	}
+
+	@Override
+	public boolean getEnabled() {
+		return this.enabled;
+	}
+
+	@Override
+	public void setFailureReason(String failureReason) {
+		this.failureReason = failureReason;
+	}
+
+	@Override
+	public String getFailureReason() {
+		return this.failureReason;
+	}
+
 }
