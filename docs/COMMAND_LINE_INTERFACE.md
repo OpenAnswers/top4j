@@ -4,8 +4,8 @@ When running the Top4J CLI jar in Remote Attach mode, the user will be presented
 
 Each of the fields and columns displayed by the top4J CLI are detailed below.
 
-1. Header Fields
-----------------
+Header Fields
+-------------
 
 **Load average:** The system load average for the last minute. The system load average is the sum of the number of runnable entities queued to the available processors plus the number of runnable entities running on the available processors averaged over a period of time. The way in which the load average is calculated is operating system specific but is typically a damped time-dependent average. If the load average is not available, a negative value is returned.
 
@@ -21,8 +21,8 @@ Each of the fields and columns displayed by the top4J CLI are detailed below.
 
 **GC Overhead(%):** The GC overhead is calculated as the percentage of real time (wall clock time) the JVM spends in garbage collection. Only stop-the-world garbage collection pauses contribute to the GC overhead. This, therefore, equates to the percentage of real time that the application is stopped whilst garbage collection takes place. This is a key performance indicator of the impact of garbage collection on a running Java application. A high GC overhead overhead can lead to poor application performance as there is less time available to process application tasks and application threads can be blocked waiting to allocate memory (i.e. create objects).
 
-2. Columns
-----------
+Columns
+-------
 
 **#** : The Thread Number
 
@@ -48,8 +48,8 @@ The percentage of time that the thread has been in a blocked state during the la
 
 The thread name.
 
-3. COMMAND-LINE Options
------------------------
+COMMAND-LINE Options
+--------------------
 
 The command-line syntax for top4j consists of:
 
