@@ -11,7 +11,7 @@ The [Top4J Remote Attach](/README.md#run-top4j-via-cli-remote-attach) function i
 
 The [Top4J Java Agent](/README.md#run-top4j-as-a-java-agent) is invoked via the standard `java -javaagent` command line argument and runs as a background thread inside the target JVM.
 
-See [Get Started](/README.md#get-started) section for more details.
+See [Getting Started](/README.md#getting-started) section for more details.
 
 Top4J is part of the Open Answers [Panther](https://www.openanswers.co.uk/products/panther) suite of monitoring applications.
 
