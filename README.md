@@ -69,7 +69,7 @@ Alternatively, you can specify the target JVM PID on the command line as follows
 java -jar top4j-cli-0.0.8.jar -p 12345
 ```
 
-See the [Top4J Command Line Interface](/docs/COMMAND_LINE_INTERFACE.md) documentation for the full set of command line options supported.
+See the [Top4J Command Line Interface](/docs/COMMAND_LINE_INTERFACE.md) documentation for the full set of command line options supported or use the "-h" command line option, e.g. `java -jar top4j-cli-0.0.8.jar -h`.
 
 Some additional CLI screenshots can be found [here](/docs/SCREENSHOTS.md).
 

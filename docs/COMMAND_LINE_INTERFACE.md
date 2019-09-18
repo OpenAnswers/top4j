@@ -53,7 +53,9 @@ The thread name.
 
 The command-line syntax for top4j consists of:
 
--h | -d delay -p pid
+-hv | -CD -d delay -p pid -S cache-size -T cache-ttl
+
+All command-line switches are optional. White space between command-line switches is also optional.
 
 -h : Help
 
