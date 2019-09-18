@@ -14,7 +14,7 @@
   <description>
     Top4J is a lightweight, low overhead, production-ready performance analysis tool for the Java runtime environment.
   </description>
-  <url>http://top4j.io</url>
+  <url>https://github.com/OpenAnswers/top4j</url>
 
 
   <properties>
