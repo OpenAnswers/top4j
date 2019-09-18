@@ -1,8 +1,21 @@
 Command Line Interface
 ======================
-When running the Top4J CLI jar in Remote Attach mode, the user will be presented with an interactive screen consisting of a header followed by a list of the top 10 threads ordered by CPU utilisation. See screenshot above for more details. A real-time thread stack trace (thread dump) of each of the listed threads can be displayed by entering the number associated with the thread (column 1). Once in the stack trace screen, the user can return to the main menu by typing "m". From the main menu screen, the user can switch to the blocked threads screen by typing "b". The blocked threads screen consists of a header followed by a list of the top 10 blocked threads ordered by the percentage of time that they have been blocked. As before, a real-time thread stack trace of each of the listed blocked threads can be displayed by entering the number associated with the thread (column 1). To leave any of the interactive screens, detach from the remote JVM and exit the top4j CLI, type "q".
 
-Each of the fields and columns displayed by the top4J CLI are detailed below.
+When running the Top4J CLI jar in Remote Attach mode, the user will be presented with an interactive screen consisting of a header followed by a list of the top 10 threads ordered by CPU utilisation, for example....
+
+![Top4J Top Threads Screenshot](/images/top4j-top-threads-screenshot.png)
+
+A real-time thread stack trace (thread dump) of each of the listed threads can be displayed by entering the number associated with the thread (column 1), for example....
+
+![Top4J Top Threads Screenshot](../images/top4j-thread-stack-trace-screenshot.png)
+
+Once in the stack trace screen, the user can return to the main menu by typing "m". From the main menu screen, the user can switch to the blocked threads screen by typing "b". The blocked threads screen consists of a header followed by a list of the top 10 blocked threads ordered by the percentage of time that they have been blocked, for example....
+
+![Top4J Top Threads Screenshot](../images/top4j-blocked-threads-screenshot.png)
+
+As before, a real-time thread stack trace of each of the listed blocked threads can be displayed by entering the number associated with the thread (column 1). To leave any of the interactive screens, detach from the remote JVM and exit the Top4J CLI, type "q".
+
+Each of the fields and columns displayed by the Top4J CLI are detailed below.
 
 Header Fields
 -------------
@@ -51,7 +64,7 @@ The thread name.
 COMMAND-LINE Options
 --------------------
 
-The command-line syntax for top4j consists of:
+The command-line syntax for Top4J consists of:
 
 -hv | -CD -d delay -p pid -S cache-size -T cache-ttl
 
