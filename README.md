@@ -46,7 +46,7 @@ java -jar top4j-cli-0.0.8.jar
 The Top4J CLI will auto-detect running, attachable JVMs and present a list of JVM processes to choose from....
 
 ```bash
-java -jar top4j-cli-0.0.9-SNAPSHOT.jar
+java -jar top4j-cli-0.0.8.jar
 
 0) org.tanukisoftware.wrapper.WrapperSimpleApp org.sonar.application.App [PID=8800]
 1) org.sonar.server.app.WebServer C:\Users\ryan\AppData\Local\Temp\sq-process6076250228712711580properties [PID=9840]
