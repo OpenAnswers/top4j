@@ -31,8 +31,8 @@
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <!-- Default distributionManagement proprties which can be overridden in a settings.xml profile: -->
-    <repository.deploy.releases.url>http://hlcit003:8081/nexus/content/repositories/releases</repository.deploy.releases.url>
-    <repository.deploy.snapshots.url>http://hlcit003:8081/nexus/content/repositories/snapshots</repository.deploy.snapshots.url>
+    <!-- <repository.deploy.releases.url>http://hlcit003:8081/nexus/content/repositories/releases</repository.deploy.releases.url> -->
+    <!-- <repository.deploy.snapshots.url>http://hlcit003:8081/nexus/content/repositories/snapshots</repository.deploy.snapshots.url> -->
     <repository.deploy.releases.id>releases</repository.deploy.releases.id>
     <repository.deploy.snapshots.id>snapshots</repository.deploy.snapshots.id>
     <repository.deploy.releases.name>Releases</repository.deploy.releases.name>
@@ -72,12 +72,12 @@
     <repository>
       <id>${repository.deploy.releases.id}</id>
       <name>${repository.deploy.releases.name}</name>
-      <url>${repository.deploy.releases.url}</url>
+      <!-- <url>${repository.deploy.releases.url}</url> -->
     </repository>
     <snapshotRepository>
       <id>${repository.deploy.snapshots.id}</id>
       <name>${repository.deploy.snapshots.name}</name>
-      <url>${repository.deploy.snapshots.url}</url>
+      <!-- <url>${repository.deploy.snapshots.url}</url> -->
     </snapshotRepository>
   </distributionManagement>
   <scm>
