@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="376088a4-ef8e-48f3-874a-15ae0da20460" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/docs/LOGGING.md" afterPath="$PROJECT_DIR$/docs/LOGGING.md" />
+      <change beforePath="$PROJECT_DIR$/docs/CONFIGURATION.md" afterPath="$PROJECT_DIR$/docs/CONFIGURATION.md" />
     </list>
     <ignored path="top4j.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -44,7 +44,7 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="LOGGING.md" pinned="false" current-in-tab="true">
+      <file leaf-file-name="LOGGING.md" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/docs/LOGGING.md">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="391">
@@ -64,11 +64,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="CONFIGURATION.md" pinned="false" current-in-tab="false">
+      <file leaf-file-name="CONFIGURATION.md" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/docs/CONFIGURATION.md">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="34">
-              <caret line="2" column="151" lean-forward="false" selection-start-line="2" selection-start-column="151" selection-end-line="2" selection-end-column="151" />
+            <state relative-caret-position="374">
+              <caret line="22" column="0" lean-forward="false" selection-start-line="22" selection-start-column="0" selection-end-line="22" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -204,9 +204,9 @@
         <option value="$PROJECT_DIR$/docs/SCREENSHOTS.md" />
         <option value="$PROJECT_DIR$/docs/COMMAND_LINE_INTERFACE.md" />
         <option value="$PROJECT_DIR$/docs/JMX_INTERFACE.md" />
-        <option value="$PROJECT_DIR$/docs/CONFIGURATION.md" />
         <option value="$PROJECT_DIR$/README.md" />
         <option value="$PROJECT_DIR$/docs/LOGGING.md" />
+        <option value="$PROJECT_DIR$/docs/CONFIGURATION.md" />
       </list>
     </option>
   </component>
@@ -1245,14 +1245,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/docs/CONFIGURATION.md">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="34">
-          <caret line="2" column="151" lean-forward="false" selection-start-line="2" selection-start-column="151" selection-end-line="2" selection-end-column="151" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/README.md">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="459">
@@ -1265,6 +1257,14 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="391">
           <caret line="23" column="48" lean-forward="false" selection-start-line="23" selection-start-column="48" selection-end-line="23" selection-end-column="48" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/docs/CONFIGURATION.md">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="374">
+          <caret line="22" column="0" lean-forward="false" selection-start-line="22" selection-start-column="0" selection-end-line="22" selection-end-column="0" />
           <folding />
         </state>
       </provider>
