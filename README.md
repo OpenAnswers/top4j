@@ -34,11 +34,11 @@ There are no prerequisites for running the Top4J Java Agent (aside from download
 Run Top4J via CLI Remote Attach
 -------------------------------
 
-1. Download and install the [Top4J CLI jar](http://hlcit003:8081/nexus/content/repositories/releases/io/top4j/top4j-cli/0.0.8/top4j-cli-0.0.8.jar) within an appropriate location on the local file system.
+1. Download and install the [Top4J CLI jar](http://hlcit003:8081/nexus/content/repositories/releases/io/top4j/top4j-cli/0.0.10/top4j-cli-0.0.10.jar) within an appropriate location on the local file system.
 1. Run Top4J CLI jar as follows....
 
 ```bash
-java -jar top4j-cli-0.0.8.jar
+java -jar top4j-cli-0.0.10.jar
 ```
 
 **NOTE:** The Top4J CLI jar **must** be run as the target JVM process owner.
@@ -46,13 +46,13 @@ java -jar top4j-cli-0.0.8.jar
 The Top4J CLI will auto-detect running, attachable JVMs and present a list of JVM processes to choose from....
 
 ```bash
-java -jar top4j-cli-0.0.8.jar
+java -jar top4j-cli-0.0.10.jar
 
 0) org.tanukisoftware.wrapper.WrapperSimpleApp org.sonar.application.App [PID=8800]
 1) org.sonar.server.app.WebServer C:\Users\ryan\AppData\Local\Temp\sq-process6076250228712711580properties [PID=9840]
 2) io.top4j.javaagent.test.MultiThreadedTest 1000 100 1000 [PID=28756]
 3) org.sonar.search.SearchServer C:\Users\ryan\AppData\Local\Temp\sq-process647990075843669775properties [PID=10876]
-4) top4j-cli-0.0.8.jar [PID=7884]
+4) top4j-cli-0.0.10.jar [PID=7884]
 
 Please select a JVM number between 0 and 4:
 ```
@@ -66,21 +66,21 @@ Here's a screenshot of Top4J in action....
 Alternatively, you can specify the target JVM PID on the command line as follows....
 
 ```bash
-java -jar top4j-cli-0.0.8.jar -p 12345
+java -jar top4j-cli-0.0.10.jar -p 12345
 ```
 
-See the [Top4J Command Line Interface](/docs/COMMAND_LINE_INTERFACE.md) documentation for the full set of command line options supported or use the "-h" command line option, e.g. `java -jar top4j-cli-0.0.8.jar -h`.
+See the [Top4J Command Line Interface](/docs/COMMAND_LINE_INTERFACE.md) documentation for the full set of command line options supported or use the "-h" command line option, e.g. `java -jar top4j-cli-0.0.10.jar -h`.
 
 Some additional CLI screenshots can be found [here](/docs/SCREENSHOTS.md).
 
 Run Top4J as a Java Agent
 -------------------------
 
-1. Download and install the [Top4J Java Agent jar](http://hlcit003:8081/nexus/content/repositories/releases/io/top4j/top4j-javaagent/0.0.8/top4j-javaagent-0.0.8.jar) within an appropriate location on the local file system.
+1. Download and install the [Top4J Java Agent jar](http://hlcit003:8081/nexus/content/repositories/releases/io/top4j/top4j-javaagent/0.0.10/top4j-javaagent-0.0.10.jar) within an appropriate location on the local file system.
 1. Add `-javaagent` command line argument to JVM startup args, e.g.
 
 ```bash
-java -javaagent:<path-to-top4j-jar>/top4j-javaagent-0.0.8.jar <java-class-name>
+java -javaagent:<path-to-top4j-jar>/top4j-javaagent-0.0.10.jar <java-class-name>
 ```
 
 The performance metrics gathered by the Top4J Java Agent are exposed via standard JMX MBean attributes. See the Top4J [JMX Interface](/docs/JMX_INTERFACE.md) for more details.
