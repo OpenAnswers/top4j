@@ -1,6 +1,6 @@
 JMX Interface
 =============
-Top4J performance metrics are exposed via JMX MBean attributes. All Top4J MBeans can be found under the "io.top4j" JMX domain.
+When running in Java Agent mode, Top4J performance metrics are exposed via standard JMX MBean attributes. All Top4J MBeans can be found under the "io.top4j" JMX domain.
 A complete list of Top4J MBeans and their associated attributes is documented below. The MBean Object Name is provided in square brackets.
 **All MBeans**
 --------------

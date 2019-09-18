@@ -5,11 +5,11 @@ Description
 
 Top4J is a lightweight, low overhead, production-ready performance analysis tool for the Java runtime environment. As the name suggests, it works a bit like the UNIX/Linux top command but at the JVM-level exposing key performance metrics from a Java runtime perspective.
 
-Top4J has two modes of operation: Remote Attach command-line interface (CLI) and Java Agent.
+Top4J has **two** modes of operation: **Remote Attach** command-line interface (CLI) and **Java Agent**.
 
-The Top4J Remote Attach function is executed via the command line and attaches to a remote JVM process via the JDK tools [VirtualMachine API](https://docs.oracle.com/javase/8/docs/jdk/api/attach/spec/com/sun/tools/attach/VirtualMachine.html).
+The **Top4J Remote Attach** function is executed via the command line and attaches to a remote JVM process via the JDK tools [VirtualMachine API](https://docs.oracle.com/javase/8/docs/jdk/api/attach/spec/com/sun/tools/attach/VirtualMachine.html).
 
-The Top4J Java Agent is invoked via the standard `java -javaagent` command line argument and runs as a background thread inside the target JVM.
+The **Top4J Java Agent** is invoked via the standard `java -javaagent` command line argument and runs as a background thread inside the target JVM.
 
 See [Get Started](/README.md#get-started) section for more details.
 
