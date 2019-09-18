@@ -21,7 +21,7 @@ java -javaagent:<path-to-top4j-jar>/top4j-javaagent-0.0.8.jar=stats.logger.enabl
 
 **NOTE:** Make sure the `stats.logger.directory` is writable by the Java process owner.
 
-The Top4J stats logger creates one log file per Top4J MBean per day. The stats (MBean attributes) are recorded as comma-separated values (CSV) by default. The stats log files are automatically rolled at midnight.
+The Top4J stats logger creates one log file per [Top4J MBean](/JMX_INTERFACE.md) per day. The stats (MBean attributes) are recorded as comma-separated values (CSV) by default. The stats log files are automatically rolled at midnight.
 
 Here is an example Top4J stats file listing....
 
