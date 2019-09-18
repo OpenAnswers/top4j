@@ -72,12 +72,12 @@
     <repository>
       <id>${repository.deploy.releases.id}</id>
       <name>${repository.deploy.releases.name}</name>
-      <!-- <url>${repository.deploy.releases.url}</url> -->
+      <url>${repository.deploy.releases.url}</url>
     </repository>
     <snapshotRepository>
       <id>${repository.deploy.snapshots.id}</id>
       <name>${repository.deploy.snapshots.name}</name>
-      <!-- <url>${repository.deploy.snapshots.url}</url> -->
+      <url>${repository.deploy.snapshots.url}</url>
     </snapshotRepository>
   </distributionManagement>
   <scm>
