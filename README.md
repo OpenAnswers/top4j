@@ -77,11 +77,17 @@ Run Top4J as a Java Agent
 -------------------------
 
 1. Download and install the [Top4J Java Agent jar](http://hlcit003:8081/nexus/content/repositories/releases/io/top4j/top4j-javaagent/0.0.8/top4j-javaagent-0.0.8.jar) within an appropriate location on the local file system.
-1. Add -javaagent command line argument to JVM startup args, e.g. `java -javaagent:<path-to-top4j-jar>/top4j-javaagent-0.0.8.jar <java-class-name>`
+1. Add `-javaagent` command line argument to JVM startup args, e.g.
+
+```bash
+java -javaagent:<path-to-top4j-jar>/top4j-javaagent-0.0.8.jar <java-class-name>
+```
 
 The performance metrics gathered by the Top4J Java Agent are exposed via standard JMX MBean attributes. See the Top4J [JMX Interface](/docs/JMX_INTERFACE.md) for more details.
 
 The Top4J Java Agent can also be configured to log performance metrics to the local file system. See the Top4J [Logging](/docs/LOGGING.md) documentation for more details.
+
+The Top4J Java Agent is configured via a standard [Java properties file](https://docs.oracle.com/javase/tutorial/essential/environment/properties.html). See the Top4J [Configuration](/docs/CONFIGURATION.md) documentation for more details.
 
 Build Top4J (via Maven)
 -----------------------
