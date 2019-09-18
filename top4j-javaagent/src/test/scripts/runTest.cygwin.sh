@@ -1,1 +1,0 @@
-java -Xms128m -Xmx128m -XX:+PrintGCTimeStamps -XX:+PrintGCDetails -verbosegc -Djava.util.logging.config.file=logging.properties -Dcom.sun.management.jmxremote -classpath "target\\top4j-javaagent-0.0.1-SNAPSHOT.jar;lib\\gson-1.7.1.jar" -javaagent:target\\top4j-javaagent-0.0.1-SNAPSHOT.jar io.top4j.javaagent.test.Test
