@@ -37,6 +37,7 @@ import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.Scanner;
+import java.util.logging.Logger;
 
 public class Top4J {
 
@@ -50,6 +51,8 @@ public class Top4J {
     private static int threadCacheTTL = 15000;
     // set default start up verbosity
     private static boolean verbose = false;
+
+    private static final Logger LOGGER = Logger.getLogger(Top4J.class.getName());
 
     public static void main( String[] args ) throws Exception {
 
@@ -96,7 +99,7 @@ public class Top4J {
         try {
             cmd = parser.parse( options, args);
         } catch (ParseException e) {
-            System.err.println("ERROR: There was a problem parsing command-line arguments. Reason: " + e.getMessage() );
+            LOGGER.severe("ERROR: There was a problem parsing command-line arguments. Reason: " + e.getMessage() );
             return 1;
         }
 
@@ -112,7 +115,7 @@ public class Top4J {
             String userProvidedDelayInterval = cmd.getOptionValue("d", "3");
             if (!isNumeric(userProvidedDelayInterval)) {
                 // user provided delay interval is *not* a number - return usage message and exit with error code
-                System.err.println("ERROR: Delay interval provided via command-line argument is not a number: " + userProvidedDelayInterval );
+                LOGGER.severe("ERROR: Delay interval provided via command-line argument is not a number: " + userProvidedDelayInterval );
                 return 1;
             }
             // override default consoleRefreshPeriod
@@ -135,7 +138,7 @@ public class Top4J {
             String userProvidedThreadCacheSize = cmd.getOptionValue("S");
             if (!isNumeric(userProvidedThreadCacheSize)) {
                 // user provided thread usage cache size is *not* a number - return usage message and exit with error code
-                System.err.println("ERROR: Thread usage cache size provided via command-line argument is not a number: " + userProvidedThreadCacheSize );
+                LOGGER.severe("ERROR: Thread usage cache size provided via command-line argument is not a number: " + userProvidedThreadCacheSize );
                 return 1;
             }
             // override default threadCacheSize
@@ -146,7 +149,7 @@ public class Top4J {
             String userProvidedThreadCacheTTL = cmd.getOptionValue("T");
             if (!isNumeric(userProvidedThreadCacheTTL)) {
                 // user provided thread usage cache TTL is *not* a number - return usage message and exit with error code
-                System.err.println("ERROR: Thread usage cache TTL provided via command-line argument is not a number: " + userProvidedThreadCacheTTL );
+                LOGGER.severe("ERROR: Thread usage cache TTL provided via command-line argument is not a number: " + userProvidedThreadCacheTTL );
                 return 1;
             }
             // override default threadCacheTTL
@@ -157,7 +160,7 @@ public class Top4J {
             String userProvidedJvmPid = cmd.getOptionValue("p");
             if (!isNumeric(userProvidedJvmPid)) {
                 // user provided JVM PID is *not* a number - return usage message and exit with error code
-                System.err.println("ERROR: JVM PID provided via command-line argument is not a number: " + userProvidedJvmPid );
+                LOGGER.severe("ERROR: JVM PID provided via command-line argument is not a number: " + userProvidedJvmPid );
                 return 1;
             }
             // user has provided a command-line arg and it's a valid number - use the arg as the jvmPid
@@ -188,7 +191,7 @@ public class Top4J {
             int jvmNumber;
             // try reading jvmNumber from stdin
             try {
-                if (jvmCount >= 10) {
+                if (jvmCount > 10) {
                     // use Java Text Scanner to read multi-digit text string
                     Scanner in = new Scanner(System.in, "utf-8");
                     jvmNumber = in.nextInt();
@@ -201,7 +204,7 @@ public class Top4J {
                 // validate user input
                 if (!(jvmNumber >= 0 && jvmNumber <= jvmCount-1)) {
                     // user has entered an out-of-bounds jvmNumber - return error message and exit with error code
-                    System.err.println("ERROR: Please enter a JVM number between 0 and " + (jvmCount-1));
+                    LOGGER.severe("ERROR: Please enter a JVM number between 0 and " + (jvmCount-1));
                     return 1;
                 }
                 // set jvmPid according to user selection
@@ -211,19 +214,19 @@ public class Top4J {
             }
             catch (Exception e) {
                 // user has entered an invalid jvmNumber - return error message and exit with error code
-                System.err.println("ERROR: Please enter a JVM number between 0 and " + (jvmCount-1));
+                LOGGER.severe("ERROR: Please enter a JVM number between 0 and " + (jvmCount-1));
                 return 1;
             }
         }
 
         // use javaProcessManager to attach to jvmPid
         System.out.println();
-        System.out.println("Attempting to attach to JVM PID " + jvmPid + "....");
+        LOGGER.info("Attempting to attach to JVM PID " + jvmPid + "....");
         JavaProcess jvm = javaProcessManager.get(jvmPid);
         // check jvm exists
         if (jvm == null) {
-            System.err.println("ERROR: JVM not found with PID " + jvmPid);
-            System.err.println("HINT: If the JVM is running, check that top4j is running as the JVM process owner");
+            LOGGER.severe("ERROR: JVM not found with PID " + jvmPid);
+            LOGGER.severe("HINT: If the JVM is running, check that top4j is running as the JVM process owner");
             return 1;
         }
         // start JMX management agent within target jvm
@@ -231,16 +234,11 @@ public class Top4J {
 
         // get JMX connector URL
         String connectorAddr = jvm.toUrl();
-        if (verbose) {
-            // print JMX connector URL
-            System.out.println("....using Connector URL = " + connectorAddr );
-        }
-
         // use JMX connector URL to connect to JMX service and establish MBean server connection
         JMXServiceURL serviceURL = new JMXServiceURL(connectorAddr);
         JMXConnector connector = JMXConnectorFactory.connect(serviceURL);
         MBeanServerConnection mbsc = connector.getMBeanServerConnection();
-        System.out.println("Successfully connected to target JVM JMX MBean Server.");
+        LOGGER.info("Successfully connected to target JVM JMX MBean Server.");
 
         // set displayThreadCount
         int displayThreadCount = 10;
@@ -259,10 +257,10 @@ public class Top4J {
 		Configurator config = new Configurator( mbsc, configOverrides );
 
 		// create and start Top4J controller thread
-        System.out.println("Top4J: Initialising Java agent.");
+        LOGGER.info("Top4J: Initialising Java agent.");
 		Controller controller = new Controller( config );
 		controller.start();
-		System.out.println("Top4J: Java agent activated.");
+		LOGGER.info("Top4J: Java agent activated.");
 
         // create new DisplayConfig to pass to ConsoleController
         DisplayConfig displayConfig = new DisplayConfig(displayThreadCount, jvmPid, jvmDisplayName);

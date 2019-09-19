@@ -33,6 +33,7 @@ import java.io.IOException;
 import java.lang.management.*;
 import java.text.SimpleDateFormat;
 import java.util.*;
+import java.util.logging.Logger;
 
 public class ConsoleController  extends TimerTask {
 
@@ -61,6 +62,8 @@ public class ConsoleController  extends TimerTask {
     private static final String ANSI_RESET = "\u001B[0m";
     private static final String INIT_ERROR_MESSAGE = "A problem occurred attempting to initialise Top4J CLI Console Controller: ";
 
+    private static final Logger LOGGER = Logger.getLogger(ConsoleController.class.getName());
+
     public ConsoleController ( ConsoleReader consoleReader, UserInput userInput, MBeanServerConnection mbsc, DisplayConfig displayConfig ) {
 
         this.consoleReader = consoleReader;
@@ -71,7 +74,7 @@ public class ConsoleController  extends TimerTask {
             this.threadHelper = new ThreadHelper( mbsc );
         } catch (IOException e) {
             String errorMessage = INIT_ERROR_MESSAGE + e.getMessage();
-            System.err.println(errorMessage);
+            LOGGER.severe(errorMessage);
             throw new IllegalStateException(errorMessage, e);
         }
 
@@ -81,7 +84,7 @@ public class ConsoleController  extends TimerTask {
             gcStatsObjectName = new ObjectName(Constants.DOMAIN + ":type=" + Constants.JVM_STATS_TYPE + ",statsType=" + Constants.GC_STATS_TYPE );
         } catch (MalformedObjectNameException e) {
             String errorMessage = INIT_ERROR_MESSAGE + e.getMessage();
-            System.err.println(errorMessage);
+            LOGGER.severe(errorMessage);
             throw new IllegalStateException(errorMessage, e);
         }
         // instantiate new gcStatsMXBean proxy based on gcStatsObjectName
@@ -95,7 +98,7 @@ public class ConsoleController  extends TimerTask {
             memoryStatsObjectName = new ObjectName(Constants.DOMAIN + ":type=" + Constants.JVM_STATS_TYPE + ",statsType=" + Constants.MEMORY_STATS_TYPE );
         } catch (MalformedObjectNameException e) {
             String errorMessage = INIT_ERROR_MESSAGE + e.getMessage();
-            System.err.println(errorMessage);
+            LOGGER.severe(errorMessage);
             throw new IllegalStateException(errorMessage, e);
         }
         // instantiate new memoryStatsMXBean proxy based on memoryStatsObjectName
@@ -109,7 +112,7 @@ public class ConsoleController  extends TimerTask {
             heapStatsObjectName = new ObjectName(Constants.DOMAIN + ":type=" + Constants.JVM_STATS_TYPE + ",statsType=" + Constants.HEAP_STATS_TYPE );
         } catch (MalformedObjectNameException e) {
             String errorMessage = INIT_ERROR_MESSAGE + e.getMessage();
-            System.err.println(errorMessage);
+            LOGGER.severe(errorMessage);
             throw new IllegalStateException(errorMessage, e);
         }
         // instantiate new heapStatsMXBean proxy based on heapStatsObjectName
@@ -123,7 +126,7 @@ public class ConsoleController  extends TimerTask {
             threadStatsObjectName = new ObjectName(Constants.DOMAIN + ":type=" + Constants.JVM_STATS_TYPE + ",statsType=" + Constants.THREADS_STATS_TYPE );
         } catch (MalformedObjectNameException e) {
             String errorMessage = INIT_ERROR_MESSAGE + e.getMessage();
-            System.err.println(errorMessage);
+            LOGGER.severe(errorMessage);
             throw new IllegalStateException(errorMessage, e);
         }
         // instantiate new threadStatsMXBean proxy based on threadStatsObjectName
@@ -140,7 +143,7 @@ public class ConsoleController  extends TimerTask {
                 topThreadObjectName = new ObjectName(Constants.DOMAIN + ":type=" + Constants.JVM_STATS_TYPE + ",statsType=" + Constants.TOP_THREAD_STATS_TYPE + ",rank=" + rank);
             } catch (MalformedObjectNameException e) {
                 String errorMessage = INIT_ERROR_MESSAGE + e.getMessage();
-                System.err.println(errorMessage);
+                LOGGER.severe(errorMessage);
                 throw new IllegalStateException(errorMessage, e);
             }
             // instantiate and store topThreadMXBean proxy based on topThreadObjectName
@@ -156,7 +159,7 @@ public class ConsoleController  extends TimerTask {
                 blockedThreadObjectName = new ObjectName(Constants.DOMAIN + ":type=" + Constants.JVM_STATS_TYPE + ",statsType=" + Constants.BLOCKED_THREAD_STATS_TYPE + ",rank=" + rank);
             } catch (MalformedObjectNameException e) {
                 String errorMessage = INIT_ERROR_MESSAGE + e.getMessage();
-                System.err.println(errorMessage);
+                LOGGER.severe(errorMessage);
                 throw new IllegalStateException(errorMessage, e);
             }
             // instantiate and store blockedThreadMXBean proxy based on blockedThreadObjectName
@@ -169,7 +172,7 @@ public class ConsoleController  extends TimerTask {
             runtimeMXBeanObjectName = new ObjectName(ManagementFactory.RUNTIME_MXBEAN_NAME);
         } catch (MalformedObjectNameException e) {
             String errorMessage = INIT_ERROR_MESSAGE + e.getMessage();
-            System.err.println(errorMessage);
+            LOGGER.severe(errorMessage);
             throw new IllegalStateException(errorMessage, e);
         }
         // instantiate new runtimeMXBean proxy based on runtimeMXBeanObjectName
@@ -181,7 +184,7 @@ public class ConsoleController  extends TimerTask {
             osMXBeanObjectName = new ObjectName(ManagementFactory.OPERATING_SYSTEM_MXBEAN_NAME);
         } catch (MalformedObjectNameException e) {
             String errorMessage = INIT_ERROR_MESSAGE + e.getMessage();
-            System.err.println(errorMessage);
+            LOGGER.severe(errorMessage);
             throw new IllegalStateException(errorMessage, e);
         }
         // instantiate new osMXBean proxy based on osMXBeanObjectName
@@ -198,7 +201,7 @@ public class ConsoleController  extends TimerTask {
 
         } catch (ScreenUpdateException e) {
             // something went wrong - print error message and exit gracefully
-            System.err.println(e.getMessage());
+            LOGGER.severe(e.getMessage());
             System.exit(1);
         }
 
