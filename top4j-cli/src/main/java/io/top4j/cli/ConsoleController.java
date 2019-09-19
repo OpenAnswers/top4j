@@ -18,6 +18,7 @@ package io.top4j.cli;
 
 import io.top4j.cli.exception.ScreenUpdateException;
 import io.top4j.javaagent.config.Constants;
+import io.top4j.javaagent.mbeans.StatsMXBean;
 import io.top4j.javaagent.mbeans.jvm.heap.HeapStatsMXBean;
 import io.top4j.javaagent.mbeans.jvm.memory.MemoryStatsMXBean;
 import io.top4j.javaagent.mbeans.jvm.threads.BlockedThreadMXBean;
@@ -44,6 +45,7 @@ public class ConsoleController  extends TimerTask {
     private final ThreadStatsMXBean threadStatsMXBean;
     private List<TopThreadMXBean> topThreadMXBeans = new ArrayList<>();
     private List<BlockedThreadMXBean> blockedThreadMXBeans = new ArrayList<>();
+    private List<StatsMXBean> jvmStatsMBeans = new ArrayList<>();
     private final RuntimeMXBean runtimeMXBean;
     private final OperatingSystemMXBean osMXBean;
     private Map<Integer, Long> topThreadIds = new HashMap<>();
@@ -84,6 +86,8 @@ public class ConsoleController  extends TimerTask {
         }
         // instantiate new gcStatsMXBean proxy based on gcStatsObjectName
         this.gcStatsMXBean = JMX.newMBeanProxy(localMBS, gcStatsObjectName, GCStatsMXBean.class);
+        // add gcStatsMXBean proxy to list of jvmStatsMBeans
+        this.jvmStatsMBeans.add(this.gcStatsMXBean);
 
         // create MemoryStats objectName
         ObjectName memoryStatsObjectName = null;
@@ -96,6 +100,8 @@ public class ConsoleController  extends TimerTask {
         }
         // instantiate new memoryStatsMXBean proxy based on memoryStatsObjectName
         this.memoryStatsMXBean = JMX.newMBeanProxy(localMBS, memoryStatsObjectName, MemoryStatsMXBean.class);
+        // add memoryStatsMXBean proxy to list of jvmStatsMBeans
+        this.jvmStatsMBeans.add(this.memoryStatsMXBean);
 
         // create HeapStats objectName
         ObjectName heapStatsObjectName = null;
@@ -108,6 +114,8 @@ public class ConsoleController  extends TimerTask {
         }
         // instantiate new heapStatsMXBean proxy based on heapStatsObjectName
         this.heapStatsMXBean = JMX.newMBeanProxy(localMBS, heapStatsObjectName, HeapStatsMXBean.class);
+        // add heapStatsMXBean proxy to list of jvmStatsMBeans
+        this.jvmStatsMBeans.add(this.heapStatsMXBean);
 
         // create ThreadStats objectName
         ObjectName threadStatsObjectName = null;
@@ -120,6 +128,8 @@ public class ConsoleController  extends TimerTask {
         }
         // instantiate new threadStatsMXBean proxy based on threadStatsObjectName
         this.threadStatsMXBean = JMX.newMBeanProxy(localMBS, threadStatsObjectName, ThreadStatsMXBean.class);
+        // add threadStatsMXBean proxy to list of jvmStatsMBeans
+        this.jvmStatsMBeans.add(this.threadStatsMXBean);
 
         // populate topThread MBean list
         for (int rank =1; rank <=displayThreadCount; rank++) {
@@ -165,7 +175,7 @@ public class ConsoleController  extends TimerTask {
         // instantiate new runtimeMXBean proxy based on runtimeMXBeanObjectName
         this.runtimeMXBean = JMX.newMBeanProxy(mbsc, runtimeMXBeanObjectName, RuntimeMXBean.class);
 
-        // create RuntimeMXBean objectName
+        // create OperatingSystemMXBean objectName
         ObjectName osMXBeanObjectName = null;
         try {
             osMXBeanObjectName = new ObjectName(ManagementFactory.OPERATING_SYSTEM_MXBEAN_NAME);
@@ -201,6 +211,8 @@ public class ConsoleController  extends TimerTask {
             // the connection to the remote MBean Server has been lost - we have no choice but to exit gracefully
             throw new ScreenUpdateException("ERROR: The connection to the remote MBean Server has been lost. Check if the target JVM is still running.");
         }
+        // now check the Top4J Java Agent status
+        checkJavaAgentStatus();
         // retrieve user provided screenId from userInput shared object
         String screenId = this.userInput.getScreenId();
         // retrieve user provided userText from userInput shared object
@@ -458,6 +470,25 @@ public class ConsoleController  extends TimerTask {
         sb.append(ANSI_RESET);
         return sb.toString();
 
+    }
+
+    /**
+     * Check if Top4J Java Agent is OK via JVM Stats MBean Enabled attribute
+     * @throws ScreenUpdateException If it detects a problem with the Top4J Java Agent
+     */
+    private void checkJavaAgentStatus( ) throws ScreenUpdateException {
+
+        // check jvmStats
+        for (StatsMXBean jvmStats : jvmStatsMBeans) {
+            // check jvmStats status via MBean Enabled attribute
+            if (!jvmStats.getEnabled()) {
+                // extract MBean Object Name from MBean proxy
+                String jvmStatsToString = jvmStats.toString();
+                String jvmStatsObjectName = jvmStatsToString.substring(jvmStatsToString.indexOf("[")+1,jvmStatsToString.indexOf("]"));
+                // throw ScreenUpdateException if any of the jvmStats MBeans are disabled
+                throw new ScreenUpdateException("ERROR: The Top4J Java Agent encountered a problem updating MBean [" + jvmStatsObjectName + "] due to: " + jvmStats.getFailureReason() );
+            }
+        }
     }
 
 }
