@@ -25,23 +25,23 @@ import io.top4j.javaagent.config.Configurator;
 import javax.management.MBeanServer;
 
 public class Agent {
-	
-	private static final Logger LOGGER = Logger.getLogger(Agent.class.getName());
-	
-	public static void premain(String agentArgs, Instrumentation inst) {
 
-		// get platform MBean server
-		MBeanServer mbs = ManagementFactory.getPlatformMBeanServer();
+    private static final Logger LOGGER = Logger.getLogger(Agent.class.getName());
 
-		// initialise configurator
-		Configurator config = new Configurator( mbs, agentArgs );
-		
-		// create and start controller thread
-		Controller controller = new Controller( config );
-		controller.start( );
+    public static void premain(String agentArgs, Instrumentation inst) {
 
-		LOGGER.info("Top4J: Java agent activated.");
+        // get platform MBean server
+        MBeanServer mbs = ManagementFactory.getPlatformMBeanServer();
 
-	}
+        // initialise configurator
+        Configurator config = new Configurator(mbs, agentArgs);
+
+        // create and start controller thread
+        Controller controller = new Controller(config);
+        controller.start();
+
+        LOGGER.info("Top4J: Java agent activated.");
+
+    }
 
 }

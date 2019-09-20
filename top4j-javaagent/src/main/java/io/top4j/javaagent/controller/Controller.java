@@ -29,30 +29,32 @@ import io.top4j.javaagent.utils.MBeanHelper;
 import javax.management.MBeanServer;
 
 public final class Controller extends Thread {
-	
-	private LoggerQueue loggerQueue;
-	private Configurator config;
-	private long interval;
-	private boolean statsLoggerEnabled;
+
+    private LoggerQueue loggerQueue;
+    private Configurator config;
+    private long interval;
+    private boolean statsLoggerEnabled;
 
     private static final Logger LOGGER = Logger.getLogger(LoggerThread.class.getName());
 
-    /** Create a polling thread to track JVM stats. */
-    public Controller( Configurator config ) {
-        super( "Top4J Monitor" );
+    /**
+     * Create a polling thread to track JVM stats.
+     */
+    public Controller(Configurator config) {
+        super("Top4J Monitor");
         this.config = config;
-        this.interval = Long.parseLong( config.get("collector.poll.frequency") );
+        this.interval = Long.parseLong(config.get("collector.poll.frequency"));
         this.statsLoggerEnabled = config.isStatsLoggerEnabled();
-    	if (statsLoggerEnabled) {
-    		// create LoggerQueue
-			this.loggerQueue = new LoggerQueue(100);
-    	}
+        if (statsLoggerEnabled) {
+            // create LoggerQueue
+            this.loggerQueue = new LoggerQueue(100);
+        }
 
         try {
             // instantiate new MBeanHelper used to access JVMStats MBean attributes and operations
-            MBeanHelper jvmStatsMBeanHelper = new MBeanHelper( Constants.AGENT_TYPE, Constants.JVM_STATS_TYPE );
+            MBeanHelper jvmStatsMBeanHelper = new MBeanHelper(Constants.AGENT_TYPE, Constants.JVM_STATS_TYPE);
             // instantiate new JVMStats MBean
-            JVMStats jvmStatsMBean = new JVMStats( config, loggerQueue );
+            JVMStats jvmStatsMBean = new JVMStats(config, loggerQueue);
             // register JVMStats MBean with MBean server
             jvmStatsMBeanHelper.registerMBean(jvmStatsMBean);
 
@@ -60,23 +62,25 @@ public final class Controller extends Thread {
             LOGGER.severe("Failed to initialise JVM stats MBean due to " + e.getMessage());
         }
 
-        setDaemon( true );
+        setDaemon(true);
     }
 
-    /** Run the thread until interrupted. */
+    /**
+     * Run the thread until interrupted.
+     */
     @Override
-    public void run( ) {
-    	
-    	if (statsLoggerEnabled) {
+    public void run() {
+
+        if (statsLoggerEnabled) {
             try {
                 // create and start logger thread
-                LoggerThread statsLogger = new LoggerThread( config, loggerQueue );
-                statsLogger.start( );
+                LoggerThread statsLogger = new LoggerThread(config, loggerQueue);
+                statsLogger.start();
             } catch (Exception e) {
                 LOGGER.severe("Failed to initialise LoggerThread due to " + e.getMessage());
             }
-    	}
-    
+        }
+
         try {
             // create new TimerTask to run JVM stats collector
             TimerTask collector = new Collector(config);
@@ -85,9 +89,9 @@ public final class Controller extends Thread {
             // run JVM stats collector at fixed interval
             timer.scheduleAtFixedRate(collector, 0, interval);
         } catch (Exception e) {
-            LOGGER.severe("Failed to initialise stats Collector thread due to " + e.getMessage() );
+            LOGGER.severe("Failed to initialise stats Collector thread due to " + e.getMessage());
         }
 
     }
-    
+
 }

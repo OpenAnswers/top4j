@@ -25,20 +25,20 @@ public class HotMethod implements HotMethodMXBean {
 
     volatile private String methodName;
     volatile private String threadName;
-	volatile private long threadId;
+    volatile private long threadId;
     volatile private double loadProfile;
     volatile private StackTraceElement[] stackTrace;
     private ThreadHelper threadHelper;
 
-    public HotMethod( MBeanServerConnection mbsc ) throws IOException {
+    public HotMethod(MBeanServerConnection mbsc) throws IOException {
 
-        this.threadHelper = new ThreadHelper( mbsc );
+        this.threadHelper = new ThreadHelper(mbsc);
 
     }
 
     @Override
     public void setMethodName(String methodName) {
-       this.methodName = methodName;
+        this.methodName = methodName;
     }
 
     @Override
@@ -68,7 +68,7 @@ public class HotMethod implements HotMethodMXBean {
 
     @Override
     public void setLoadProfile(double loadProfile) {
-       this.loadProfile = loadProfile;
+        this.loadProfile = loadProfile;
     }
 
     @Override

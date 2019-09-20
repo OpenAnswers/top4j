@@ -17,6 +17,7 @@
 package io.top4j.javaagent.mbeans.jvm.threads;
 
 import io.top4j.javaagent.config.Configurator;
+
 import java.io.IOException;
 import java.lang.Thread.State;
 import java.lang.management.*;
@@ -26,48 +27,49 @@ import java.util.logging.*;
 public class ThreadUsage {
 
     private static class ThreadInfo {
-	        long id;
-            String name;
-            State state;
-            boolean active = true;
-            long interval = 0;
-	        long startTime = 0;
-	        long startCpuTime = 0;
-	        long startUserTime = 0;
-	        long endTime = 0;
-	        long endCpuTime = 0;
-	        long endUserTime = 0;
-            long lastBlockedTime = 0;
-            long intervalBlockedTime = 0;
-	        double cpuUsage = 0.0;
-	        double userCpuUsage = 0.0;
-	        private ThreadInfo( long id, long startTime) {
-	            this.id = id;
-	            this.startTime = startTime;
-            }
-	}
+        long id;
+        String name;
+        State state;
+        boolean active = true;
+        long interval = 0;
+        long startTime = 0;
+        long startCpuTime = 0;
+        long startUserTime = 0;
+        long endTime = 0;
+        long endCpuTime = 0;
+        long endUserTime = 0;
+        long lastBlockedTime = 0;
+        long intervalBlockedTime = 0;
+        double cpuUsage = 0.0;
+        double userCpuUsage = 0.0;
+
+        private ThreadInfo(long id, long startTime) {
+            this.id = id;
+            this.startTime = startTime;
+        }
+    }
 
     private int numberOfProcessors;
-    private final Map<Long,ThreadInfo> threadHistory =
-        new HashMap<>( );
+    private final Map<Long, ThreadInfo> threadHistory =
+            new HashMap<>();
     volatile private double cpuUsage;
-    private final Map<Long,ThreadInfo> threadHistoryCache =
-            new HashMap<>( );
+    private final Map<Long, ThreadInfo> threadHistoryCache =
+            new HashMap<>();
     volatile private double userCpuUsage;
     volatile private double sysCpuUsage;
-	private ThreadTimeMap cpuTimeMap;
+    private ThreadTimeMap cpuTimeMap;
     private ThreadTimeMap blockedTimeMap;
-	volatile private long threadCount;
+    volatile private long threadCount;
     volatile private long runnableThreadCount;
     volatile private long blockedThreadCount;
     volatile private long waitingThreadCount;
     volatile private long timedWaitingThreadCount;
-	private final ThreadMXBean threadMXBean;
-	private Map<Integer, TopThread> topThreadsMap;
+    private final ThreadMXBean threadMXBean;
+    private Map<Integer, TopThread> topThreadsMap;
     private Map<Integer, BlockedThread> blockedThreadsMap;
     private boolean threadContentionMonitoringEnabled;
     private boolean hotMethodProfilingEnabled;
-	private int topThreadCount;
+    private int topThreadCount;
     private int blockedThreadsCount;
     private HotMethods hotMethods;
     private boolean threadCacheEnabled;
@@ -80,13 +82,13 @@ public class ThreadUsage {
 
     private static final Logger LOGGER = Logger.getLogger(ThreadUsage.class.getName());
 
-    public ThreadUsage( Configurator config, Map<Integer, TopThread> topThreadsMap ) throws IOException {
+    public ThreadUsage(Configurator config, Map<Integer, TopThread> topThreadsMap) throws IOException {
         final OperatingSystemMXBean osbean =
-                ManagementFactory.getPlatformMXBean( config.getMBeanServerConnection(), OperatingSystemMXBean.class );
+                ManagementFactory.getPlatformMXBean(config.getMBeanServerConnection(), OperatingSystemMXBean.class);
         this.numberOfProcessors = osbean.getAvailableProcessors();
         this.setTopThreadsMap(topThreadsMap);
         this.topThreadCount = topThreadsMap.size();
-        this.threadMXBean = ManagementFactory.getPlatformMXBean( config.getMBeanServerConnection(), ThreadMXBean.class );
+        this.threadMXBean = ManagementFactory.getPlatformMXBean(config.getMBeanServerConnection(), ThreadMXBean.class);
         final RuntimeMXBean runtimeMXBean = ManagementFactory.getPlatformMXBean(config.getMBeanServerConnection(), RuntimeMXBean.class);
         long jvmStartUpTime = System.nanoTime() - (runtimeMXBean.getUptime() * 1000000);
         this.newThreadStartTime = jvmStartUpTime;
@@ -117,11 +119,11 @@ public class ThreadUsage {
         }
     }
 
-    public ThreadUsage( Configurator config, Map<Integer, TopThread> topThreadsMap, Map<Integer, BlockedThread> blockedThreadsMap ) throws IOException {
+    public ThreadUsage(Configurator config, Map<Integer, TopThread> topThreadsMap, Map<Integer, BlockedThread> blockedThreadsMap) throws IOException {
 
         this(config, topThreadsMap);
 
-        if ( threadMXBean.isThreadContentionMonitoringSupported() ) {
+        if (threadMXBean.isThreadContentionMonitoringSupported()) {
             // enable thread contention monitoring
             threadMXBean.setThreadContentionMonitoringEnabled(true);
             this.threadContentionMonitoringEnabled = true;
@@ -141,32 +143,34 @@ public class ThreadUsage {
 
     }
 
-    public ThreadUsage( Configurator config, Map<Integer, TopThread> topThreadsMap, HotMethods hotMethods, long hotMethodPollInterval ) throws IOException {
+    public ThreadUsage(Configurator config, Map<Integer, TopThread> topThreadsMap, HotMethods hotMethods, long hotMethodPollInterval) throws IOException {
 
         this(config, topThreadsMap);
         this.hotMethodProfilingEnabled = true;
         // store hotMethods
         this.hotMethods = hotMethods;
         // init hot method tracker
-        initHotMethodTracker( topThreadsMap, hotMethods, hotMethodPollInterval );
+        initHotMethodTracker(topThreadsMap, hotMethods, hotMethodPollInterval);
 
     }
 
-    public ThreadUsage( Configurator config, Map<Integer, TopThread> topThreadsMap, Map<Integer, BlockedThread> blockedThreadsMap, HotMethods hotMethods, long hotMethodPollInterval ) throws IOException {
+    public ThreadUsage(Configurator config, Map<Integer, TopThread> topThreadsMap, Map<Integer, BlockedThread> blockedThreadsMap, HotMethods hotMethods, long hotMethodPollInterval) throws IOException {
 
         this(config, topThreadsMap, blockedThreadsMap);
         this.hotMethodProfilingEnabled = true;
         // store hotMethods
         this.hotMethods = hotMethods;
         // init hot method tracker
-        initHotMethodTracker( topThreadsMap, hotMethods, hotMethodPollInterval );
+        initHotMethodTracker(topThreadsMap, hotMethods, hotMethodPollInterval);
 
     }
 
-    /** Update thread usage stats. */
-    public synchronized void update( ) {
+    /**
+     * Update thread usage stats.
+     */
+    public synchronized void update() {
 
-        if ( threadCacheEnabled && (threadCount > threadCacheSize) ) {
+        if (threadCacheEnabled && (threadCount > threadCacheSize)) {
             LOGGER.fine("Thread usage cache enabled....");
             // get current time in millis
             final long currentTime = System.currentTimeMillis();
@@ -205,8 +209,11 @@ public class ThreadUsage {
         }
 
     }
-    /** Update thread usage stats for threadHistory threads. */
-    private synchronized void update( Map<Long,ThreadInfo> threadHistory, boolean updateGlobalCounters ) {
+
+    /**
+     * Update thread usage stats for threadHistory threads.
+     */
+    private synchronized void update(Map<Long, ThreadInfo> threadHistory, boolean updateGlobalCounters) {
 
         double totalCpuTime = 0;
         double totalUserCpuTime = 0;
@@ -339,7 +346,7 @@ public class ThreadUsage {
             this.userCpuUsage = totalUserCpuTime / numberOfProcessors;
             LOGGER.fine("User CPU Usage = " + this.userCpuUsage);
             // update sysCpuUsage
-            this.sysCpuUsage = ( totalCpuTime - totalUserCpuTime) / numberOfProcessors;
+            this.sysCpuUsage = (totalCpuTime - totalUserCpuTime) / numberOfProcessors;
             LOGGER.fine("System CPU Usage = " + this.sysCpuUsage);
             // update threadCount
             this.setThreadCount(threadCount);
@@ -355,20 +362,20 @@ public class ThreadUsage {
 
     }
 
-    private synchronized void resetActivityTracker( ) {
+    private synchronized void resetActivityTracker() {
 
         // reset activity tracker within threadHistory ThreadInfo to false
-        for (Map.Entry<Long,ThreadInfo> entry : threadHistory.entrySet()) {
+        for (Map.Entry<Long, ThreadInfo> entry : threadHistory.entrySet()) {
             entry.getValue().active = false;
         }
     }
 
-    private synchronized void cleanUpThreadHistory( ) {
+    private synchronized void cleanUpThreadHistory() {
 
         // remove inactive threads from threadHistory
-        for(Iterator<Map.Entry<Long, ThreadInfo>> it = threadHistory.entrySet().iterator(); it.hasNext(); ) {
+        for (Iterator<Map.Entry<Long, ThreadInfo>> it = threadHistory.entrySet().iterator(); it.hasNext(); ) {
             Map.Entry<Long, ThreadInfo> entry = it.next();
-            if (! entry.getValue().active ) {
+            if (!entry.getValue().active) {
                 it.remove();
             }
         }
@@ -379,18 +386,18 @@ public class ThreadUsage {
      * Refresh global threadHistory map with with complete list of running threads via JMX ThreadMXBean.getAllThreadIds() method
      */
 
-    private synchronized void refreshThreadHistory( ) {
+    private synchronized void refreshThreadHistory() {
 
         // reset threadHistory activity tracking
         resetActivityTracker();
 
         // refresh threadHistory with complete list of running threads via ThreadMXBean
-        for ( long id : threadMXBean.getAllThreadIds() ) {
+        for (long id : threadMXBean.getAllThreadIds()) {
             // retrieve threadInfo object from threadHistory map
-            ThreadInfo threadInfo = threadHistory.get( id );
-            if ( threadInfo == null ) {
+            ThreadInfo threadInfo = threadHistory.get(id);
+            if (threadInfo == null) {
                 // create new ThreadInfo object
-                threadInfo = new ThreadInfo(id , newThreadStartTime);
+                threadInfo = new ThreadInfo(id, newThreadStartTime);
                 // add new ThreadInfo object to threadHistory
                 threadHistory.put(id, threadInfo);
             } else {
@@ -403,70 +410,76 @@ public class ThreadUsage {
 
     }
 
-    /** Get CPU usage. */
-    public double getCpuUsage( ) {
-    	return this.cpuUsage;
-    }
-    
-    /** Get User CPU usage. */
-    public double getUserCpuUsage( ) {
-    	return this.userCpuUsage;
-    }
-    
-    /** Get System CPU usage. */
-    public double getSysCpuUsage( ) {
-    	return this.sysCpuUsage;
-    }
-    
-    public synchronized void updateTopThreads( ) {
-    	
-    	Object[] threadCpuTimeArray = cpuTimeMap.descendingKeySet().toArray();
-    	int threadCounter = 1;
-    	String threadName;
-    	List<Long> threadIds;
-    	State threadState;
-    	double threadCpuUsage;
-    	int topThreadLimit;
-    	// handle situation where threadCount less than topThreadCount
-    	if ( threadCount < topThreadCount ) {
-    		topThreadLimit = (int) threadCount;
-    	} else {
-    		topThreadLimit = topThreadCount;
-    	}
-    	threadLimitLoop:
-    	for (int i=0; i<topThreadLimit; i++) {
-    		// get threadIds
-    		threadIds = cpuTimeMap.get( (Long) threadCpuTimeArray[i] );
-    		for ( long threadId : threadIds ) {
-    			
-    			// get cpuUsage
-        		threadCpuUsage = threadHistory.get( threadId ).cpuUsage;
-      			// get threadName
-      			threadName = threadHistory.get( threadId ).name;
-       			// get threadState
-       			threadState = threadHistory.get( threadId ).state;
-        		// retrieve threadCounter TopThread
-        		TopThread topThreadsMBean = topThreadsMap.get(threadCounter);
-        		// update topThreadsMBean attributes
-        		topThreadsMBean.setThreadName(threadName);
-        		topThreadsMBean.setThreadId(threadId);
-        		topThreadsMBean.setThreadState(threadState);
-        		topThreadsMBean.setThreadCpuUsage(threadCpuUsage);
-        		LOGGER.fine("threadCounter: " + threadCounter + ", threadCpuUsage: " + threadCpuUsage + ", threadId: " + threadId);
-        		// check threadCount
-        		if ( threadCounter == topThreadLimit ) {
-        			// topThreadCount reached - break out of loop
-        			break threadLimitLoop;
-        		}
-        		// increment threadCounter
-        		threadCounter++;
-    		}
-    		
-    	}
-    	
+    /**
+     * Get CPU usage.
+     */
+    public double getCpuUsage() {
+        return this.cpuUsage;
     }
 
-    public synchronized void updateBlockedThreads( ) {
+    /**
+     * Get User CPU usage.
+     */
+    public double getUserCpuUsage() {
+        return this.userCpuUsage;
+    }
+
+    /**
+     * Get System CPU usage.
+     */
+    public double getSysCpuUsage() {
+        return this.sysCpuUsage;
+    }
+
+    public synchronized void updateTopThreads() {
+
+        Object[] threadCpuTimeArray = cpuTimeMap.descendingKeySet().toArray();
+        int threadCounter = 1;
+        String threadName;
+        List<Long> threadIds;
+        State threadState;
+        double threadCpuUsage;
+        int topThreadLimit;
+        // handle situation where threadCount less than topThreadCount
+        if (threadCount < topThreadCount) {
+            topThreadLimit = (int) threadCount;
+        } else {
+            topThreadLimit = topThreadCount;
+        }
+        threadLimitLoop:
+        for (int i = 0; i < topThreadLimit; i++) {
+            // get threadIds
+            threadIds = cpuTimeMap.get((Long) threadCpuTimeArray[i]);
+            for (long threadId : threadIds) {
+
+                // get cpuUsage
+                threadCpuUsage = threadHistory.get(threadId).cpuUsage;
+                // get threadName
+                threadName = threadHistory.get(threadId).name;
+                // get threadState
+                threadState = threadHistory.get(threadId).state;
+                // retrieve threadCounter TopThread
+                TopThread topThreadsMBean = topThreadsMap.get(threadCounter);
+                // update topThreadsMBean attributes
+                topThreadsMBean.setThreadName(threadName);
+                topThreadsMBean.setThreadId(threadId);
+                topThreadsMBean.setThreadState(threadState);
+                topThreadsMBean.setThreadCpuUsage(threadCpuUsage);
+                LOGGER.fine("threadCounter: " + threadCounter + ", threadCpuUsage: " + threadCpuUsage + ", threadId: " + threadId);
+                // check threadCount
+                if (threadCounter == topThreadLimit) {
+                    // topThreadCount reached - break out of loop
+                    break threadLimitLoop;
+                }
+                // increment threadCounter
+                threadCounter++;
+            }
+
+        }
+
+    }
+
+    public synchronized void updateBlockedThreads() {
 
         Object[] threadBlockedTimeArray = blockedTimeMap.descendingKeySet().toArray();
         int threadCounter = 1;
@@ -476,19 +489,19 @@ public class ThreadUsage {
         long threadBlockedTime;
         int blockedThreadLimit;
         // handle situation where threadCount less than blockedThreadsCount
-        if ( threadCount < blockedThreadsCount ) {
+        if (threadCount < blockedThreadsCount) {
             blockedThreadLimit = (int) threadCount;
         } else {
             blockedThreadLimit = blockedThreadsCount;
         }
         threadLimitLoop:
-        for (int i=0; i<blockedThreadLimit; i++) {
+        for (int i = 0; i < blockedThreadLimit; i++) {
             // get threadIds
-            threadIds = blockedTimeMap.get( (Long) threadBlockedTimeArray[i] );
-            for ( long threadId : threadIds ) {
+            threadIds = blockedTimeMap.get((Long) threadBlockedTimeArray[i]);
+            for (long threadId : threadIds) {
 
                 // get blockedTime
-                threadBlockedTime = threadHistory.get( threadId ).intervalBlockedTime;
+                threadBlockedTime = threadHistory.get(threadId).intervalBlockedTime;
                 if (threadBlockedTime > 0) {
 
                     /*
@@ -496,16 +509,16 @@ public class ThreadUsage {
                     */
 
                     // get interval time difference
-                    long timeDiff = threadHistory.get( threadId ).interval;
+                    long timeDiff = threadHistory.get(threadId).interval;
                     // calculate percentage of interval time spent blocked
                     double threadBlockedPercentage = 0.0;
                     if (timeDiff > 0) {
-                        threadBlockedPercentage = ( ( ( (double) threadBlockedTime ) * 1000000 ) / (double) timeDiff ) * 100;
+                        threadBlockedPercentage = ((((double) threadBlockedTime) * 1000000) / (double) timeDiff) * 100;
                     }
                     // get threadName
-                    threadName = threadHistory.get( threadId ).name;
+                    threadName = threadHistory.get(threadId).name;
                     // get threadState
-                    threadState = threadHistory.get( threadId ).state;
+                    threadState = threadHistory.get(threadId).state;
                     // retrieve threadCounter BlockedThread
                     BlockedThread blockedThreadMBean = blockedThreadsMap.get(threadCounter);
                     // and update blockedThreadMBean attributes
@@ -532,7 +545,7 @@ public class ThreadUsage {
 
                 LOGGER.fine("threadCounter: " + threadCounter + ", threadBlockedTime: " + threadBlockedTime + ", threadId: " + threadId);
                 // check threadCount
-                if ( threadCounter == blockedThreadLimit ) {
+                if (threadCounter == blockedThreadLimit) {
                     // blockedThreadsCount reached - break out of loop
                     break threadLimitLoop;
                 }
@@ -544,58 +557,64 @@ public class ThreadUsage {
 
     }
 
-    /** Get total CPU time so far in nanoseconds. */
-    public long getTotalCpuTime( ) {
-        final Collection<ThreadInfo> hist = threadHistory.values( );
+    /**
+     * Get total CPU time so far in nanoseconds.
+     */
+    public long getTotalCpuTime() {
+        final Collection<ThreadInfo> hist = threadHistory.values();
         long time = 0L;
-        for ( ThreadInfo threadInfo : hist ) {
+        for (ThreadInfo threadInfo : hist) {
             time += threadInfo.endCpuTime - threadInfo.startCpuTime;
         }
         return time;
     }
 
-    /** Get total user time so far in nanoseconds. */
-    public long getTotalUserTime( ) {
-        final Collection<ThreadInfo> hist = threadHistory.values( );
+    /**
+     * Get total user time so far in nanoseconds.
+     */
+    public long getTotalUserTime() {
+        final Collection<ThreadInfo> hist = threadHistory.values();
         long time = 0L;
-        for ( ThreadInfo threadInfo : hist ) {
+        for (ThreadInfo threadInfo : hist) {
             time += threadInfo.endUserTime - threadInfo.startUserTime;
         }
         return time;
     }
 
-    /** Get total system time so far in nanoseconds. */
-    public long getTotalSystemTime( ) {
-        return getTotalCpuTime( ) - getTotalUserTime( );
+    /**
+     * Get total system time so far in nanoseconds.
+     */
+    public long getTotalSystemTime() {
+        return getTotalCpuTime() - getTotalUserTime();
     }
 
-	public long getThreadCount() {
-		return threadCount;
-	}
+    public long getThreadCount() {
+        return threadCount;
+    }
 
-	public void setThreadCount(long threadCount) {
-		this.threadCount = threadCount;
-	}
+    public void setThreadCount(long threadCount) {
+        this.threadCount = threadCount;
+    }
 
-	public void setCpuUsage(double cpuUsage) {
-		this.cpuUsage = cpuUsage;
-	}
+    public void setCpuUsage(double cpuUsage) {
+        this.cpuUsage = cpuUsage;
+    }
 
-	public void setUserCpuUsage(double userCpuUsage) {
-		this.userCpuUsage = userCpuUsage;
-	}
+    public void setUserCpuUsage(double userCpuUsage) {
+        this.userCpuUsage = userCpuUsage;
+    }
 
-	public void setSysCpuUsage(double sysCpuUsage) {
-		this.sysCpuUsage = sysCpuUsage;
-	}
+    public void setSysCpuUsage(double sysCpuUsage) {
+        this.sysCpuUsage = sysCpuUsage;
+    }
 
-	public Map<Integer, TopThread> getTopThreadsMap() {
-		return topThreadsMap;
-	}
+    public Map<Integer, TopThread> getTopThreadsMap() {
+        return topThreadsMap;
+    }
 
-	private void setTopThreadsMap(Map<Integer, TopThread> topThreadsMap) {
-		this.topThreadsMap = topThreadsMap;
-	}
+    private void setTopThreadsMap(Map<Integer, TopThread> topThreadsMap) {
+        this.topThreadsMap = topThreadsMap;
+    }
 
     public Map<Integer, BlockedThread> getBlockedThreadsMap() {
         return blockedThreadsMap;
@@ -637,35 +656,35 @@ public class ThreadUsage {
         this.timedWaitingThreadCount = timedWaitingThreadCount;
     }
 
-    private void initHotMethodTracker (Map<Integer, TopThread> topThreadsMap, HotMethods hotMethods, long pollInterval) {
+    private void initHotMethodTracker(Map<Integer, TopThread> topThreadsMap, HotMethods hotMethods, long pollInterval) {
 
         // create new TimerTask to run hot method tracker
-    	TimerTask hotMethodTracker = new HotMethodTracker( topThreadsMap, hotMethods );
-    	// create new Timer to schedule hot method tracker
-    	Timer timer = new Timer("Top4J Method Profiler", true);
-    	// run hot method tracker at fixed interval
-    	timer.scheduleAtFixedRate(hotMethodTracker, 0, pollInterval);
+        TimerTask hotMethodTracker = new HotMethodTracker(topThreadsMap, hotMethods);
+        // create new Timer to schedule hot method tracker
+        Timer timer = new Timer("Top4J Method Profiler", true);
+        // run hot method tracker at fixed interval
+        timer.scheduleAtFixedRate(hotMethodTracker, 0, pollInterval);
 
     }
 
-    public HotMethods getHotMethods( ) {
+    public HotMethods getHotMethods() {
         return this.hotMethods;
     }
 
     /**
-     *   Refresh top thread cache (aka threadCache). The threadCache is an array of threadCacheSize thread IDs which have consumed the most CPU time since the last cache refresh.
+     * Refresh top thread cache (aka threadCache). The threadCache is an array of threadCacheSize thread IDs which have consumed the most CPU time since the last cache refresh.
      */
-    private void refreshThreadHistoryCache( ) {
+    private void refreshThreadHistoryCache() {
 
         LOGGER.fine("Refreshing thread history cache....");
         int topThreadLimit;
         int blockedThreadLimit;
         Set<Long> threadSet = new HashSet<>();
         // handle situation where threadCount less than threadCacheSize
-        if ( threadCount < threadCacheSize ) {
+        if (threadCount < threadCacheSize) {
             // we shouldn't get here but just in case.... set thread limits to a percentage of threadCount
-            topThreadLimit = (int) ( ( (int) threadCount ) * 0.8 );
-            blockedThreadLimit = (int) ( ( (int) threadCount ) * 0.2 );
+            topThreadLimit = (int) (((int) threadCount) * 0.8);
+            blockedThreadLimit = (int) (((int) threadCount) * 0.2);
         } else {
             topThreadLimit = topThreadCacheSize;
             blockedThreadLimit = blockedThreadCacheSize;
@@ -681,18 +700,19 @@ public class ThreadUsage {
         // populate threadHistoryCache with threadSet thread IDs
         for (Long id : threadSet) {
             // retrieve threadInfo from global threadHistory map and add it to threadHistoryCache
-            threadHistoryCache.put( id, threadHistory.get(id) );
+            threadHistoryCache.put(id, threadHistory.get(id));
         }
 
     }
 
     /**
      * Get list of top threads from a ThreadTimeMap up to and including threadCount threads
+     *
      * @param threadTimeMap A ThreadTimeMap, e.g. cpuTimeMap
-     * @param threadLimit The number of threads to include in the thread ID Set returned
+     * @param threadLimit   The number of threads to include in the thread ID Set returned
      * @return Set<Long> A Set of thread Ids
      */
-    private Set<Long> getTopThreads( ThreadTimeMap threadTimeMap, int threadLimit ) {
+    private Set<Long> getTopThreads(ThreadTimeMap threadTimeMap, int threadLimit) {
 
         Object[] threadCpuTimeArray = threadTimeMap.descendingKeySet().toArray();
         int threadCounter = 1;
@@ -700,16 +720,16 @@ public class ThreadUsage {
         Set<Long> threadSet = new HashSet<>();
         // add top thread IDs to threadSet
         topThreadLimitLoop:
-        for (int i=0; i<threadLimit; i++) {
+        for (int i = 0; i < threadLimit; i++) {
             // get threadIds
-            threadIds = threadTimeMap.get( (Long) threadCpuTimeArray[i] );
-            for ( long threadId : threadIds ) {
+            threadIds = threadTimeMap.get((Long) threadCpuTimeArray[i]);
+            for (long threadId : threadIds) {
 
                 LOGGER.fine("Adding thread: threadCounter: " + threadCounter + ", threadId: " + threadId + " to thread cache");
                 // add threadId to threadSet
                 threadSet.add(threadId);
                 // check threadCount
-                if ( threadCounter == threadLimit ) {
+                if (threadCounter == threadLimit) {
                     // topThreadCount reached - break out of loop
                     break topThreadLimitLoop;
                 }
@@ -722,12 +742,12 @@ public class ThreadUsage {
     }
 
     /**
-        Calculate CPU usage
+     * Calculate CPU usage
      */
-    private double calculateCpuUsage( long cpuTimeDiff, long timeDiff ) {
+    private double calculateCpuUsage(long cpuTimeDiff, long timeDiff) {
 
         // calculate thread CPU usage as percentage of wall clock time, aka timeDiff
-        return ( (double)cpuTimeDiff / (double)timeDiff ) * 100;
+        return ((double) cpuTimeDiff / (double) timeDiff) * 100;
     }
 
 }

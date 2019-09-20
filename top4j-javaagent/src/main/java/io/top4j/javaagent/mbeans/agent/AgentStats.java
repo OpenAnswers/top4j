@@ -26,186 +26,186 @@ import java.util.logging.Logger;
 
 public class AgentStats implements AgentStatsMXBean {
 
-	volatile private double agentCpuTime;
-	volatile private double agentCpuUtil;
-	volatile private double mBeanCpuTime;
-	volatile private long iterations;
-	private int availableProcessors;
-	private long lastCpuTime;
-	private long lastSystemTime;
-	private CpuTime cpuTime = new CpuTime();
-	private List<StatsMXBean> jvmStatsMBeans;
-	private boolean enabled = true;
-	private String failureReason;
+    volatile private double agentCpuTime;
+    volatile private double agentCpuUtil;
+    volatile private double mBeanCpuTime;
+    volatile private long iterations;
+    private int availableProcessors;
+    private long lastCpuTime;
+    private long lastSystemTime;
+    private CpuTime cpuTime = new CpuTime();
+    private List<StatsMXBean> jvmStatsMBeans;
+    private boolean enabled = true;
+    private String failureReason;
 
-	private static final Logger LOGGER = Logger.getLogger(AgentStats.class.getName());
-	
-	public AgentStats ( List<StatsMXBean> jvmStatsMBeans ) {
-		
-		this.setAgentCpuUtil(0);
-		this.setMBeanCpuTime(0);
-		this.setIterations(0);
-		this.setLastCpuTime(0);
-		long systemTime = System.currentTimeMillis();
-		this.setLastSystemTime( systemTime );
+    private static final Logger LOGGER = Logger.getLogger(AgentStats.class.getName());
+
+    public AgentStats(List<StatsMXBean> jvmStatsMBeans) {
+
+        this.setAgentCpuUtil(0);
+        this.setMBeanCpuTime(0);
+        this.setIterations(0);
+        this.setLastCpuTime(0);
+        long systemTime = System.currentTimeMillis();
+        this.setLastSystemTime(systemTime);
         this.jvmStatsMBeans = jvmStatsMBeans;
-		
-		final OperatingSystemMXBean osbean =
-	            ManagementFactory.getOperatingSystemMXBean();
-		this.setAvailableProcessors(osbean.getAvailableProcessors());
 
-	}
+        final OperatingSystemMXBean osbean =
+                ManagementFactory.getOperatingSystemMXBean();
+        this.setAvailableProcessors(osbean.getAvailableProcessors());
 
-	@Override
-	public void setAgentCpuTime(double cpuTime) {
-		this.agentCpuTime = cpuTime;
-	}
+    }
 
-	@Override
-	public double getAgentCpuTime() {
-		return agentCpuTime;
-	}
+    @Override
+    public void setAgentCpuTime(double cpuTime) {
+        this.agentCpuTime = cpuTime;
+    }
 
-	@Override
-	public void setAgentCpuUtil(double agentCpuUtil) {
-		this.agentCpuUtil = agentCpuUtil;
+    @Override
+    public double getAgentCpuTime() {
+        return agentCpuTime;
+    }
 
-	}
+    @Override
+    public void setAgentCpuUtil(double agentCpuUtil) {
+        this.agentCpuUtil = agentCpuUtil;
 
-	@Override
-	public double getAgentCpuUtil() {
-		return agentCpuUtil;
-	}
+    }
 
-	@Override
-	public void setIterations(long iterations) {
-		this.iterations = iterations;
-	}
+    @Override
+    public double getAgentCpuUtil() {
+        return agentCpuUtil;
+    }
 
-	@Override
-	public long getIterations() {
-		return iterations;
-	}
+    @Override
+    public void setIterations(long iterations) {
+        this.iterations = iterations;
+    }
 
-	@Override
-	/* Update Agent Stats */
-	public synchronized void update() {
+    @Override
+    public long getIterations() {
+        return iterations;
+    }
 
-		if (enabled) {
-			try {
-				// update Agent stats
-				updateAgentStats();
-			} catch (Exception e) {
-				// something went wrong - record failure reason and disable any further updates
-				this.failureReason = e.getMessage();
-				this.enabled = false;
-				LOGGER.severe("TOP4J ERROR: Failed to update AgentStats MBean due to: " + e.getMessage());
-				LOGGER.severe("TOP4J ERROR: Further AgentStats MBean updates will be disabled from now on.");
-			}
-		}
+    @Override
+    /* Update Agent Stats */
+    public synchronized void update() {
 
-	}
+        if (enabled) {
+            try {
+                // update Agent stats
+                updateAgentStats();
+            } catch (Exception e) {
+                // something went wrong - record failure reason and disable any further updates
+                this.failureReason = e.getMessage();
+                this.enabled = false;
+                LOGGER.severe("TOP4J ERROR: Failed to update AgentStats MBean due to: " + e.getMessage());
+                LOGGER.severe("TOP4J ERROR: Further AgentStats MBean updates will be disabled from now on.");
+            }
+        }
 
-	private synchronized void updateAgentStats( ) {
+    }
 
-		// initialise thread CPU timer
-		cpuTime.init();
+    private synchronized void updateAgentStats() {
 
-		LOGGER.fine("Updating Agent stats....");
-		
-		// update CPU util
-		updateCpuUtil();
-		
-		// update iterations
-		updateIterations();
+        // initialise thread CPU timer
+        cpuTime.init();
 
-		// update agent stats CPU time
-		mBeanCpuTime = cpuTime.getMillis();
+        LOGGER.fine("Updating Agent stats....");
 
-	}
-	
-	private void updateCpuUtil() {
+        // update CPU util
+        updateCpuUtil();
 
-		// get current system time
-		long systemTime = System.currentTimeMillis();
-		// calculate time difference since last update
-		long timeDiffMillis = systemTime - lastSystemTime;
+        // update iterations
+        updateIterations();
+
+        // update agent stats CPU time
+        mBeanCpuTime = cpuTime.getMillis();
+
+    }
+
+    private void updateCpuUtil() {
+
+        // get current system time
+        long systemTime = System.currentTimeMillis();
+        // calculate time difference since last update
+        long timeDiffMillis = systemTime - lastSystemTime;
         // aggregate agentCpuTime in milliseconds accumulated during this iteration
         double agentCpuTime = 0;
         for (StatsMXBean jvmStats : jvmStatsMBeans) {
-            agentCpuTime+=jvmStats.getMBeanCpuTime();
+            agentCpuTime += jvmStats.getMBeanCpuTime();
         }
-        double threadCpuUsage = ( agentCpuTime / timeDiffMillis) * 100;
+        double threadCpuUsage = (agentCpuTime / timeDiffMillis) * 100;
         double cpuUtil = threadCpuUsage / availableProcessors;
         LOGGER.fine("Agent CPU Util = " + cpuUtil + "%");
         LOGGER.fine("Agent CPU Time = " + agentCpuTime + "ms");
-		// update agent CPU util
-		this.agentCpuUtil = cpuUtil;
-		// update agent CPU time
-		this.agentCpuTime = agentCpuTime;
-		// update last system time
-		this.lastSystemTime = systemTime;
-	}
-	
-	private synchronized void updateIterations() {
-		
-		// update iterations
-		this.iterations++;
-	}
+        // update agent CPU util
+        this.agentCpuUtil = cpuUtil;
+        // update agent CPU time
+        this.agentCpuTime = agentCpuTime;
+        // update last system time
+        this.lastSystemTime = systemTime;
+    }
 
-	public long getLastCpuTime() {
-		return lastCpuTime;
-	}
+    private synchronized void updateIterations() {
 
-	public void setLastCpuTime(long lastCpuTime) {
-		this.lastCpuTime = lastCpuTime;
-	}
+        // update iterations
+        this.iterations++;
+    }
 
-	public int getAvailableProcessors() {
-		return availableProcessors;
-	}
+    public long getLastCpuTime() {
+        return lastCpuTime;
+    }
 
-	public void setAvailableProcessors(int availableProcessors) {
-		this.availableProcessors = availableProcessors;
-	}
+    public void setLastCpuTime(long lastCpuTime) {
+        this.lastCpuTime = lastCpuTime;
+    }
 
-	public long getLastSystemTime() {
-		return lastSystemTime;
-	}
+    public int getAvailableProcessors() {
+        return availableProcessors;
+    }
 
-	public void setLastSystemTime(long lastSystemTime) {
-		this.lastSystemTime = lastSystemTime;
-	}
+    public void setAvailableProcessors(int availableProcessors) {
+        this.availableProcessors = availableProcessors;
+    }
 
-	@Override
-	public void setMBeanCpuTime(double agentCpuTime) {
-		this.mBeanCpuTime = agentCpuTime;
-		
-	}
+    public long getLastSystemTime() {
+        return lastSystemTime;
+    }
 
-	@Override
-	public double getMBeanCpuTime() {
-		return mBeanCpuTime;
-	}
+    public void setLastSystemTime(long lastSystemTime) {
+        this.lastSystemTime = lastSystemTime;
+    }
 
-	@Override
-	public void setEnabled(boolean enabled) {
-		this.enabled = enabled;
-	}
+    @Override
+    public void setMBeanCpuTime(double agentCpuTime) {
+        this.mBeanCpuTime = agentCpuTime;
 
-	@Override
-	public boolean getEnabled() {
-		return this.enabled;
-	}
+    }
 
-	@Override
-	public void setFailureReason(String failureReason) {
-		this.failureReason = failureReason;
-	}
+    @Override
+    public double getMBeanCpuTime() {
+        return mBeanCpuTime;
+    }
 
-	@Override
-	public String getFailureReason() {
-		return this.failureReason;
-	}
+    @Override
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
+    }
+
+    @Override
+    public boolean getEnabled() {
+        return this.enabled;
+    }
+
+    @Override
+    public void setFailureReason(String failureReason) {
+        this.failureReason = failureReason;
+    }
+
+    @Override
+    public String getFailureReason() {
+        return this.failureReason;
+    }
 
 }

@@ -44,41 +44,41 @@ import java.util.logging.Logger;
 import javax.management.JMX;
 import javax.management.MBeanServer;
 
-public class JVMStats implements JVMStatsMXBean { 
-	
-	private LoggerQueue loggerQueue;
-	private String statsLoggerNotification = "jvm stats";
+public class JVMStats implements JVMStatsMXBean {
+
+    private LoggerQueue loggerQueue;
+    private String statsLoggerNotification = "jvm stats";
     private CpuTime cpuTime = new CpuTime();
     private double mBeanCpuTime;
     private List<StatsMXBean> jvmStatsMBeans = new ArrayList<>();
-	private MBeanServer mbs = ManagementFactory.getPlatformMBeanServer();
+    private MBeanServer mbs = ManagementFactory.getPlatformMBeanServer();
     private Configurator config;
     private boolean enabled = true;
     private String failureReason;
 
-	private static final Logger LOGGER = Logger.getLogger(JVMStats.class.getName());
-	
-	public JVMStats ( Configurator config, LoggerQueue loggerQueue ) {
-		
-		LOGGER.fine("Initialising JVM stats....");
+    private static final Logger LOGGER = Logger.getLogger(JVMStats.class.getName());
+
+    public JVMStats(Configurator config, LoggerQueue loggerQueue) {
+
+        LOGGER.fine("Initialising JVM stats....");
 
         this.config = config;
-		this.loggerQueue = loggerQueue;
-		
-		// initialise ThreadStats
-		initThreadStats();
-		
-		// initialise MemoryStats
-		initMemoryStats();
+        this.loggerQueue = loggerQueue;
 
-		// initialise HeapStats
-		initHeapStats();
+        // initialise ThreadStats
+        initThreadStats();
 
-		// initialise GCStats
-		initGCStats();
-		
-     	// initialise AgentStats
-     	initAgentStats();
+        // initialise MemoryStats
+        initMemoryStats();
+
+        // initialise HeapStats
+        initHeapStats();
+
+        // initialise GCStats
+        initGCStats();
+
+        // initialise AgentStats
+        initAgentStats();
 
         if (config.isStatsLoggerEnabled()) {
             // initialise StatsLogger
@@ -86,9 +86,11 @@ public class JVMStats implements JVMStatsMXBean {
         }
 
     }
-	
-	/** Update JVM stats. */
-    public synchronized void update( ) {
+
+    /**
+     * Update JVM stats.
+     */
+    public synchronized void update() {
 
         if (enabled) {
             try {
@@ -104,12 +106,12 @@ public class JVMStats implements JVMStatsMXBean {
         }
     }
 
-    private synchronized void updateJvmStats( ) {
+    private synchronized void updateJvmStats() {
 
         // initialise thread CPU timer
-    	cpuTime.init();
+        cpuTime.init();
 
-    	LOGGER.fine("Updating JVM stats....");
+        LOGGER.fine("Updating JVM stats....");
 
         // update jvmStats
         for (StatsMXBean jvmStats : jvmStatsMBeans) {
@@ -118,12 +120,12 @@ public class JVMStats implements JVMStatsMXBean {
 
         // update JVM stats CPU time
         mBeanCpuTime = cpuTime.getMillis();
-    	
+
     }
 
     @Override
     public void setMBeanCpuTime(double agentCpuTime) {
-       this.mBeanCpuTime = agentCpuTime;
+        this.mBeanCpuTime = agentCpuTime;
     }
 
     @Override
@@ -131,88 +133,88 @@ public class JVMStats implements JVMStatsMXBean {
         return mBeanCpuTime;
     }
 
-    public synchronized void log( ) {
-    	
-    	// send notification to loggerQueue
-    	loggerQueue.send(statsLoggerNotification);
+    public synchronized void log() {
+
+        // send notification to loggerQueue
+        loggerQueue.send(statsLoggerNotification);
     }
-    
+
     /**
      * Init Threads Stats MBean
      */
-	private void initThreadStats( ) {
+    private void initThreadStats() {
 
-		// get configured top thread count
-		int topThreadCount = Integer.parseInt(config.get("top.thread.count"));
-		// get configured thread contention monitoring switch
-		boolean threadContentionMonitoringEnabled = config.isThreadContentionMonitoringEnabled();
+        // get configured top thread count
+        int topThreadCount = Integer.parseInt(config.get("top.thread.count"));
+        // get configured thread contention monitoring switch
+        boolean threadContentionMonitoringEnabled = config.isThreadContentionMonitoringEnabled();
         // get configured blocked thread count
         int blockedThreadCount = Integer.parseInt(config.get("blocked.thread.count"));
-		// get configured hot method profiling switch
-		boolean hotMethodProfilingEnabled = config.isHotMethodProfilingEnabledEnabled();
+        // get configured hot method profiling switch
+        boolean hotMethodProfilingEnabled = config.isHotMethodProfilingEnabledEnabled();
         // get configured hot method count
         int hotMethodCount = Integer.parseInt(config.get("hot.method.count"));
         // get configured hot method polling interval
         long hotMethodPollInterval = Long.parseLong(config.get("hot.method.poll.frequency"));
 
-		// instantiate Map of TopThread MBeans
-		Map<Integer, TopThread> topThreadsMap = new HashMap<>();
-		for (int rank = 1; rank <= topThreadCount; rank++) {
+        // instantiate Map of TopThread MBeans
+        Map<Integer, TopThread> topThreadsMap = new HashMap<>();
+        for (int rank = 1; rank <= topThreadCount; rank++) {
 
-			// convert rank to String
-			String ranking = String.valueOf(rank);
+            // convert rank to String
+            String ranking = String.valueOf(rank);
 
-			// instantiate new MBeanHelper based on this type, statsType and rank
+            // instantiate new MBeanHelper based on this type, statsType and rank
             MBeanHelper topThreadsMBeanHelper = null;
             try {
                 topThreadsMBeanHelper = new MBeanHelper(
                         Constants.JVM_STATS_TYPE, Constants.TOP_THREAD_STATS_TYPE, ranking);
                 // instantiate new TopThread MBean
-                TopThread topThreadsBean = new TopThread( config.getMBeanServerConnection() );
+                TopThread topThreadsBean = new TopThread(config.getMBeanServerConnection());
                 // add topThreadsBean to Map of topThreads MBeans
                 topThreadsMap.put(rank, topThreadsBean);
                 // register topThreadsBean with MBean server
                 topThreadsMBeanHelper.registerMBean(topThreadsBean);
 
             } catch (Exception e) {
-                LOGGER.severe("Failed to initialise top threads MBean with rank " + ranking +  " due to: " + e.getMessage());
+                LOGGER.severe("Failed to initialise top threads MBean with rank " + ranking + " due to: " + e.getMessage());
             }
         }
 
         // instantiate Map of BlockedThread MBeans
         Map<Integer, BlockedThread> blockedThreadsMap = new HashMap<>();
 
-		if (threadContentionMonitoringEnabled) {
+        if (threadContentionMonitoringEnabled) {
 
-			for (int rank = 1; rank <= blockedThreadCount; rank++) {
+            for (int rank = 1; rank <= blockedThreadCount; rank++) {
 
-				// convert rank to String
-				String ranking = String.valueOf(rank);
+                // convert rank to String
+                String ranking = String.valueOf(rank);
 
-				// instantiate new MBeanHelper based on this type, statsType and rank
+                // instantiate new MBeanHelper based on this type, statsType and rank
                 MBeanHelper blockedThreadsMBeanHelper = null;
                 try {
                     blockedThreadsMBeanHelper = new MBeanHelper(
                             Constants.JVM_STATS_TYPE, Constants.BLOCKED_THREAD_STATS_TYPE, ranking);
                     // instantiate new BlockedThread MBean
-                    BlockedThread blockedThreadBean = new BlockedThread( config.getMBeanServerConnection() );
+                    BlockedThread blockedThreadBean = new BlockedThread(config.getMBeanServerConnection());
                     // add blockedThreadBean to Map of blockedThreads MBeans
                     blockedThreadsMap.put(rank, blockedThreadBean);
                     // register blockedThreadBean with MBean server
                     blockedThreadsMBeanHelper.registerMBean(blockedThreadBean);
 
                 } catch (Exception e) {
-                    LOGGER.severe("Failed to initialise blocked threads MBean with rank " + ranking +  " due to: " + e.getMessage());
+                    LOGGER.severe("Failed to initialise blocked threads MBean with rank " + ranking + " due to: " + e.getMessage());
                 }
             }
-		}
+        }
 
         // instantiate Map of HotMethod MBeans
         Map<Integer, HotMethod> hotMethodsMap = new HashMap<>();
         // instantiate new HotMethods object
         HotMethods hotMethods = null;
         try {
-            hotMethods = new HotMethods( config.getMBeanServerConnection(), hotMethodsMap );
+            hotMethods = new HotMethods(config.getMBeanServerConnection(), hotMethodsMap);
         } catch (IOException e) {
             LOGGER.severe("Failed to initialise hot methods MBean due to: " + e.getMessage());
         }
@@ -230,20 +232,20 @@ public class JVMStats implements JVMStatsMXBean {
                     hotMethodsMBeanHelper = new MBeanHelper(
                             Constants.JVM_STATS_TYPE, Constants.HOT_METHOD_STATS_TYPE, ranking);
                     // instantiate new HotMethod MBean
-                    HotMethod hotMethodMBean = new HotMethod( config.getMBeanServerConnection() );
+                    HotMethod hotMethodMBean = new HotMethod(config.getMBeanServerConnection());
                     // add hotMethod MBean to Map of hotMethods MBeans
                     hotMethodsMap.put(rank, hotMethodMBean);
                     // register hotMethod MBean with MBean server
                     hotMethodsMBeanHelper.registerMBean(hotMethodMBean);
 
                 } catch (Exception e) {
-                    LOGGER.severe("Failed to initialise hot method MBean with rank " + ranking +  " due to: " + e.getMessage());
+                    LOGGER.severe("Failed to initialise hot method MBean with rank " + ranking + " due to: " + e.getMessage());
                 }
             }
 
             // instantiate new HotMethods object
             try {
-                hotMethods = new HotMethods( config.getMBeanServerConnection(), hotMethodsMap );
+                hotMethods = new HotMethods(config.getMBeanServerConnection(), hotMethodsMap);
             } catch (IOException e) {
                 LOGGER.severe("Failed to initialise hot methods MBean due to: " + e.getMessage());
             }
@@ -252,14 +254,14 @@ public class JVMStats implements JVMStatsMXBean {
 
         try {
             // instantiate new MBeanHelper used to access ThreadStats MBean attributes and operations
-            MBeanHelper threadStatsMBeanHelper = new MBeanHelper( Constants.JVM_STATS_TYPE, Constants.THREADS_STATS_TYPE );
+            MBeanHelper threadStatsMBeanHelper = new MBeanHelper(Constants.JVM_STATS_TYPE, Constants.THREADS_STATS_TYPE);
 
             // instantiate new thread stats MBean
             ThreadStats threadStatsMBean;
-            if (threadContentionMonitoringEnabled && ! hotMethodProfilingEnabled) {
+            if (threadContentionMonitoringEnabled && !hotMethodProfilingEnabled) {
                 // instantiate new ThreadStats MBean with thread contention monitoring enabled
                 threadStatsMBean = new ThreadStats(config, topThreadsMap, blockedThreadsMap);
-            } else if (! threadContentionMonitoringEnabled && hotMethodProfilingEnabled) {
+            } else if (!threadContentionMonitoringEnabled && hotMethodProfilingEnabled) {
                 // instantiate new ThreadStats MBean with hot method profiling enabled
                 threadStatsMBean = new ThreadStats(config, topThreadsMap, hotMethods, hotMethodPollInterval);
             } else if (threadContentionMonitoringEnabled && hotMethodProfilingEnabled) {
@@ -285,14 +287,14 @@ public class JVMStats implements JVMStatsMXBean {
     /**
      * Init Memory Stats MBean
      */
-    private void initMemoryStats( ) {
+    private void initMemoryStats() {
 
         // init heap stats MBean
         try {
             // instantiate new MBeanHelper used to access MemoryStats MBean attributes and operations
-            MBeanHelper memoryStatsMBeanHelper = new MBeanHelper( Constants.JVM_STATS_TYPE, Constants.MEMORY_STATS_TYPE );
+            MBeanHelper memoryStatsMBeanHelper = new MBeanHelper(Constants.JVM_STATS_TYPE, Constants.MEMORY_STATS_TYPE);
             // instantiate new MemoryStats MBean
-            MemoryStats memoryStatsMBean = new MemoryStats( config.getMBeanServerConnection() );
+            MemoryStats memoryStatsMBean = new MemoryStats(config.getMBeanServerConnection());
             // register memoryStatsMBean with MBean server
             memoryStatsMBeanHelper.registerMBean(memoryStatsMBean);
             // instantiate and store new MemoryStatsMXBean proxy
@@ -307,14 +309,14 @@ public class JVMStats implements JVMStatsMXBean {
     /**
      * Init Heap Stats MBean
      */
-	private void initHeapStats( ) {
+    private void initHeapStats() {
 
         // init heap stats MBean
         try {
             // instantiate new MBeanHelper used to access HeapStats MBean attributes and operations
-            MBeanHelper heapStatsMBeanHelper = new MBeanHelper( Constants.JVM_STATS_TYPE, Constants.HEAP_STATS_TYPE );
+            MBeanHelper heapStatsMBeanHelper = new MBeanHelper(Constants.JVM_STATS_TYPE, Constants.HEAP_STATS_TYPE);
             // instantiate new HeapStats MBean
-            HeapStats heapStatsMBean = new HeapStats( config.getMBeanServerConnection() );
+            HeapStats heapStatsMBean = new HeapStats(config.getMBeanServerConnection());
             // register heapStatsMBean with MBean server
             heapStatsMBeanHelper.registerMBean(heapStatsMBean);
             // instantiate and store new HeapStatsMXBean proxy
@@ -324,19 +326,19 @@ public class JVMStats implements JVMStatsMXBean {
             LOGGER.severe("Failed to initialise heap stats MBean due to: " + e.getMessage());
         }
 
-	}
+    }
 
     /**
      * Init GC Stats MBean
      */
-	private void initGCStats( ) {
+    private void initGCStats() {
 
         // init GC stats
         try {
             // instantiate new MBeanHelper used to access GCStats MBean attributes and operations
-            MBeanHelper gcStatsMBeanHelper = new MBeanHelper( Constants.JVM_STATS_TYPE, Constants.GC_STATS_TYPE );
+            MBeanHelper gcStatsMBeanHelper = new MBeanHelper(Constants.JVM_STATS_TYPE, Constants.GC_STATS_TYPE);
             // instantiate new GCStats MBean
-            GCStats gcStatsMBean = new GCStats( config.getMBeanServerConnection() );
+            GCStats gcStatsMBean = new GCStats(config.getMBeanServerConnection());
             // register gcStatsMBean with MBean server
             gcStatsMBeanHelper.registerMBean(gcStatsMBean);
             // instantiate and store new GCStatsMXBean proxy
@@ -350,18 +352,18 @@ public class JVMStats implements JVMStatsMXBean {
     /**
      * Init Agent Stats MBean
      */
-    private void initAgentStats( ) {
+    private void initAgentStats() {
 
         // init agent stats
         try {
             // instantiate new MBeanHelper used to access AgentStats MBean attributes and operations
-            MBeanHelper agentStatsMBeanHelper = new MBeanHelper( Constants.JVM_STATS_TYPE, Constants.AGENT_STATS_TYPE );
+            MBeanHelper agentStatsMBeanHelper = new MBeanHelper(Constants.JVM_STATS_TYPE, Constants.AGENT_STATS_TYPE);
             // instantiate new AgentStats MBean
-            AgentStats agentStatsMBean = new AgentStats( jvmStatsMBeans );
+            AgentStats agentStatsMBean = new AgentStats(jvmStatsMBeans);
             // register agentStatsMBean with MBean server
             agentStatsMBeanHelper.registerMBean(agentStatsMBean);
             // instantiate and store new AgentStatsMXBean proxy
-            this.jvmStatsMBeans.add( JMX.newMBeanProxy(mbs, agentStatsMBeanHelper.getObjectName(), AgentStatsMXBean.class) );
+            this.jvmStatsMBeans.add(JMX.newMBeanProxy(mbs, agentStatsMBeanHelper.getObjectName(), AgentStatsMXBean.class));
 
         } catch (Exception e) {
             LOGGER.severe("Failed to initialise GC stats MBean due to: " + e.getMessage());
@@ -371,14 +373,14 @@ public class JVMStats implements JVMStatsMXBean {
     /**
      * Init Stats Logger MBean
      */
-    private void initStatsLogger( ) {
+    private void initStatsLogger() {
 
         // init stats logger
         try {
             // instantiate new MBeanHelper used to access StatsLogger MBean attributes and operations
-            MBeanHelper statsLoggerMBeanHelper = new MBeanHelper( Constants.AGENT_TYPE, Constants.STATS_LOGGER_TYPE );
+            MBeanHelper statsLoggerMBeanHelper = new MBeanHelper(Constants.AGENT_TYPE, Constants.STATS_LOGGER_TYPE);
             // instantiate new StatsLogger MBean
-            StatsLogger statsLoggerMBean = new StatsLogger( config );
+            StatsLogger statsLoggerMBean = new StatsLogger(config);
             // register statsLoggerMBean with MBean server
             statsLoggerMBeanHelper.registerMBean(statsLoggerMBean);
 

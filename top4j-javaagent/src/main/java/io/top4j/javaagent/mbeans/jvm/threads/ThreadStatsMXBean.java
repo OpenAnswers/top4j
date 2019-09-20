@@ -20,36 +20,36 @@ import io.top4j.javaagent.mbeans.StatsMXBean;
 
 public interface ThreadStatsMXBean extends StatsMXBean {
 
-	void setCpuUsage(double cpuUsage);
+    void setCpuUsage(double cpuUsage);
 
-	double getCpuUsage();
-	
-	void setUserCpuUsage(double userCpuUsage);
-	
-	double getUserCpuUsage();
-	
-	void setSysCpuUsage(double sysCpuUsage);
-	
-	double getSysCpuUsage();
-	
-	long getThreadCount();
-	
-	void setThreadCount(long threadCount);
+    double getCpuUsage();
 
-	long getRunnableThreadCount();
+    void setUserCpuUsage(double userCpuUsage);
 
-	void setRunnableThreadCount(long runnableThreadCount);
+    double getUserCpuUsage();
 
-	long getBlockedThreadCount();
+    void setSysCpuUsage(double sysCpuUsage);
 
-	void setBlockedThreadCount(long blockedThreadCount);
+    double getSysCpuUsage();
 
-	long getWaitingThreadCount();
+    long getThreadCount();
 
-	void setWaitingThreadCount(long waitingThreadCount);
+    void setThreadCount(long threadCount);
 
-	long getTimedWaitingThreadCount();
+    long getRunnableThreadCount();
 
-	void setTimedWaitingThreadCount(long timedWaitingThreadCount);
+    void setRunnableThreadCount(long runnableThreadCount);
+
+    long getBlockedThreadCount();
+
+    void setBlockedThreadCount(long blockedThreadCount);
+
+    long getWaitingThreadCount();
+
+    void setWaitingThreadCount(long waitingThreadCount);
+
+    long getTimedWaitingThreadCount();
+
+    void setTimedWaitingThreadCount(long timedWaitingThreadCount);
 
 }

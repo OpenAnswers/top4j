@@ -51,17 +51,19 @@ public class LoggerThread extends Thread {
         try {
             statsLoggerObjectName = new ObjectName(Constants.DOMAIN + ":" + "type=" + Constants.AGENT_TYPE + ",statsType=" + Constants.STATS_LOGGER_TYPE);
         } catch (MalformedObjectNameException e) {
-            throw new MBeanAccessException( e, "JMX MalformedObjectNameException: " + e.getMessage() );
+            throw new MBeanAccessException(e, "JMX MalformedObjectNameException: " + e.getMessage());
         }
         // instantiate new statsLoggerMXBean proxy based on statsLoggerObjectName
         this.statsLogger = JMX.newMBeanProxy(mbs, statsLoggerObjectName, StatsLoggerMXBean.class);
-        setDaemon( true );
+        setDaemon(true);
     }
 
-    /** Run the thread until interrupted. */
+    /**
+     * Run the thread until interrupted.
+     */
     @Override
-    public void run( ) {
-        while ( !isInterrupted( ) ) {
+    public void run() {
+        while (!isInterrupted()) {
             // poll loggerQueue for log stats notification
             String notification = loggerQueue.poll(interval);
             if (notification != null && statsLoggerEnabled) {

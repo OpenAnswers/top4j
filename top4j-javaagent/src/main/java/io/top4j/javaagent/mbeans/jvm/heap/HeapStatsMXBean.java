@@ -20,16 +20,16 @@ import io.top4j.javaagent.mbeans.StatsMXBean;
 
 public interface HeapStatsMXBean extends StatsMXBean {
 
-	void setEdenSpaceUtil(double edenSpaceUtil);
+    void setEdenSpaceUtil(double edenSpaceUtil);
 
-	double getEdenSpaceUtil();
+    double getEdenSpaceUtil();
 
-	void setSurvivorSpaceUtil(double survivorSpaceUtil);
+    void setSurvivorSpaceUtil(double survivorSpaceUtil);
 
-	double getSurvivorSpaceUtil();
+    double getSurvivorSpaceUtil();
 
-	void setTenuredHeapUtil(double tenuredHeapUtil);
+    void setTenuredHeapUtil(double tenuredHeapUtil);
 
-	double getTenuredHeapUtil();
+    double getTenuredHeapUtil();
 
 }

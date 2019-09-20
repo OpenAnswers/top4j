@@ -24,34 +24,34 @@ import java.util.*;
 import java.util.logging.Logger;
 
 public class HotMethods {
-	
-	private Map<String, StackTraceElement[]> stackTraces;
-	private Map<String, String> threadNames;
-	private Map<String, Long> threadIds;
+
+    private Map<String, StackTraceElement[]> stackTraces;
+    private Map<String, String> threadNames;
+    private Map<String, Long> threadIds;
     private Map<String, Long> hotMethodCpuTime;
     private Map<Long, Long> threadCpuTime;
     private long totalCpuTime;
-	private Map<Integer, HotMethod> hotMethods;
-	private int hotMethodCount;
+    private Map<Integer, HotMethod> hotMethods;
+    private int hotMethodCount;
     private final Object lock = new Object();
     private ThreadHelper threadHelper;
     private double mBeanCpuTime;
 
     private static final Logger LOGGER = Logger.getLogger(HotMethods.class.getName());
 
-	public HotMethods ( MBeanServerConnection mbsc, Map<Integer, HotMethod> hotMethods ) throws IOException {
-		
-		this.stackTraces = new HashMap<>();
-		this.threadNames = new HashMap<>();
-		this.threadIds = new HashMap<>();
+    public HotMethods(MBeanServerConnection mbsc, Map<Integer, HotMethod> hotMethods) throws IOException {
+
+        this.stackTraces = new HashMap<>();
+        this.threadNames = new HashMap<>();
+        this.threadIds = new HashMap<>();
         this.hotMethodCpuTime = new HashMap<>();
         this.threadCpuTime = new HashMap<>();
-		this.hotMethods = hotMethods;
-		this.hotMethodCount = hotMethods.size();
-        this.threadHelper = new ThreadHelper( mbsc );
-	}
-	
-	public void addHotMethod ( StackTraceElement[] ste, String threadName, long threadId ) {
+        this.hotMethods = hotMethods;
+        this.hotMethodCount = hotMethods.size();
+        this.threadHelper = new ThreadHelper(mbsc);
+    }
+
+    public void addHotMethod(StackTraceElement[] ste, String threadName, long threadId) {
 
         synchronized (lock) {
 
@@ -74,47 +74,47 @@ public class HotMethods {
             this.threadIds.put(hotMethod, threadId);
 
             // get thread CPU time
-            long cpuTime = threadHelper.getThreadCpuTime( threadId );
+            long cpuTime = threadHelper.getThreadCpuTime(threadId);
 
             if (cpuTime > -1) {
 
                 // add cpuTime to totalCpuTime
-                totalCpuTime+=cpuTime;
+                totalCpuTime += cpuTime;
 
-                if ( threadCpuTime.containsKey( threadId ) ) {
+                if (threadCpuTime.containsKey(threadId)) {
                     // get previous thread CPU time
-                    long previousCpuTime = threadCpuTime.get( threadId );
+                    long previousCpuTime = threadCpuTime.get(threadId);
                     // calculate CPU burn since last iteration
                     long cpuTimeDiff = cpuTime - previousCpuTime;
                     // store new thread CPU time
-                    threadCpuTime.put( threadId, cpuTime );
+                    threadCpuTime.put(threadId, cpuTime);
 
-                    if ( hotMethodCpuTime.containsKey( hotMethod ) ) {
+                    if (hotMethodCpuTime.containsKey(hotMethod)) {
                         // get previous hot method CPU time
-                        long previousHotMethodCpuTime = hotMethodCpuTime.get( hotMethod );
+                        long previousHotMethodCpuTime = hotMethodCpuTime.get(hotMethod);
                         // store new hot method CPU time
-                        hotMethodCpuTime.put( hotMethod, previousHotMethodCpuTime + cpuTimeDiff );
+                        hotMethodCpuTime.put(hotMethod, previousHotMethodCpuTime + cpuTimeDiff);
                     } else {
                         // initialise hot method CPU time
-                        hotMethodCpuTime.put( hotMethod, cpuTimeDiff );
+                        hotMethodCpuTime.put(hotMethod, cpuTimeDiff);
                     }
                 } else {
                     // initialise thread CPU time
-                    threadCpuTime.put( threadId, cpuTime );
+                    threadCpuTime.put(threadId, cpuTime);
                 }
             }
 
         }
-	}
+    }
 
-	public Map<Integer, HotMethod> get( ) {
+    public Map<Integer, HotMethod> get() {
 
         synchronized (lock) {
             return hotMethods;
         }
-	}
+    }
 
-	public void update( ) {
+    public void update() {
 
         synchronized (lock) {
 
@@ -124,7 +124,7 @@ public class HotMethods {
                 hotMethodSortedMap.put(entry.getValue(), entry.getKey());
             }
             LOGGER.finer("Hot Method Sorted Map: " + hotMethodSortedMap.toString());
-            if ( hotMethodSortedMap.size() == 0 )  {
+            if (hotMethodSortedMap.size() == 0) {
                 // no hot methods to process on this occasion - set default values and return
                 setDefaultValues();
                 return;
@@ -161,7 +161,7 @@ public class HotMethods {
                 Long hotMethodCpuTime = (Long) hotMethodArray[i];
 
                 // get methodNames
-                List<String> methodNames = hotMethodSortedMap.get( hotMethodCpuTime );
+                List<String> methodNames = hotMethodSortedMap.get(hotMethodCpuTime);
 
                 for (String methodName : methodNames) {
 
@@ -172,7 +172,7 @@ public class HotMethods {
                     // get stackTrace
                     StackTraceElement[] stackTrace = stackTraces.get(methodName);
                     // calculate load profile
-                    double loadProfile = ( (double) hotMethodCpuTime / totalCpuTime ) * 100;
+                    double loadProfile = ((double) hotMethodCpuTime / totalCpuTime) * 100;
                     // retrieve hotMethodCounter HotMethod
                     HotMethod hotMethodMBean = hotMethods.get(hotMethodCounter);
                     // update hotMethodsMBean attributes
@@ -200,18 +200,18 @@ public class HotMethods {
             threadIds.clear();
             hotMethodCpuTime.clear();
             threadCpuTime.clear();
-            totalCpuTime=0;
+            totalCpuTime = 0;
         }
 
-	}
+    }
 
-    private void setDefaultValues( HotMethod hotMethod ) {
+    private void setDefaultValues(HotMethod hotMethod) {
 
         // set default values on hotMethod MBean attributes
         hotMethod.setMethodName(null);
         hotMethod.setStackTrace(null);
         hotMethod.setThreadId(0);
-        hotMethod.setThreadName( null );
+        hotMethod.setThreadName(null);
 
     }
 
@@ -219,7 +219,7 @@ public class HotMethods {
 
         // set default values on all hotMethod MBean attributes
         for (Map.Entry<Integer, HotMethod> entry : hotMethods.entrySet()) {
-            setDefaultValues( entry.getValue() );
+            setDefaultValues(entry.getValue());
         }
     }
 
@@ -228,7 +228,7 @@ public class HotMethods {
         synchronized (lock) {
 
             // add mBeanCpuTime
-            this.mBeanCpuTime +=agentCpuTime;
+            this.mBeanCpuTime += agentCpuTime;
         }
 
     }

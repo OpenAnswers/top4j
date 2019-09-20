@@ -30,7 +30,7 @@ public class HotMethodTracker extends TimerTask {
 
     private static final Logger LOGGER = Logger.getLogger(HotMethodTracker.class.getName());
 
-    public HotMethodTracker( Map<Integer, TopThread> topThreadMap, HotMethods hotMethods ) {
+    public HotMethodTracker(Map<Integer, TopThread> topThreadMap, HotMethods hotMethods) {
 
         // store topThreadMap
         this.topThreadMap = topThreadMap;
@@ -46,7 +46,7 @@ public class HotMethodTracker extends TimerTask {
         cpuTime.init();
 
         // iterate over topThreadsMap
-        for ( TopThread topThread : topThreadMap.values() ) {
+        for (TopThread topThread : topThreadMap.values()) {
 
             // get topThread stack trace
             StackTraceElement[] stackTrace = topThread.getStackTraceElements();

@@ -24,83 +24,85 @@ import java.util.Map;
 import java.util.logging.*;
 
 public class ThreadStats implements ThreadStatsMXBean {
-	
-	private ThreadUsage threadUsage;
+
+    private ThreadUsage threadUsage;
     private CpuTime cpuTime = new CpuTime();
-	private volatile double mBeanCpuTime;
+    private volatile double mBeanCpuTime;
     private boolean hotMethodProfilingEnabled;
-	private boolean enabled = true;
-	private String failureReason;
+    private boolean enabled = true;
+    private String failureReason;
 
-	private static final Logger LOGGER = Logger.getLogger(ThreadStats.class.getName());
-	
-	public ThreadStats (Configurator config, Map<Integer, TopThread> topThreadsMap ) throws IOException {
-		
-		LOGGER.fine("Initialising Thread Stats....");
+    private static final Logger LOGGER = Logger.getLogger(ThreadStats.class.getName());
 
-        this.hotMethodProfilingEnabled = false;
-		// instantiate new ThreadUsage object used to track thread usage
-		this.threadUsage = new ThreadUsage( config, topThreadsMap );
-		
-	}
+    public ThreadStats(Configurator config, Map<Integer, TopThread> topThreadsMap) throws IOException {
 
-	public ThreadStats ( Configurator config, Map<Integer, TopThread> topThreadsMap, Map<Integer, BlockedThread> blockedThreadsMap ) throws IOException {
-
-		LOGGER.fine("Initialising Thread Stats with thread contention monitoring enabled....");
+        LOGGER.fine("Initialising Thread Stats....");
 
         this.hotMethodProfilingEnabled = false;
-		// instantiate new ThreadUsage object used to track thread usage
-		this.threadUsage = new ThreadUsage( config, topThreadsMap, blockedThreadsMap );
+        // instantiate new ThreadUsage object used to track thread usage
+        this.threadUsage = new ThreadUsage(config, topThreadsMap);
 
-	}
+    }
 
-	public  ThreadStats ( Configurator config, Map<Integer, TopThread> topThreadsMap, HotMethods hotMethods, long hotMethodPollInterval ) throws IOException {
+    public ThreadStats(Configurator config, Map<Integer, TopThread> topThreadsMap, Map<Integer, BlockedThread> blockedThreadsMap) throws IOException {
 
-		LOGGER.fine("Initialising Thread Stats with hot method profiling enabled....");
+        LOGGER.fine("Initialising Thread Stats with thread contention monitoring enabled....");
+
+        this.hotMethodProfilingEnabled = false;
+        // instantiate new ThreadUsage object used to track thread usage
+        this.threadUsage = new ThreadUsage(config, topThreadsMap, blockedThreadsMap);
+
+    }
+
+    public ThreadStats(Configurator config, Map<Integer, TopThread> topThreadsMap, HotMethods hotMethods, long hotMethodPollInterval) throws IOException {
+
+        LOGGER.fine("Initialising Thread Stats with hot method profiling enabled....");
 
         this.hotMethodProfilingEnabled = true;
-		// instantiate new ThreadUsage object used to track thread usage
-		this.threadUsage = new ThreadUsage( config, topThreadsMap, hotMethods, hotMethodPollInterval );
+        // instantiate new ThreadUsage object used to track thread usage
+        this.threadUsage = new ThreadUsage(config, topThreadsMap, hotMethods, hotMethodPollInterval);
 
-	}
+    }
 
-	public ThreadStats ( Configurator config, Map<Integer, TopThread> topThreadsMap, Map<Integer, BlockedThread> blockedThreadsMap, HotMethods hotMethods, long hotMethodPollInterval ) throws IOException {
+    public ThreadStats(Configurator config, Map<Integer, TopThread> topThreadsMap, Map<Integer, BlockedThread> blockedThreadsMap, HotMethods hotMethods, long hotMethodPollInterval) throws IOException {
 
-		LOGGER.fine("Initialising Thread Stats with thread contention monitoring and hot method profiling enabled....");
+        LOGGER.fine("Initialising Thread Stats with thread contention monitoring and hot method profiling enabled....");
 
         this.hotMethodProfilingEnabled = true;
-		// instantiate new ThreadUsage object used to track thread usage
-		this.threadUsage = new ThreadUsage( config, topThreadsMap, blockedThreadsMap, hotMethods, hotMethodPollInterval );
+        // instantiate new ThreadUsage object used to track thread usage
+        this.threadUsage = new ThreadUsage(config, topThreadsMap, blockedThreadsMap, hotMethods, hotMethodPollInterval);
 
-	}
+    }
 
 
-	/** Update Thread stats. */
-    public synchronized void update( ) {
+    /**
+     * Update Thread stats.
+     */
+    public synchronized void update() {
 
-		if (enabled) {
-			try {
-				// update thread stats
-				updateThreadStats();
-			} catch (Exception e) {
-				// something went wrong - record failure reason and disable any further updates
-				this.failureReason = e.getMessage();
-				this.enabled = false;
-				LOGGER.severe("TOP4J ERROR: Failed to update ThreadStats MBean due to: " + e.getMessage());
-				LOGGER.severe("TOP4J ERROR: Further ThreadStats MBean updates will be disabled from now on.");
-			}
-		}
-	}
+        if (enabled) {
+            try {
+                // update thread stats
+                updateThreadStats();
+            } catch (Exception e) {
+                // something went wrong - record failure reason and disable any further updates
+                this.failureReason = e.getMessage();
+                this.enabled = false;
+                LOGGER.severe("TOP4J ERROR: Failed to update ThreadStats MBean due to: " + e.getMessage());
+                LOGGER.severe("TOP4J ERROR: Further ThreadStats MBean updates will be disabled from now on.");
+            }
+        }
+    }
 
-	private synchronized void updateThreadStats( ) {
+    private synchronized void updateThreadStats() {
 
         // initialise thread CPU timer
-    	cpuTime.init();
+        cpuTime.init();
 
-    	LOGGER.fine("Updating Thread Stats....");
+        LOGGER.fine("Updating Thread Stats....");
 
-    	// update CPU usage
-    	threadUsage.update();
+        // update CPU usage
+        threadUsage.update();
 
         // update thread stats CPU time
         if (hotMethodProfilingEnabled) {
@@ -111,114 +113,114 @@ public class ThreadStats implements ThreadStatsMXBean {
 
     }
 
-	@Override
-	public void setMBeanCpuTime(double agentCpuTime) {
+    @Override
+    public void setMBeanCpuTime(double agentCpuTime) {
         this.mBeanCpuTime = agentCpuTime;
-	}
+    }
 
-	@Override
-	public double getMBeanCpuTime() {
-		return mBeanCpuTime;
-	}
+    @Override
+    public double getMBeanCpuTime() {
+        return mBeanCpuTime;
+    }
 
-	@Override
-	public void setCpuUsage(double threadUsage) {
-		this.threadUsage.setCpuUsage(threadUsage);
-	}
+    @Override
+    public void setCpuUsage(double threadUsage) {
+        this.threadUsage.setCpuUsage(threadUsage);
+    }
 
-	@Override
-	public double getCpuUsage() {
-		return this.threadUsage.getCpuUsage();
-	}
+    @Override
+    public double getCpuUsage() {
+        return this.threadUsage.getCpuUsage();
+    }
 
-	@Override
-	public void setUserCpuUsage(double userCpuUsage) {
-		this.threadUsage.setUserCpuUsage(userCpuUsage);
-	}
+    @Override
+    public void setUserCpuUsage(double userCpuUsage) {
+        this.threadUsage.setUserCpuUsage(userCpuUsage);
+    }
 
-	@Override
-	public double getUserCpuUsage() {
-		return this.threadUsage.getUserCpuUsage();
-	}
+    @Override
+    public double getUserCpuUsage() {
+        return this.threadUsage.getUserCpuUsage();
+    }
 
-	@Override
-	public void setSysCpuUsage(double sysCpuUsage) {
-		this.threadUsage.setSysCpuUsage(sysCpuUsage);
-	}
+    @Override
+    public void setSysCpuUsage(double sysCpuUsage) {
+        this.threadUsage.setSysCpuUsage(sysCpuUsage);
+    }
 
-	@Override
-	public double getSysCpuUsage() {
-		return this.threadUsage.getSysCpuUsage();
-	}
+    @Override
+    public double getSysCpuUsage() {
+        return this.threadUsage.getSysCpuUsage();
+    }
 
-	@Override
-	public long getThreadCount() {
-		return this.threadUsage.getThreadCount();
-	}
+    @Override
+    public long getThreadCount() {
+        return this.threadUsage.getThreadCount();
+    }
 
-	@Override
-	public void setThreadCount(long threadCount) {
-		this.threadUsage.setThreadCount(threadCount);
-	}
+    @Override
+    public void setThreadCount(long threadCount) {
+        this.threadUsage.setThreadCount(threadCount);
+    }
 
-	@Override
-	public long getRunnableThreadCount() {
-		return this.threadUsage.getRunnableThreadCount();
-	}
+    @Override
+    public long getRunnableThreadCount() {
+        return this.threadUsage.getRunnableThreadCount();
+    }
 
-	@Override
-	public void setRunnableThreadCount(long runnableThreadCount) {
-		this.threadUsage.setRunnableThreadCount(runnableThreadCount);
-	}
+    @Override
+    public void setRunnableThreadCount(long runnableThreadCount) {
+        this.threadUsage.setRunnableThreadCount(runnableThreadCount);
+    }
 
-	@Override
-	public long getBlockedThreadCount() {
-		return this.threadUsage.getBlockedThreadCount();
-	}
+    @Override
+    public long getBlockedThreadCount() {
+        return this.threadUsage.getBlockedThreadCount();
+    }
 
-	@Override
-	public void setBlockedThreadCount(long blockedThreadCount) {
-		this.threadUsage.setBlockedThreadCount(blockedThreadCount);
-	}
+    @Override
+    public void setBlockedThreadCount(long blockedThreadCount) {
+        this.threadUsage.setBlockedThreadCount(blockedThreadCount);
+    }
 
-	@Override
-	public long getWaitingThreadCount() {
-		return this.threadUsage.getWaitingThreadCount();
-	}
+    @Override
+    public long getWaitingThreadCount() {
+        return this.threadUsage.getWaitingThreadCount();
+    }
 
-	@Override
-	public void setWaitingThreadCount(long waitingThreadCount) {
-		this.threadUsage.setWaitingThreadCount(waitingThreadCount);
-	}
+    @Override
+    public void setWaitingThreadCount(long waitingThreadCount) {
+        this.threadUsage.setWaitingThreadCount(waitingThreadCount);
+    }
 
-	@Override
-	public long getTimedWaitingThreadCount() {
-		return this.threadUsage.getTimedWaitingThreadCount();
-	}
+    @Override
+    public long getTimedWaitingThreadCount() {
+        return this.threadUsage.getTimedWaitingThreadCount();
+    }
 
-	@Override
-	public void setTimedWaitingThreadCount(long timedWaitingThreadCount) {
-		this.threadUsage.setTimedWaitingThreadCount(timedWaitingThreadCount);
-	}
+    @Override
+    public void setTimedWaitingThreadCount(long timedWaitingThreadCount) {
+        this.threadUsage.setTimedWaitingThreadCount(timedWaitingThreadCount);
+    }
 
-	@Override
-	public void setEnabled(boolean enabled) {
-		this.enabled = enabled;
-	}
+    @Override
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
+    }
 
-	@Override
-	public boolean getEnabled() {
-		return this.enabled;
-	}
+    @Override
+    public boolean getEnabled() {
+        return this.enabled;
+    }
 
-	@Override
-	public void setFailureReason(String failureReason) {
-		this.failureReason = failureReason;
-	}
+    @Override
+    public void setFailureReason(String failureReason) {
+        this.failureReason = failureReason;
+    }
 
-	@Override
-	public String getFailureReason() {
-		return this.failureReason;
-	}
+    @Override
+    public String getFailureReason() {
+        return this.failureReason;
+    }
 
 }

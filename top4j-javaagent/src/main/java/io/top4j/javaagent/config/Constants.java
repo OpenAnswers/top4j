@@ -17,62 +17,62 @@
 package io.top4j.javaagent.config;
 
 public final class Constants {
-	
-	// JMX MXBean domain name
-	public static final String DOMAIN = "io.top4j";
-	
-	// JMX MXBean JVM stats type
-	public static final String JVM_STATS_TYPE = "JVM";
-	
-	// JMX MXBean top thread stats type
-	public static final String TOP_THREAD_STATS_TYPE = "TopThread";
 
-	// JMX MXBean blocked thread stats type
-	public static final String BLOCKED_THREAD_STATS_TYPE = "BlockedThread";
+    // JMX MXBean domain name
+    public static final String DOMAIN = "io.top4j";
 
-	// JMX MXBean hot method stats type
-	public static final String HOT_METHOD_STATS_TYPE = "HotMethod";
+    // JMX MXBean JVM stats type
+    public static final String JVM_STATS_TYPE = "JVM";
 
-	// JMX MXBean threads stats type
-	public static final String THREADS_STATS_TYPE = "ThreadStats";
-	
-	// JMX MXBean memory stats type
-	public static final String MEMORY_STATS_TYPE = "MemoryStats";
+    // JMX MXBean top thread stats type
+    public static final String TOP_THREAD_STATS_TYPE = "TopThread";
 
-	// JMX MXBean heap stats type
-	public static final String HEAP_STATS_TYPE = "HeapStats";
+    // JMX MXBean blocked thread stats type
+    public static final String BLOCKED_THREAD_STATS_TYPE = "BlockedThread";
 
-	// JMX MXBean GC stats type
-	public static final String GC_STATS_TYPE = "GCStats";
-	
-	// JMX MXBean agent type
-	public static final String AGENT_TYPE = "Agent";
-		
-	// JMX MXBean agent stats type
-	public static final String AGENT_STATS_TYPE = "AgentStats";
+    // JMX MXBean hot method stats type
+    public static final String HOT_METHOD_STATS_TYPE = "HotMethod";
 
-	// JMX MXBean stats logger type
-	public static final String STATS_LOGGER_TYPE = "StatsLogger";
+    // JMX MXBean threads stats type
+    public static final String THREADS_STATS_TYPE = "ThreadStats";
 
-	// file path separator
-	public static final String FILE_SEPARATOR = System.getProperty("file.separator");
+    // JMX MXBean memory stats type
+    public static final String MEMORY_STATS_TYPE = "MemoryStats";
 
-	// default properties file name
-	public static final String DEFAULT_PROPERTIES_FILE_NAME = "default-top4j.properties";
+    // JMX MXBean heap stats type
+    public static final String HEAP_STATS_TYPE = "HeapStats";
 
-	// properties file name
-	public static final String PROPERTIES_FILE_NAME = "top4j.properties";
+    // JMX MXBean GC stats type
+    public static final String GC_STATS_TYPE = "GCStats";
 
-	// test properties file name
-	public static final String TEST_PROPERTIES_FILE_NAME = "top4j-test.properties";
+    // JMX MXBean agent type
+    public static final String AGENT_TYPE = "Agent";
 
-	// properties file name argument token (used to specify properties file location via agent argument)
-	public static final String PROPERTIES_FILE_NAME_ARG = "config.file";
+    // JMX MXBean agent stats type
+    public static final String AGENT_STATS_TYPE = "AgentStats";
+
+    // JMX MXBean stats logger type
+    public static final String STATS_LOGGER_TYPE = "StatsLogger";
+
+    // file path separator
+    public static final String FILE_SEPARATOR = System.getProperty("file.separator");
+
+    // default properties file name
+    public static final String DEFAULT_PROPERTIES_FILE_NAME = "default-top4j.properties";
+
+    // properties file name
+    public static final String PROPERTIES_FILE_NAME = "top4j.properties";
+
+    // test properties file name
+    public static final String TEST_PROPERTIES_FILE_NAME = "top4j-test.properties";
+
+    // properties file name argument token (used to specify properties file location via agent argument)
+    public static final String PROPERTIES_FILE_NAME_ARG = "config.file";
 
     // 1 Mega Byte
-    public  static final int ONE_MEGA_BYTE = 1048576;
+    public static final int ONE_MEGA_BYTE = 1048576;
 
-	private Constants(){
-	    throw new AssertionError();
-	}
+    private Constants() {
+        throw new AssertionError();
+    }
 }

@@ -23,129 +23,125 @@ import java.util.logging.Logger;
 
 public class MultiThreadedTest {
 
-	private int numThreads;
-	private int numIterations;
-	private int pauseTime;
-	private boolean synchronised;
+    private int numThreads;
+    private int numIterations;
+    private int pauseTime;
+    private boolean synchronised;
 
-	private static final Logger LOGGER = Logger.getLogger(MultiThreadedTest.class.getName());
+    private static final Logger LOGGER = Logger.getLogger(MultiThreadedTest.class.getName());
 
-	public MultiThreadedTest(int numThreads, int numIterations, int pauseTime, boolean synchronised) {
+    public MultiThreadedTest(int numThreads, int numIterations, int pauseTime, boolean synchronised) {
 
-		this.numThreads = numThreads;
-		this.numIterations = numIterations;
-		this.pauseTime = pauseTime;
-		this.synchronised = synchronised;
+        this.numThreads = numThreads;
+        this.numIterations = numIterations;
+        this.pauseTime = pauseTime;
+        this.synchronised = synchronised;
 
-	}
+    }
 
-	public static void main(String[] args) {
-		int numThreads = 1;
-		int numIterations = 1;
-		int pauseTime = 1;
-		boolean synchronised = true;
-		LOGGER.info("Running Top4J Multithreaded Test....");
-		if (args.length == 0) {
-			LOGGER.severe("USAGE: MultiThreadedTest <num-threads> <num-iterations> <pause-time> [synchronised]");
-			System.exit(1);
-		} else {
-			try {
-				numThreads = Integer.parseInt(args[0]);
-				numIterations = Integer.parseInt(args[1]);
-				pauseTime = Integer.parseInt(args[2]);
-			} catch (NumberFormatException e) {
-				LOGGER.severe("Argument must be an integer");
-			}
-			if (args.length == 4) {
-				synchronised = Boolean.parseBoolean(args[3]);
-			}
-		}
-		LOGGER.info("Number of threads = " + numThreads);
-		LOGGER.info("Number of iterations = " + numIterations);
-		LOGGER.info("Pause time between iterations = " + pauseTime + " ms");
-		LOGGER.info("Synchronised = " + synchronised);
-		MultiThreadedTest multiThreadedTest = new MultiThreadedTest(numThreads, numIterations, pauseTime, synchronised);
-		multiThreadedTest.run();
-	}
+    public static void main(String[] args) {
+        int numThreads = 1;
+        int numIterations = 1;
+        int pauseTime = 1;
+        boolean synchronised = true;
+        LOGGER.info("Running Top4J Multithreaded Test....");
+        if (args.length == 0) {
+            LOGGER.severe("USAGE: MultiThreadedTest <num-threads> <num-iterations> <pause-time> [synchronised]");
+            System.exit(1);
+        } else {
+            try {
+                numThreads = Integer.parseInt(args[0]);
+                numIterations = Integer.parseInt(args[1]);
+                pauseTime = Integer.parseInt(args[2]);
+            } catch (NumberFormatException e) {
+                LOGGER.severe("Argument must be an integer");
+            }
+            if (args.length == 4) {
+                synchronised = Boolean.parseBoolean(args[3]);
+            }
+        }
+        LOGGER.info("Number of threads = " + numThreads);
+        LOGGER.info("Number of iterations = " + numIterations);
+        LOGGER.info("Pause time between iterations = " + pauseTime + " ms");
+        LOGGER.info("Synchronised = " + synchronised);
+        MultiThreadedTest multiThreadedTest = new MultiThreadedTest(numThreads, numIterations, pauseTime, synchronised);
+        multiThreadedTest.run();
+    }
 
-	public void run() {
-		long start = System.currentTimeMillis();
+    public void run() {
+        long start = System.currentTimeMillis();
 
-		Thread[] t = new Thread[numThreads];
+        Thread[] t = new Thread[numThreads];
 
-		for(int i = 0; i< numThreads; i++) {
-			t[i] = new Thread(new CPUBurner(numIterations, pauseTime, synchronised), "CPUBurner-" + i);
-			t[i].start();
-		}
+        for (int i = 0; i < numThreads; i++) {
+            t[i] = new Thread(new CPUBurner(numIterations, pauseTime, synchronised), "CPUBurner-" + i);
+            t[i].start();
+        }
 
-		for(int i = 0; i< numThreads; i++) {
-			try
-			{
-				t[i].join();
-			}
-			catch (InterruptedException ie)
-			{
-				Thread.currentThread().interrupt();
-			}
-		}
+        for (int i = 0; i < numThreads; i++) {
+            try {
+                t[i].join();
+            } catch (InterruptedException ie) {
+                Thread.currentThread().interrupt();
+            }
+        }
 
-		long end = System.currentTimeMillis();
+        long end = System.currentTimeMillis();
 
-		double seconds = (end - start) / 1000.0;
+        double seconds = (end - start) / 1000.0;
 
-		LOGGER.info("Calculations              : " + numThreads * numIterations);
-		LOGGER.info("Duration                  : " + seconds);
-		LOGGER.info("TPS                       : " + numThreads * numIterations / seconds);
-	}
+        LOGGER.info("Calculations              : " + numThreads * numIterations);
+        LOGGER.info("Duration                  : " + seconds);
+        LOGGER.info("TPS                       : " + numThreads * numIterations / seconds);
+    }
 
-	private class CPUBurner implements Runnable {
-		private int numIterations;
-		private int maxPauseTime;
-		private long n = 200;
-		private Random randomGenerator = new Random();
-		private Map<Integer, Long> result = new HashMap<>();
-		private boolean synchronised;
+    private class CPUBurner implements Runnable {
+        private int numIterations;
+        private int maxPauseTime;
+        private long n = 200;
+        private Random randomGenerator = new Random();
+        private Map<Integer, Long> result = new HashMap<>();
+        private boolean synchronised;
 
-		public CPUBurner(int numIterations, int maxPauseTime, boolean synchronised) {
-			this.numIterations = numIterations;
-			this.maxPauseTime = maxPauseTime;
-			this.synchronised = synchronised;
-		}
+        public CPUBurner(int numIterations, int maxPauseTime, boolean synchronised) {
+            this.numIterations = numIterations;
+            this.maxPauseTime = maxPauseTime;
+            this.synchronised = synchronised;
+        }
 
-		public void run() {
+        public void run() {
 
-			for(int i=1; i<=numIterations; i++) {
-				if (i % 100 == 0)
-				{
-					LOGGER.fine(Thread.currentThread().getName() + " : " + i);
-				}
+            for (int i = 1; i <= numIterations; i++) {
+                if (i % 100 == 0) {
+                    LOGGER.fine(Thread.currentThread().getName() + " : " + i);
+                }
 
-				// generate randomPause between 0 and maxPauseTime
-				int randomPause = randomGenerator.nextInt(maxPauseTime);
+                // generate randomPause between 0 and maxPauseTime
+                int randomPause = randomGenerator.nextInt(maxPauseTime);
 
-				// do some work
-				doWork( randomPause );
+                // do some work
+                doWork(randomPause);
 
-			}
+            }
 
-		}
-		
-		private void doWork( int randomPause ){
+        }
 
-			if (synchronised) {
-				synchronized (CPUBurner.class) {
-					// calculate the nth fibonacci number
+        private void doWork(int randomPause) {
+
+            if (synchronised) {
+                synchronized (CPUBurner.class) {
+                    // calculate the nth fibonacci number
                     calculateFibonacciNumber(randomPause);
-				}
-			} else {
+                }
+            } else {
 
-				// calculate the nth fibonacci number
+                // calculate the nth fibonacci number
                 calculateFibonacciNumber(randomPause);
-			}
-			
-		}
+            }
 
-		private void calculateFibonacciNumber( int randomPause ) {
+        }
+
+        private void calculateFibonacciNumber(int randomPause) {
 
             // calculate the nth fibonacci number
             long fibonacci = fibonacci(n);
@@ -167,8 +163,8 @@ public class MultiThreadedTest {
                 f = f + g;
                 g = f - g;
                 fibSeq = fibSeq + " " + f;
-				// store result
-				result.put(i, f);
+                // store result
+                result.put(i, f);
             }
 
             LOGGER.fine("Fibonacci Sequence: " + fibSeq);
@@ -176,6 +172,6 @@ public class MultiThreadedTest {
 
         }
 
-	}
+    }
 
 }

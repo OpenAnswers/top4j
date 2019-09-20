@@ -54,7 +54,7 @@ public class Top4J {
 
     private static final Logger LOGGER = Logger.getLogger(Top4J.class.getName());
 
-    public static void main( String[] args ) throws Exception {
+    public static void main(String[] args) throws Exception {
 
         // run Top4J CLI
         System.exit(new Top4J().execute(args));
@@ -79,8 +79,7 @@ public class Top4J {
         JavaProcessManager javaProcessManager;
         if (isJava9Plus()) {
             javaProcessManager = new Jdk9JavaProcessManager();
-        }
-        else {
+        } else {
             ClassLoader classLoader = JConsoleClassLoaderFactory.getClassLoader();
             javaProcessManager = new Jdk6JavaProcessManager(classLoader);
         }
@@ -97,9 +96,9 @@ public class Top4J {
         CommandLineParser parser = new DefaultParser();
         CommandLine cmd = null;
         try {
-            cmd = parser.parse( options, args);
+            cmd = parser.parse(options, args);
         } catch (ParseException e) {
-            LOGGER.severe("ERROR: There was a problem parsing command-line arguments. Reason: " + e.getMessage() );
+            LOGGER.severe("ERROR: There was a problem parsing command-line arguments. Reason: " + e.getMessage());
             return 1;
         }
 
@@ -107,7 +106,7 @@ public class Top4J {
         if (cmd.hasOption("h")) {
             // automatically generate the help statement
             HelpFormatter formatter = new HelpFormatter();
-            formatter.printHelp( "top4j", options );
+            formatter.printHelp("top4j", options);
             return 0;
         }
         if (cmd.hasOption("d")) {
@@ -115,7 +114,7 @@ public class Top4J {
             String userProvidedDelayInterval = cmd.getOptionValue("d", "3");
             if (!isNumeric(userProvidedDelayInterval)) {
                 // user provided delay interval is *not* a number - return usage message and exit with error code
-                LOGGER.severe("ERROR: Delay interval provided via command-line argument is not a number: " + userProvidedDelayInterval );
+                LOGGER.severe("ERROR: Delay interval provided via command-line argument is not a number: " + userProvidedDelayInterval);
                 return 1;
             }
             // override default consoleRefreshPeriod
@@ -138,7 +137,7 @@ public class Top4J {
             String userProvidedThreadCacheSize = cmd.getOptionValue("S");
             if (!isNumeric(userProvidedThreadCacheSize)) {
                 // user provided thread usage cache size is *not* a number - return usage message and exit with error code
-                LOGGER.severe("ERROR: Thread usage cache size provided via command-line argument is not a number: " + userProvidedThreadCacheSize );
+                LOGGER.severe("ERROR: Thread usage cache size provided via command-line argument is not a number: " + userProvidedThreadCacheSize);
                 return 1;
             }
             // override default threadCacheSize
@@ -149,7 +148,7 @@ public class Top4J {
             String userProvidedThreadCacheTTL = cmd.getOptionValue("T");
             if (!isNumeric(userProvidedThreadCacheTTL)) {
                 // user provided thread usage cache TTL is *not* a number - return usage message and exit with error code
-                LOGGER.severe("ERROR: Thread usage cache TTL provided via command-line argument is not a number: " + userProvidedThreadCacheTTL );
+                LOGGER.severe("ERROR: Thread usage cache TTL provided via command-line argument is not a number: " + userProvidedThreadCacheTTL);
                 return 1;
             }
             // override default threadCacheTTL
@@ -160,7 +159,7 @@ public class Top4J {
             String userProvidedJvmPid = cmd.getOptionValue("p");
             if (!isNumeric(userProvidedJvmPid)) {
                 // user provided JVM PID is *not* a number - return usage message and exit with error code
-                LOGGER.severe("ERROR: JVM PID provided via command-line argument is not a number: " + userProvidedJvmPid );
+                LOGGER.severe("ERROR: JVM PID provided via command-line argument is not a number: " + userProvidedJvmPid);
                 return 1;
             }
             // user has provided a command-line arg and it's a valid number - use the arg as the jvmPid
@@ -198,23 +197,22 @@ public class Top4J {
                 } else {
                     // use System Console to read single digit character
                     String input = System.console().readLine();
-                    jvmNumber = Integer.parseInt( input );
+                    jvmNumber = Integer.parseInt(input);
                 }
                 System.out.println(jvmNumber);
                 // validate user input
-                if (!(jvmNumber >= 0 && jvmNumber <= jvmCount-1)) {
+                if (!(jvmNumber >= 0 && jvmNumber <= jvmCount - 1)) {
                     // user has entered an out-of-bounds jvmNumber - return error message and exit with error code
-                    LOGGER.severe("ERROR: Please enter a JVM number between 0 and " + (jvmCount-1));
+                    LOGGER.severe("ERROR: Please enter a JVM number between 0 and " + (jvmCount - 1));
                     return 1;
                 }
                 // set jvmPid according to user selection
                 jvmPid = jvms.get(jvmNumber).getProcessId();
                 // set jvmDisplayName according to user selection
                 jvmDisplayName = jvms.get(jvmNumber).getDisplayName();
-            }
-            catch (Exception e) {
+            } catch (Exception e) {
                 // user has entered an invalid jvmNumber - return error message and exit with error code
-                LOGGER.severe("ERROR: Please enter a JVM number between 0 and " + (jvmCount-1));
+                LOGGER.severe("ERROR: Please enter a JVM number between 0 and " + (jvmCount - 1));
                 return 1;
             }
         }
@@ -254,13 +252,13 @@ public class Top4J {
                 "top.thread.count=" + displayThreadCount + "," +
                 "blocked.thread.count=" + displayThreadCount;
         // initialise Top4J configurator
-		Configurator config = new Configurator( mbsc, configOverrides );
+        Configurator config = new Configurator(mbsc, configOverrides);
 
-		// create and start Top4J controller thread
+        // create and start Top4J controller thread
         LOGGER.info("Top4J: Initialising Java agent.");
-		Controller controller = new Controller( config );
-		controller.start();
-		LOGGER.info("Top4J: Java agent activated.");
+        Controller controller = new Controller(config);
+        controller.start();
+        LOGGER.info("Top4J: Java agent activated.");
 
         // create new DisplayConfig to pass to ConsoleController
         DisplayConfig displayConfig = new DisplayConfig(displayThreadCount, jvmPid, jvmDisplayName);
@@ -286,7 +284,7 @@ public class Top4J {
                 // exit Top4J
                 return 0;
             }
-            if (Character.isDigit( inputChar )) {
+            if (Character.isDigit(inputChar)) {
                 userInput.setIsDigit(true);
             } else if (inputText.equals("m")) {
                 userInput.setIsDigit(false);

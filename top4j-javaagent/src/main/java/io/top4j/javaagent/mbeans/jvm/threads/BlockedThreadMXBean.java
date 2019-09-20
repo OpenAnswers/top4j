@@ -18,28 +18,28 @@ package io.top4j.javaagent.mbeans.jvm.threads;
 
 public interface BlockedThreadMXBean {
 
-    public void setThreadName( String threadName );
+    public void setThreadName(String threadName);
 
-	public String getThreadName();
+    public String getThreadName();
 
-	public void setThreadId( long threadId );
+    public void setThreadId(long threadId);
 
-	public long getThreadId();
+    public long getThreadId();
 
-	public void setThreadState( Thread.State threadState );
+    public void setThreadState(Thread.State threadState);
 
-	public Thread.State getThreadState();
+    public Thread.State getThreadState();
 
-	public void setThreadBlockedTime( long threadBlockedTime );
+    public void setThreadBlockedTime(long threadBlockedTime);
 
-	public long getThreadBlockedTime();
+    public long getThreadBlockedTime();
 
-	public void setThreadBlockedPercentage( double threadBlockedPercentage );
+    public void setThreadBlockedPercentage(double threadBlockedPercentage);
 
-	public double getThreadBlockedPercentage();
+    public double getThreadBlockedPercentage();
 
-	public String getStackTrace( int maxDepth );
+    public String getStackTrace(int maxDepth);
 
-	public String getStackTraceWithContext( int maxDepth );
+    public String getStackTraceWithContext(int maxDepth);
 
 }

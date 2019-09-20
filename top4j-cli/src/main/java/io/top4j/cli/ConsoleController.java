@@ -35,7 +35,7 @@ import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.logging.Logger;
 
-public class ConsoleController  extends TimerTask {
+public class ConsoleController extends TimerTask {
 
     private final ConsoleReader consoleReader;
     private final UserInput userInput;
@@ -64,14 +64,14 @@ public class ConsoleController  extends TimerTask {
 
     private static final Logger LOGGER = Logger.getLogger(ConsoleController.class.getName());
 
-    public ConsoleController ( ConsoleReader consoleReader, UserInput userInput, MBeanServerConnection mbsc, DisplayConfig displayConfig ) {
+    public ConsoleController(ConsoleReader consoleReader, UserInput userInput, MBeanServerConnection mbsc, DisplayConfig displayConfig) {
 
         this.consoleReader = consoleReader;
         this.userInput = userInput;
         this.displayConfig = displayConfig;
         int displayThreadCount = displayConfig.getThreadCount();
         try {
-            this.threadHelper = new ThreadHelper( mbsc );
+            this.threadHelper = new ThreadHelper(mbsc);
         } catch (IOException e) {
             String errorMessage = INIT_ERROR_MESSAGE + e.getMessage();
             LOGGER.severe(errorMessage);
@@ -81,7 +81,7 @@ public class ConsoleController  extends TimerTask {
         // create GCStats objectName
         ObjectName gcStatsObjectName = null;
         try {
-            gcStatsObjectName = new ObjectName(Constants.DOMAIN + ":type=" + Constants.JVM_STATS_TYPE + ",statsType=" + Constants.GC_STATS_TYPE );
+            gcStatsObjectName = new ObjectName(Constants.DOMAIN + ":type=" + Constants.JVM_STATS_TYPE + ",statsType=" + Constants.GC_STATS_TYPE);
         } catch (MalformedObjectNameException e) {
             String errorMessage = INIT_ERROR_MESSAGE + e.getMessage();
             LOGGER.severe(errorMessage);
@@ -95,7 +95,7 @@ public class ConsoleController  extends TimerTask {
         // create MemoryStats objectName
         ObjectName memoryStatsObjectName = null;
         try {
-            memoryStatsObjectName = new ObjectName(Constants.DOMAIN + ":type=" + Constants.JVM_STATS_TYPE + ",statsType=" + Constants.MEMORY_STATS_TYPE );
+            memoryStatsObjectName = new ObjectName(Constants.DOMAIN + ":type=" + Constants.JVM_STATS_TYPE + ",statsType=" + Constants.MEMORY_STATS_TYPE);
         } catch (MalformedObjectNameException e) {
             String errorMessage = INIT_ERROR_MESSAGE + e.getMessage();
             LOGGER.severe(errorMessage);
@@ -109,7 +109,7 @@ public class ConsoleController  extends TimerTask {
         // create HeapStats objectName
         ObjectName heapStatsObjectName = null;
         try {
-            heapStatsObjectName = new ObjectName(Constants.DOMAIN + ":type=" + Constants.JVM_STATS_TYPE + ",statsType=" + Constants.HEAP_STATS_TYPE );
+            heapStatsObjectName = new ObjectName(Constants.DOMAIN + ":type=" + Constants.JVM_STATS_TYPE + ",statsType=" + Constants.HEAP_STATS_TYPE);
         } catch (MalformedObjectNameException e) {
             String errorMessage = INIT_ERROR_MESSAGE + e.getMessage();
             LOGGER.severe(errorMessage);
@@ -123,7 +123,7 @@ public class ConsoleController  extends TimerTask {
         // create ThreadStats objectName
         ObjectName threadStatsObjectName = null;
         try {
-            threadStatsObjectName = new ObjectName(Constants.DOMAIN + ":type=" + Constants.JVM_STATS_TYPE + ",statsType=" + Constants.THREADS_STATS_TYPE );
+            threadStatsObjectName = new ObjectName(Constants.DOMAIN + ":type=" + Constants.JVM_STATS_TYPE + ",statsType=" + Constants.THREADS_STATS_TYPE);
         } catch (MalformedObjectNameException e) {
             String errorMessage = INIT_ERROR_MESSAGE + e.getMessage();
             LOGGER.severe(errorMessage);
@@ -135,7 +135,7 @@ public class ConsoleController  extends TimerTask {
         this.jvmStatsMBeans.add(this.threadStatsMXBean);
 
         // populate topThread MBean list
-        for (int rank =1; rank <=displayThreadCount; rank++) {
+        for (int rank = 1; rank <= displayThreadCount; rank++) {
 
             // create TopThread objectName
             ObjectName topThreadObjectName = null;
@@ -151,7 +151,7 @@ public class ConsoleController  extends TimerTask {
         }
 
         // populate blockedThread MBean list
-        for (int rank =1; rank <=displayThreadCount; rank++) {
+        for (int rank = 1; rank <= displayThreadCount; rank++) {
 
             // create BlockedThread objectName
             ObjectName blockedThreadObjectName = null;
@@ -210,7 +210,7 @@ public class ConsoleController  extends TimerTask {
     private void updateScreen() throws ScreenUpdateException {
 
         // first things first, check MBean Server Connection is still alive
-        if (! isMBSConnectionAlive()) {
+        if (!isMBSConnectionAlive()) {
             // the connection to the remote MBean Server has been lost - we have no choice but to exit gracefully
             throw new ScreenUpdateException("ERROR: The connection to the remote MBean Server has been lost. Check if the target JVM is still running.");
         }
@@ -224,10 +224,10 @@ public class ConsoleController  extends TimerTask {
         mainScreenId = screenId;
         String screen;
         try {
-            if ( userInput.isDigit() ) {
+            if (userInput.isDigit()) {
                 // create thread stack trace screen
                 screen = createThreadStackTraceScreen(Integer.valueOf(userText).intValue());
-            } else if ( screenId.equals("b") ) {
+            } else if (screenId.equals("b")) {
                 // create blocked threads screen
                 screen = createBlockedThreadsScreen();
             } else {
@@ -251,7 +251,7 @@ public class ConsoleController  extends TimerTask {
         StringBuilder sb = new StringBuilder();
         String displayName = displayConfig.getDisplayName();
         if (displayName != null && displayName.length() > MAX_DISPLAY_NAME_LENGTH) {
-            displayName = displayName.substring(0, MAX_DISPLAY_NAME_LENGTH-1);
+            displayName = displayName.substring(0, MAX_DISPLAY_NAME_LENGTH - 1);
         }
         sb.append("top4j - " + timeFormat.format(date) + " up " + getUptime() + ",  load average: " + osMXBean.getSystemLoadAverage() + "\n");
         sb.append("Attached to: " + displayName + " [PID=" + displayConfig.getJvmPid() + "]" + "\n");
@@ -292,16 +292,16 @@ public class ConsoleController  extends TimerTask {
                 continue;
             }
             Long threadId = topThreadMXBean.getThreadId();
-            String threadState = abbreviateThreadState( threadHelper.getThreadState( threadId ));
+            String threadState = abbreviateThreadState(threadHelper.getThreadState(threadId));
             Double threadCpuUsage = topThreadMXBean.getThreadCpuUsage();
             if (threadName != null && threadName.length() > MAX_THREAD_NAME_LENGTH) {
-               threadName = threadName.substring(0, MAX_THREAD_NAME_LENGTH-1);
+                threadName = threadName.substring(0, MAX_THREAD_NAME_LENGTH - 1);
             }
-            sb.append(  counter + "  " +
-                    String.format("%1$-8s", threadId ) +
-                    String.format("%1$-3s", threadState ) +
-                    String.format("%1$-6.1f", threadCpuUsage ) +
-                    String.format("%1$-64s", threadName ) +
+            sb.append(counter + "  " +
+                    String.format("%1$-8s", threadId) +
+                    String.format("%1$-3s", threadState) +
+                    String.format("%1$-6.1f", threadCpuUsage) +
+                    String.format("%1$-64s", threadName) +
                     "\n");
 
             // store thread Id
@@ -350,16 +350,16 @@ public class ConsoleController  extends TimerTask {
                 continue;
             }
             Long threadId = blockedThreadMXBean.getThreadId();
-            String threadState = abbreviateThreadState( threadHelper.getThreadState( threadId ));
+            String threadState = abbreviateThreadState(threadHelper.getThreadState(threadId));
             Double threadBlockedPercentage = blockedThreadMXBean.getThreadBlockedPercentage();
             if (threadName != null && threadName.length() > MAX_THREAD_NAME_LENGTH) {
                 threadName = threadName.substring(0, MAX_THREAD_NAME_LENGTH - 1);
             }
             sb.append(counter + "  " +
-                    String.format("%1$-8s", threadId ) +
-                    String.format("%1$-3s", threadState ) +
-                    String.format("%1$-10.1f", threadBlockedPercentage ) +
-                    String.format("%1$-50s", threadName ) +
+                    String.format("%1$-8s", threadId) +
+                    String.format("%1$-3s", threadState) +
+                    String.format("%1$-10.1f", threadBlockedPercentage) +
+                    String.format("%1$-50s", threadName) +
                     "\n");
 
             // store thread Id
@@ -373,7 +373,8 @@ public class ConsoleController  extends TimerTask {
         return sb.toString();
 
     }
-    private String createThreadStackTraceScreen( int threadNumber ) {
+
+    private String createThreadStackTraceScreen(int threadNumber) {
 
         Date date = new Date();
         StringBuilder sb = new StringBuilder();
@@ -392,7 +393,7 @@ public class ConsoleController  extends TimerTask {
         return sb.toString();
     }
 
-    private String getUptime( ) {
+    private String getUptime() {
         Long uptimeSecs = runtimeMXBean.getUptime() / 1000;
         String uptime;
         if (uptimeSecs > 86400) {
@@ -403,7 +404,7 @@ public class ConsoleController  extends TimerTask {
         return uptime;
     }
 
-    private String abbreviateThreadState( Thread.State state ) {
+    private String abbreviateThreadState(Thread.State state) {
 
         if (state == null) {
             return "X";
@@ -446,19 +447,17 @@ public class ConsoleController  extends TimerTask {
             // use OS MX Bean to retrieve OS name
             osMXBean.getName();
             isAlive = true;
-        }
-        catch (Exception e) {
-           isAlive = false;
+        } catch (Exception e) {
+            isAlive = false;
         }
         return isAlive;
     }
 
     /**
-     *
-     *   Highlight heading using ANSI escape characters
+     * Highlight heading using ANSI escape characters
      */
 
-    private String highlightHeading( String heading ) {
+    private String highlightHeading(String heading) {
         int consoleWidth = consoleReader.getTerminal().getWidth();
         StringBuilder sb = new StringBuilder();
         // prepend heading with ANSI escape characters
@@ -477,9 +476,10 @@ public class ConsoleController  extends TimerTask {
 
     /**
      * Check if Top4J Java Agent is OK via JVM Stats MBean Enabled attribute
+     *
      * @throws ScreenUpdateException If it detects a problem with the Top4J Java Agent
      */
-    private void checkJavaAgentStatus( ) throws ScreenUpdateException {
+    private void checkJavaAgentStatus() throws ScreenUpdateException {
 
         // check jvmStats
         for (StatsMXBean jvmStats : jvmStatsMBeans) {
@@ -487,9 +487,9 @@ public class ConsoleController  extends TimerTask {
             if (!jvmStats.getEnabled()) {
                 // extract MBean Object Name from MBean proxy
                 String jvmStatsToString = jvmStats.toString();
-                String jvmStatsObjectName = jvmStatsToString.substring(jvmStatsToString.indexOf("[")+1,jvmStatsToString.indexOf("]"));
+                String jvmStatsObjectName = jvmStatsToString.substring(jvmStatsToString.indexOf("[") + 1, jvmStatsToString.indexOf("]"));
                 // throw ScreenUpdateException if any of the jvmStats MBeans are disabled
-                throw new ScreenUpdateException("ERROR: The Top4J Java Agent encountered a problem updating MBean [" + jvmStatsObjectName + "] due to: " + jvmStats.getFailureReason() );
+                throw new ScreenUpdateException("ERROR: The Top4J Java Agent encountered a problem updating MBean [" + jvmStatsObjectName + "] due to: " + jvmStats.getFailureReason());
             }
         }
     }

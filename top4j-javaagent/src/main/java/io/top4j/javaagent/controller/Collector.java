@@ -30,53 +30,53 @@ import io.top4j.javaagent.exception.MBeanAccessException;
 import io.top4j.javaagent.mbeans.jvm.JVMStatsMXBean;
 
 public class Collector extends TimerTask {
-	
-	private JVMStatsMXBean jvmStats;
-	private boolean statsLoggerEnabled;
 
-	public Collector ( Configurator config ) throws MBeanAccessException {
-		
+    private JVMStatsMXBean jvmStats;
+    private boolean statsLoggerEnabled;
+
+    public Collector(Configurator config) throws MBeanAccessException {
+
         this.statsLoggerEnabled = config.isStatsLoggerEnabled();
-        
-     	// create JVMStats objectName
-		try {
-			ObjectName jvmStatsObjectName = new ObjectName(Constants.DOMAIN + ":type=" + Constants.AGENT_TYPE + ",statsType=" + Constants.JVM_STATS_TYPE);
 
-			// instantiate new JVMStatsMXBean proxy based on jvmStatsObjectName
-			MBeanServer mbs = ManagementFactory.getPlatformMBeanServer();
+        // create JVMStats objectName
+        try {
+            ObjectName jvmStatsObjectName = new ObjectName(Constants.DOMAIN + ":type=" + Constants.AGENT_TYPE + ",statsType=" + Constants.JVM_STATS_TYPE);
 
-			this.jvmStats = JMX.newMBeanProxy(mbs, jvmStatsObjectName, JVMStatsMXBean.class);
+            // instantiate new JVMStatsMXBean proxy based on jvmStatsObjectName
+            MBeanServer mbs = ManagementFactory.getPlatformMBeanServer();
 
-		} catch (MalformedObjectNameException e) {
-			throw new MBeanAccessException( e, "JMX MalformedObjectNameException: " + e.getMessage() );
-		}
-		
-	}
-	
-	@Override
-	public void run() {
+            this.jvmStats = JMX.newMBeanProxy(mbs, jvmStatsObjectName, JVMStatsMXBean.class);
 
-		// update stats
-    	updateStats( );
-    	if (statsLoggerEnabled) {
-    		// log stats
-    		logStats( );
-    	}
+        } catch (MalformedObjectNameException e) {
+            throw new MBeanAccessException(e, "JMX MalformedObjectNameException: " + e.getMessage());
+        }
 
-	}
-	
-	private void logStats( ) {
-    	
-    	// log JVM stats
-		jvmStats.log();
-		
-	}
-
-    private void updateStats( ) {
-    	
-    	// update JVM stats
-    	jvmStats.update();
-        
     }
-    
+
+    @Override
+    public void run() {
+
+        // update stats
+        updateStats();
+        if (statsLoggerEnabled) {
+            // log stats
+            logStats();
+        }
+
+    }
+
+    private void logStats() {
+
+        // log JVM stats
+        jvmStats.log();
+
+    }
+
+    private void updateStats() {
+
+        // update JVM stats
+        jvmStats.update();
+
+    }
+
 }

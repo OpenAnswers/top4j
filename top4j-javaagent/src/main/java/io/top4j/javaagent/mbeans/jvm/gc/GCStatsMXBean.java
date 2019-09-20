@@ -19,17 +19,17 @@ package io.top4j.javaagent.mbeans.jvm.gc;
 import io.top4j.javaagent.mbeans.StatsMXBean;
 
 public interface GCStatsMXBean extends StatsMXBean {
-	
-	void setGcOverhead(double gcOverhead);
 
-	double getGcOverhead();
+    void setGcOverhead(double gcOverhead);
 
-	void setMeanNurseryGCTime(double meanNurseryGCTime);
-	
-	double getMeanNurseryGCTime();
+    double getGcOverhead();
 
-	void setMeanTenuredGCTime(double meanTenuredGCTime);
+    void setMeanNurseryGCTime(double meanNurseryGCTime);
 
-	double getMeanTenuredGCTime();
-	
+    double getMeanNurseryGCTime();
+
+    void setMeanTenuredGCTime(double meanTenuredGCTime);
+
+    double getMeanTenuredGCTime();
+
 }

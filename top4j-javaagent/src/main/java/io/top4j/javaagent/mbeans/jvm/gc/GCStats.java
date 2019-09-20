@@ -24,125 +24,127 @@ import java.util.logging.*;
 
 public class GCStats implements GCStatsMXBean {
 
-	private GCOverhead gcOverhead;
-	private GCPauseTime gcPauseTime;
-	private CpuTime cpuTime = new CpuTime();
-	private double mBeanCpuTime;
-	private boolean enabled = true;
-	private String failureReason;
-	
-	private static final Logger LOGGER = Logger.getLogger(GCStats.class.getName());
-	
-	public GCStats ( MBeanServerConnection mbsc ) throws Exception {
-		
-		LOGGER.fine("Initialising GC stats....");
-		
-		// instantiate new GC Overhead
-		GCOverhead gcOverhead = new GCOverhead( mbsc );
-		
-		// instantiate new GC Pause Time
-		GCPauseTime gcPauseTime = new GCPauseTime( mbsc );
-		
-		this.gcOverhead = gcOverhead;
-		this.gcPauseTime = gcPauseTime;
-		
-	}
-	
-	/** Update GC stats. */
-    public synchronized void update( ) {
+    private GCOverhead gcOverhead;
+    private GCPauseTime gcPauseTime;
+    private CpuTime cpuTime = new CpuTime();
+    private double mBeanCpuTime;
+    private boolean enabled = true;
+    private String failureReason;
 
-		if (enabled) {
-			try {
-				// update GC stats
-				updateGCStats();
-			} catch (Exception e) {
-				// something went wrong - record failure reason and disable any further updates
-				this.failureReason = e.getMessage();
-				this.enabled = false;
-				LOGGER.severe("TOP4J ERROR: Failed to update GCStats MBean due to: " + e.getMessage());
-				LOGGER.severe("TOP4J ERROR: Further GCStats MBean updates will be disabled from now on.");
-			}
-		}
+    private static final Logger LOGGER = Logger.getLogger(GCStats.class.getName());
 
-	}
+    public GCStats(MBeanServerConnection mbsc) throws Exception {
 
-	private synchronized void updateGCStats( ) {
+        LOGGER.fine("Initialising GC stats....");
+
+        // instantiate new GC Overhead
+        GCOverhead gcOverhead = new GCOverhead(mbsc);
+
+        // instantiate new GC Pause Time
+        GCPauseTime gcPauseTime = new GCPauseTime(mbsc);
+
+        this.gcOverhead = gcOverhead;
+        this.gcPauseTime = gcPauseTime;
+
+    }
+
+    /**
+     * Update GC stats.
+     */
+    public synchronized void update() {
+
+        if (enabled) {
+            try {
+                // update GC stats
+                updateGCStats();
+            } catch (Exception e) {
+                // something went wrong - record failure reason and disable any further updates
+                this.failureReason = e.getMessage();
+                this.enabled = false;
+                LOGGER.severe("TOP4J ERROR: Failed to update GCStats MBean due to: " + e.getMessage());
+                LOGGER.severe("TOP4J ERROR: Further GCStats MBean updates will be disabled from now on.");
+            }
+        }
+
+    }
+
+    private synchronized void updateGCStats() {
 
         // initialise thread CPU timer
-    	cpuTime.init();
+        cpuTime.init();
 
-    	LOGGER.fine("Updating GC stats....");
-    	
-    	// update GC Overhead
-    	gcOverhead.update();
-    	
-    	// update GC pause time stats
-    	gcPauseTime.update();
+        LOGGER.fine("Updating GC stats....");
+
+        // update GC Overhead
+        gcOverhead.update();
+
+        // update GC pause time stats
+        gcPauseTime.update();
 
         // update GC stats CPU time
         mBeanCpuTime = cpuTime.getMillis();
-    	
+
     }
 
-	@Override
-	public void setMBeanCpuTime(double agentCpuTime) {
-		this.mBeanCpuTime = agentCpuTime;
-	}
+    @Override
+    public void setMBeanCpuTime(double agentCpuTime) {
+        this.mBeanCpuTime = agentCpuTime;
+    }
 
-	@Override
-	public double getMBeanCpuTime() {
-		return mBeanCpuTime;
-	}
+    @Override
+    public double getMBeanCpuTime() {
+        return mBeanCpuTime;
+    }
 
-	@Override
-	public void setEnabled(boolean enabled) {
-		this.enabled = enabled;
-	}
+    @Override
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
+    }
 
-	@Override
-	public boolean getEnabled() {
-		return this.enabled;
-	}
+    @Override
+    public boolean getEnabled() {
+        return this.enabled;
+    }
 
-	@Override
-	public void setFailureReason(String failureReason) {
-		this.failureReason = failureReason;
-	}
+    @Override
+    public void setFailureReason(String failureReason) {
+        this.failureReason = failureReason;
+    }
 
-	@Override
-	public String getFailureReason() {
-		return this.failureReason;
-	}
+    @Override
+    public String getFailureReason() {
+        return this.failureReason;
+    }
 
-	@Override
-	public void setGcOverhead(double gcOverhead) {
-		this.gcOverhead.setGcOverhead( gcOverhead );
-		
-	}
+    @Override
+    public void setGcOverhead(double gcOverhead) {
+        this.gcOverhead.setGcOverhead(gcOverhead);
 
-	@Override
-	public double getGcOverhead() {
-		return this.gcOverhead.getGcOverhead();
-	}
+    }
 
-	@Override
-	public void setMeanNurseryGCTime(double meanNurseryGCTime) {
-		this.gcPauseTime.setMeanNurseryGCTime( meanNurseryGCTime );
-	}
+    @Override
+    public double getGcOverhead() {
+        return this.gcOverhead.getGcOverhead();
+    }
 
-	@Override
-	public double getMeanNurseryGCTime() {
-		return this.gcPauseTime.getMeanNurseryGCTime();
-	}
+    @Override
+    public void setMeanNurseryGCTime(double meanNurseryGCTime) {
+        this.gcPauseTime.setMeanNurseryGCTime(meanNurseryGCTime);
+    }
 
-	@Override
-	public void setMeanTenuredGCTime(double meanTenuredGCTime) {
-		gcPauseTime.setMeanTenuredGCTime( meanTenuredGCTime );
-	}
+    @Override
+    public double getMeanNurseryGCTime() {
+        return this.gcPauseTime.getMeanNurseryGCTime();
+    }
 
-	@Override
-	public double getMeanTenuredGCTime() {
-		return this.gcPauseTime.getMeanTenuredGCTime();
-	}
-    
+    @Override
+    public void setMeanTenuredGCTime(double meanTenuredGCTime) {
+        gcPauseTime.setMeanTenuredGCTime(meanTenuredGCTime);
+    }
+
+    @Override
+    public double getMeanTenuredGCTime() {
+        return this.gcPauseTime.getMeanTenuredGCTime();
+    }
+
 }

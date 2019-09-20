@@ -25,7 +25,6 @@ import java.util.Properties;
 
 /**
  * JDK9 specific java process
- *
  */
 
 public class Jdk9JavaProcess implements JavaProcess {
@@ -36,7 +35,7 @@ public class Jdk9JavaProcess implements JavaProcess {
     private static final String LOCAL_CONNECTOR_ADDRESS_PROP =
             "com.sun.management.jmxremote.localConnectorAddress";
 
-    public Jdk9JavaProcess(int jvmid, String displayName, String address ) {
+    public Jdk9JavaProcess(int jvmid, String displayName, String address) {
         this.id = jvmid;
         this.name = displayName;
         this.address = address;

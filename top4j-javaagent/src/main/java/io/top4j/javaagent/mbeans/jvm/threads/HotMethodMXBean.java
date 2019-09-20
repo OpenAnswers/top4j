@@ -18,22 +18,22 @@ package io.top4j.javaagent.mbeans.jvm.threads;
 
 public interface HotMethodMXBean {
 
-	void setMethodName( String methodName );
+    void setMethodName(String methodName);
 
-	String getMethodName();
+    String getMethodName();
 
-    void setThreadName( String threadName );
+    void setThreadName(String threadName);
 
-	String getThreadName();
+    String getThreadName();
 
-	void setThreadId( long threadId );
+    void setThreadId(long threadId);
 
-	long getThreadId();
+    long getThreadId();
 
-	void setLoadProfile( double loadProfile );
+    void setLoadProfile(double loadProfile);
 
-	double getLoadProfile();
+    double getLoadProfile();
 
-	String getStackTrace( int maxDepth );
+    String getStackTrace(int maxDepth);
 
 }

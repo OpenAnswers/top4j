@@ -29,21 +29,21 @@ import java.util.logging.Logger;
 public class Configurator {
 
     private MBeanServerConnection mBeanServerConnection;
-	private Map<String, String> config = new HashMap<>();
-	private boolean statsLoggerEnabled;
-	private boolean topThreadsStackTraceLoggingEnabled;
-	private boolean blockedThreadsStackTraceLoggingEnabled;
-	private boolean threadContentionMonitoringEnabled;
+    private Map<String, String> config = new HashMap<>();
+    private boolean statsLoggerEnabled;
+    private boolean topThreadsStackTraceLoggingEnabled;
+    private boolean blockedThreadsStackTraceLoggingEnabled;
+    private boolean threadContentionMonitoringEnabled;
     private boolean hotMethodProfilingEnabled;
     private boolean threadUsageCacheEnabled;
 
-	private static final Logger LOGGER = Logger.getLogger(Configurator.class.getName());
+    private static final Logger LOGGER = Logger.getLogger(Configurator.class.getName());
 
-	public Configurator ( MBeanServerConnection mBeanServerConnection, String agentArgs ) {
+    public Configurator(MBeanServerConnection mBeanServerConnection, String agentArgs) {
 
         // store MBean server connection
         this.mBeanServerConnection = mBeanServerConnection;
-		
+
         // load default properties
         loadPropsFromClasspath(Constants.DEFAULT_PROPERTIES_FILE_NAME);
 
@@ -58,7 +58,7 @@ public class Configurator {
 
         // load agent arg properties
         if (config.get(Constants.PROPERTIES_FILE_NAME_ARG) != null) {
-            loadPropsFromFileSystem( config.get(Constants.PROPERTIES_FILE_NAME_ARG) );
+            loadPropsFromFileSystem(config.get(Constants.PROPERTIES_FILE_NAME_ARG));
         }
 
         if (Boolean.parseBoolean(config.get("log.properties.on.startup"))) {
@@ -66,16 +66,16 @@ public class Configurator {
             listProperties();
         }
 
-    	// set statsLoggerEnabled status
+        // set statsLoggerEnabled status
         this.statsLoggerEnabled = Boolean.parseBoolean(config.get("stats.logger.enabled"));
-    	
-    	// set topThreadsStackTraceLoggingEnabled status
+
+        // set topThreadsStackTraceLoggingEnabled status
         this.topThreadsStackTraceLoggingEnabled = Boolean.parseBoolean(config.get("top.threads.stack.trace.logging.enabled"));
 
-		// set blockedThreadsStackTraceLoggingEnabled status
+        // set blockedThreadsStackTraceLoggingEnabled status
         this.blockedThreadsStackTraceLoggingEnabled = Boolean.parseBoolean(config.get("blocked.threads.stack.trace.logging.enabled"));
 
-		// set threadContentionMonitoringEnabled status
+        // set threadContentionMonitoringEnabled status
         this.threadContentionMonitoringEnabled = Boolean.parseBoolean(config.get("thread.contention.monitoring.enabled"));
 
         // set hotMethodProfilingEnabled status
@@ -83,9 +83,9 @@ public class Configurator {
 
         // set threadUsageCacheEnabled status
         this.threadUsageCacheEnabled = Boolean.parseBoolean(config.get("thread.usage.cache.enabled"));
-	}
+    }
 
-    private void loadPropsFromClasspath ( String propsFileName ) {
+    private void loadPropsFromClasspath(String propsFileName) {
 
         Properties props = new Properties();
         InputStream is = null;
@@ -118,7 +118,7 @@ public class Configurator {
 
     }
 
-    private void loadPropsFromFileSystem ( String propsFileName ) {
+    private void loadPropsFromFileSystem(String propsFileName) {
 
         Properties props = new Properties();
         FileInputStream fileInputStream = null;
@@ -151,9 +151,9 @@ public class Configurator {
 
     }
 
-	private void loadProps ( Properties props, String propsFileName ) {
+    private void loadProps(Properties props, String propsFileName) {
 
-		for (final String name: props.stringPropertyNames()) {
+        for (final String name : props.stringPropertyNames()) {
 
             String value = props.getProperty(name);
             LOGGER.fine("Top4J Property Loader: " + propsFileName + ": " + name + " = " + value);
@@ -161,13 +161,13 @@ public class Configurator {
 
         }
 
-	}
+    }
 
     private void loadAgentArgs(String agentArgs) {
 
         if (agentArgs != null) {
             // parse agent args and load into config Map
-            for(String propertyAndValue : agentArgs.split(",")) {
+            for (String propertyAndValue : agentArgs.split(",")) {
                 String[] tokens = propertyAndValue.split("=", 2);
                 if (tokens.length != 2) {
                     continue;
@@ -177,7 +177,7 @@ public class Configurator {
         }
     }
 
-    public void listProperties( ) {
+    public void listProperties() {
 
         // list all configured properties and their values
         for (Map.Entry<String, String> entry : config.entrySet()) {
@@ -187,35 +187,35 @@ public class Configurator {
         }
     }
 
-	public void setConfig(Map<String, String> config) {
-		this.config = config;
-	}
+    public void setConfig(Map<String, String> config) {
+        this.config = config;
+    }
 
-	public Map<String, String> getConfig() {
-		return config;
-	}
-	
-	public String get(String prop) {
-		
-		return this.config.get(prop);
-		
-	}
+    public Map<String, String> getConfig() {
+        return config;
+    }
 
-	public boolean isStatsLoggerEnabled() {
-		return this.statsLoggerEnabled;
-	}
-	
-	public boolean isTopThreadsStackTraceLoggingEnabled() {
-		return this.topThreadsStackTraceLoggingEnabled;
-	}
+    public String get(String prop) {
 
-	public boolean isBlockedThreadsStackTraceLoggingEnabled() {
-		return this.blockedThreadsStackTraceLoggingEnabled;
-	}
+        return this.config.get(prop);
 
-	public boolean isThreadContentionMonitoringEnabled() {
-		return this.threadContentionMonitoringEnabled;
-	}
+    }
+
+    public boolean isStatsLoggerEnabled() {
+        return this.statsLoggerEnabled;
+    }
+
+    public boolean isTopThreadsStackTraceLoggingEnabled() {
+        return this.topThreadsStackTraceLoggingEnabled;
+    }
+
+    public boolean isBlockedThreadsStackTraceLoggingEnabled() {
+        return this.blockedThreadsStackTraceLoggingEnabled;
+    }
+
+    public boolean isThreadContentionMonitoringEnabled() {
+        return this.threadContentionMonitoringEnabled;
+    }
 
     public boolean isHotMethodProfilingEnabledEnabled() {
         return this.hotMethodProfilingEnabled;

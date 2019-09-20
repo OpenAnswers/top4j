@@ -24,13 +24,13 @@ import java.util.List;
 
 public class MemoryPoolNames {
 
-    public static void main ( String[] args ) {
+    public static void main(String[] args) {
 
         // list memory pool names
         list();
     }
 
-    private static void list( ) {
+    private static void list() {
 
         // get platform MBean server
         MBeanServer mbs = ManagementFactory.getPlatformMBeanServer();
@@ -38,9 +38,9 @@ public class MemoryPoolNames {
         // instantiate new MemoryPoolMXBeanHelper
         MemoryPoolMXBeanHelper memoryPoolMxBeanHelper = null;
         try {
-            memoryPoolMxBeanHelper = new MemoryPoolMXBeanHelper( mbs );
+            memoryPoolMxBeanHelper = new MemoryPoolMXBeanHelper(mbs);
         } catch (Exception e) {
-            System.err.println("ERROR: Unable to initialise MemoryPoolMXBeanHelper due to : " + e.getMessage() );
+            System.err.println("ERROR: Unable to initialise MemoryPoolMXBeanHelper due to : " + e.getMessage());
         }
 
         // get list of memory pool names

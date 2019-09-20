@@ -30,19 +30,19 @@ public class StatsLogWriter {
 
     private static final Logger LOGGER = Logger.getLogger(StatsLogWriter.class.getName());
 
-    public StatsLogWriter( String fileName ) throws Exception {
+    public StatsLogWriter(String fileName) throws Exception {
 
         // init new PrintWriter
-        init( fileName, null );
+        init(fileName, null);
     }
 
-    public StatsLogWriter( String fileName, String header ) throws Exception {
+    public StatsLogWriter(String fileName, String header) throws Exception {
 
         // init new PrintWriter
-        init( fileName, header );
+        init(fileName, header);
     }
 
-    private void init( String fileName, String header ) throws Exception {
+    private void init(String fileName, String header) throws Exception {
 
         PrintWriter printWriter = null;
 
@@ -52,15 +52,15 @@ public class StatsLogWriter {
                 // create new file
                 LOGGER.finer("Creating new stats log file " + fileName);
                 if (header != null) {
-                    printWriter = createNewFile( file, header );
+                    printWriter = createNewFile(file, header);
                 } else {
-                    printWriter = createNewFile( file, null );
+                    printWriter = createNewFile(file, null);
                 }
             } else {
                 // create new printWriter
                 LOGGER.finer("Stats log file " + fileName + " already exists.");
                 fileOutputStream = new FileOutputStream(fileName, true);
-                printWriter = new PrintWriter( fileOutputStream );
+                printWriter = new PrintWriter(fileOutputStream);
             }
 
         } catch (IOException ioe) {
@@ -75,7 +75,7 @@ public class StatsLogWriter {
 
     }
 
-    private PrintWriter createNewFile( File file, String header ) throws Exception {
+    private PrintWriter createNewFile(File file, String header) throws Exception {
 
         PrintWriter printWriter = null;
         try {
@@ -94,7 +94,7 @@ public class StatsLogWriter {
         return printWriter;
     }
 
-    public void println( String logEntry ) {
+    public void println(String logEntry) {
 
         if (printWriter != null) {
             // write logEntry to stats log file via printWriter
@@ -104,7 +104,7 @@ public class StatsLogWriter {
         }
     }
 
-    public void close( ) {
+    public void close() {
 
         if (printWriter != null) {
             // close the printWriter

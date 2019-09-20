@@ -27,7 +27,6 @@ import java.util.*;
 
 /**
  * JDK9 specific java process manager
- *
  */
 
 public class Jdk9JavaProcessManager extends JavaProcessManager {
@@ -74,8 +73,7 @@ public class Jdk9JavaProcessManager extends JavaProcessManager {
             }
             try {
                 processId = Integer.parseInt(jvmid);
-            }
-            catch (NumberFormatException e) {
+            } catch (NumberFormatException e) {
                 // do not support JVMs where jvmid is different to PID
                 continue;
             }
@@ -89,7 +87,7 @@ public class Jdk9JavaProcessManager extends JavaProcessManager {
     /**
      * Get Map containing list of attachable Java processes
      *
-     * @return Map<Integer, JavaProcess> A Map containing a list of attachable Java processes
+     * @return Map<Integer   ,       JavaProcess> A Map containing a list of attachable Java processes
      */
     private Map<Integer, JavaProcess> getAttachableVMs() {
         // retrieve list of attachable Java processes

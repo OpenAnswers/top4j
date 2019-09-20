@@ -24,78 +24,78 @@ import java.lang.Thread.State;
 
 
 public class BlockedThread implements BlockedThreadMXBean {
-	
-	volatile private String threadName;
-	volatile private long threadId;
-	volatile private State threadState;
-	volatile private long threadBlockedTime;
-	volatile private double threadBlockedPercentage;
-	private ThreadHelper threadHelper;
 
-	public BlockedThread( MBeanServerConnection mbsc ) throws IOException {
+    volatile private String threadName;
+    volatile private long threadId;
+    volatile private State threadState;
+    volatile private long threadBlockedTime;
+    volatile private double threadBlockedPercentage;
+    private ThreadHelper threadHelper;
 
-		this.threadHelper = new ThreadHelper( mbsc );
+    public BlockedThread(MBeanServerConnection mbsc) throws IOException {
 
-	}
-	
-	public void setThreadName(String threadName) {
-		this.threadName = threadName;
-	}
+        this.threadHelper = new ThreadHelper(mbsc);
 
-	public String getThreadName() {
-		return threadName;
-	}
+    }
 
-	public void setThreadId(long threadId) {
-		this.threadId = threadId;
-	}
+    public void setThreadName(String threadName) {
+        this.threadName = threadName;
+    }
 
-	public long getThreadId() {
-		return threadId;
-	}
+    public String getThreadName() {
+        return threadName;
+    }
 
-	public void setThreadState(State threadState) {
-		this.threadState = threadState;
-	}
+    public void setThreadId(long threadId) {
+        this.threadId = threadId;
+    }
 
-	public State getThreadState() {
-		return threadState;
-	}
+    public long getThreadId() {
+        return threadId;
+    }
 
-	@Override
-	public void setThreadBlockedTime(long threadBlockedTime) {
+    public void setThreadState(State threadState) {
+        this.threadState = threadState;
+    }
 
-		this.threadBlockedTime = threadBlockedTime;
+    public State getThreadState() {
+        return threadState;
+    }
 
-	}
+    @Override
+    public void setThreadBlockedTime(long threadBlockedTime) {
 
-	@Override
-	public long getThreadBlockedTime() {
-		return threadBlockedTime;
-	}
+        this.threadBlockedTime = threadBlockedTime;
 
-	@Override
-	public void setThreadBlockedPercentage(double threadBlockedPercentage) {
+    }
 
-		this.threadBlockedPercentage = threadBlockedPercentage;
+    @Override
+    public long getThreadBlockedTime() {
+        return threadBlockedTime;
+    }
 
-	}
+    @Override
+    public void setThreadBlockedPercentage(double threadBlockedPercentage) {
 
-	@Override
-	public double getThreadBlockedPercentage() {
-		return threadBlockedPercentage;
-	}
+        this.threadBlockedPercentage = threadBlockedPercentage;
 
-	public String getStackTrace( int maxDepth ) {
+    }
 
-		return threadHelper.getStackTrace( threadId, maxDepth );
+    @Override
+    public double getThreadBlockedPercentage() {
+        return threadBlockedPercentage;
+    }
 
-	}
+    public String getStackTrace(int maxDepth) {
 
-	public String getStackTraceWithContext(int maxDepth) {
+        return threadHelper.getStackTrace(threadId, maxDepth);
 
-		return threadHelper.getStackTraceWithContext( threadId, maxDepth );
+    }
 
-	}
-	
+    public String getStackTraceWithContext(int maxDepth) {
+
+        return threadHelper.getStackTraceWithContext(threadId, maxDepth);
+
+    }
+
 }

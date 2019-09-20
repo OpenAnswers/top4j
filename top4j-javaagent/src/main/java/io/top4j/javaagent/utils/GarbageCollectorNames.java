@@ -24,13 +24,13 @@ import java.util.List;
 
 public class GarbageCollectorNames {
 
-    public static void main ( String[] args ) {
+    public static void main(String[] args) {
 
         // list garbage collector names
         list();
     }
 
-    private static void list( ) {
+    private static void list() {
 
         // get platform MBean server
         MBeanServer mbs = ManagementFactory.getPlatformMBeanServer();
@@ -38,9 +38,9 @@ public class GarbageCollectorNames {
         // instantiate new GarbageCollectorMXBeanHelper
         GarbageCollectorMXBeanHelper gcMxBeanHelper = null;
         try {
-            gcMxBeanHelper = new GarbageCollectorMXBeanHelper( mbs );
+            gcMxBeanHelper = new GarbageCollectorMXBeanHelper(mbs);
         } catch (Exception e) {
-            System.err.println("ERROR: Unable to initialise GarbageCollectorMXBeanHelper due to : " + e.getMessage() );
+            System.err.println("ERROR: Unable to initialise GarbageCollectorMXBeanHelper due to : " + e.getMessage());
         }
 
         // get list of garbage collector names

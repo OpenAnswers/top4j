@@ -27,13 +27,13 @@ public class ThreadHelper {
 
     ThreadMXBean threadMXBean;
 
-	public ThreadHelper( MBeanServerConnection mbsc ) throws IOException {
+    public ThreadHelper(MBeanServerConnection mbsc) throws IOException {
 
-		this.threadMXBean = ManagementFactory.getPlatformMXBean( mbsc, ThreadMXBean.class);
+        this.threadMXBean = ManagementFactory.getPlatformMXBean(mbsc, ThreadMXBean.class);
 
-	}
+    }
 
-    public StackTraceElement[] getStackTraceElements( ThreadInfo threadInfo ) {
+    public StackTraceElement[] getStackTraceElements(ThreadInfo threadInfo) {
 
         StackTraceElement[] stackTraceElements;
         if (threadInfo != null) {
@@ -47,94 +47,95 @@ public class ThreadHelper {
         return stackTraceElements;
     }
 
-	public StackTraceElement[] getStackTraceElements( long threadId, int maxDepth ) {
+    public StackTraceElement[] getStackTraceElements(long threadId, int maxDepth) {
 
-		if (threadId == 0) {
-			return new StackTraceElement[0];
-		}
-		if (maxDepth == 0) {
-			maxDepth = Integer.MAX_VALUE;
-		}
+        if (threadId == 0) {
+            return new StackTraceElement[0];
+        }
+        if (maxDepth == 0) {
+            maxDepth = Integer.MAX_VALUE;
+        }
 
-		ThreadInfo threadInfo = threadMXBean.getThreadInfo(threadId, maxDepth);
+        ThreadInfo threadInfo = threadMXBean.getThreadInfo(threadId, maxDepth);
 
-		return getStackTraceElements( threadInfo );
-	}
+        return getStackTraceElements(threadInfo);
+    }
 
-    public StackTraceElement[] getStackTraceElements( long threadId ) {
+    public StackTraceElement[] getStackTraceElements(long threadId) {
 
-        return getStackTraceElements( threadId, 0 );
+        return getStackTraceElements(threadId, 0);
 
     }
-    public String getStackTrace( long threadId, int maxDepth ) {
+
+    public String getStackTrace(long threadId, int maxDepth) {
 
         // get stack trace
-		StackTraceElement[] stackTraceElements = getStackTraceElements(threadId, maxDepth);
+        StackTraceElement[] stackTraceElements = getStackTraceElements(threadId, maxDepth);
 
-		if (stackTraceElements != null) {
+        if (stackTraceElements != null) {
 
-			return getStackTraceAsString(stackTraceElements);
+            return getStackTraceAsString(stackTraceElements);
 
-		} else {
+        } else {
 
-			return "No stack trace available.";
-		}
-	}
+            return "No stack trace available.";
+        }
+    }
 
-	public String getStackTraceWithContext( long threadId, int maxDepth ) {
+    public String getStackTraceWithContext(long threadId, int maxDepth) {
 
-		if (threadId == 0) {
-			return null;
-		}
-		if (maxDepth == 0) {
-			maxDepth = Integer.MAX_VALUE;
-		}
-		ThreadInfo threadInfo = threadMXBean.getThreadInfo(threadId, maxDepth);
-		String threadName;
-		String threadState;
-		StackTraceElement[] stackTraceElements;
-		if (threadInfo != null) {
-			// get threadName
-			threadName = threadInfo.getThreadName();
-			// get threadState
-			threadState = threadInfo.getThreadState().toString();
-			// get stack trace
-			stackTraceElements = threadInfo.getStackTrace();
-		} else {
-			// assume thread has terminated
-			threadName = "TERMINATED";
-			threadState = Thread.State.TERMINATED.toString();
-			stackTraceElements = null;
-		}
+        if (threadId == 0) {
+            return null;
+        }
+        if (maxDepth == 0) {
+            maxDepth = Integer.MAX_VALUE;
+        }
+        ThreadInfo threadInfo = threadMXBean.getThreadInfo(threadId, maxDepth);
+        String threadName;
+        String threadState;
+        StackTraceElement[] stackTraceElements;
+        if (threadInfo != null) {
+            // get threadName
+            threadName = threadInfo.getThreadName();
+            // get threadState
+            threadState = threadInfo.getThreadState().toString();
+            // get stack trace
+            stackTraceElements = threadInfo.getStackTrace();
+        } else {
+            // assume thread has terminated
+            threadName = "TERMINATED";
+            threadState = Thread.State.TERMINATED.toString();
+            stackTraceElements = null;
+        }
 
-		StringBuilder sb = new StringBuilder();
-		sb.append("Name: ").append(threadName).append("\n");
-		sb.append("State: ").append(threadState).append("\n\n");
+        StringBuilder sb = new StringBuilder();
+        sb.append("Name: ").append(threadName).append("\n");
+        sb.append("State: ").append(threadState).append("\n\n");
 
-		if (stackTraceElements != null) {
+        if (stackTraceElements != null) {
 
-			sb.append( getStackTraceAsString(stackTraceElements) );
-		} else {
+            sb.append(getStackTraceAsString(stackTraceElements));
+        } else {
 
-			sb.append("No stack trace available.");
-		}
+            sb.append("No stack trace available.");
+        }
 
-		return sb.toString();
+        return sb.toString();
 
-	}
+    }
 
-	public String getStackTraceAsString( StackTraceElement[] stackTraceElements ) {
+    public String getStackTraceAsString(StackTraceElement[] stackTraceElements) {
 
-		StringBuilder sb = new StringBuilder();
-		sb.append("Stack trace:");
-		for (StackTraceElement element : stackTraceElements ) {
-			sb.append("\n");
-			sb.append(element.toString());
-		}
-		return sb.toString();
-	}
+        StringBuilder sb = new StringBuilder();
+        sb.append("Stack trace:");
+        for (StackTraceElement element : stackTraceElements) {
+            sb.append("\n");
+            sb.append(element.toString());
+        }
+        return sb.toString();
+    }
 
-    public State getThreadState( long threadId ) {
+    public State getThreadState(long threadId) {
 
         if (threadId == 0) {
             return null;
@@ -152,13 +153,13 @@ public class ThreadHelper {
 
     }
 
-    public long getThreadCpuTime( long threadId ) {
+    public long getThreadCpuTime(long threadId) {
 
         if (threadId == 0) {
             return -1;
         }
 
-        return threadMXBean.getThreadCpuTime( threadId );
+        return threadMXBean.getThreadCpuTime(threadId);
 
     }
 }
