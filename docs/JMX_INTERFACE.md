@@ -12,6 +12,10 @@ A complete list of Top4J MBeans and their associated attributes is documented be
 
 **MBeanCpuTime:** The amount of CPU time in milliseconds consumed by the MBean update() operation per invocation.
 
+**Enabled:** Boolean flag indicating whether the MBean is enabled (true) or disabled (false). Disabled MBeans will no longer receive updates via the MBean update() operation or the Top4J Java Agent stats update process. An MBean will be marked as disabled if the update() operation encounters an unexpected exception.
+
+**FailureReason:** If the update() operation encounters an unexpected exception the failure reason will be stored within the FailureReason MBean attribute.
+
 ### Operations
 
 **update():** Update MBean attributes with latest data.

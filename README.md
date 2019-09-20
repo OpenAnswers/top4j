@@ -13,7 +13,7 @@ The [Top4J Java Agent](/README.md#run-top4j-as-a-java-agent) is invoked via the 
 
 See [Getting Started](/README.md#getting-started) section for more details.
 
-Top4J is part of the Open Answers [Panther](https://www.openanswers.co.uk/products/panther) suite of monitoring applications.
+Top4J is an open sourced component of the Open Answers [Panther](https://www.openanswers.co.uk/products/panther) suite of monitoring applications.
 
 Getting Started
 ===============
@@ -91,8 +91,10 @@ The Top4J Java Agent is configured via a standard [Java properties file](https:/
 
 Build Top4J (via Maven)
 -----------------------
+Make sure JDK 8+ and Maven 3.x are installed on your machine, then....
 ```bash
 git clone git@gitlab.openans.co.uk:open-answers/top4j.git
+cd top4j
 mvn clean package
 ```
 
@@ -105,6 +107,8 @@ Contributing
 
 Please read [CONTRIBUTING.md](/CONTRIBUTING.md) for details on our code of conduct, and the process for submitting pull requests to us.
 
+For general queries, please email the project team at <top4j@openanswers.co.uk>. If you think you've found a bug or have an enhancement request, please check the Top4J [issue management database](https://github.com/OpenAnswers/top4j/issues) for existing issues before submitting [a new issue](https://github.com/OpenAnswers/top4j/issues/new).
+
 Versioning
 ==========
 
@@ -115,7 +119,7 @@ Authors
 
 * **Ryan Young** - *Project founder* - [Open Answers](https://github.com/OpenAnswers)
 
-See also the list of [contributors](https://github.com/OpenAnswers/top4j/contributors) who participated in this project.
+See also the list of [contributors](https://github.com/OpenAnswers/top4j/contributors) who have participated in this project.
 
 License
 =======

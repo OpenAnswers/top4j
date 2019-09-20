@@ -57,7 +57,7 @@ If you set your `user.name` and `user.email` git configs, you can sign your
 commit automatically with `git commit -s`.
 
 If you fix some documentation (typos, formatting, ...) you are not required to sign-off.
-It is possible to sign your commits in retrospective, [too](http://stackoverflow.com/questions/13043357/git-sign-off-previous-commits)
+It is possible to sign your commits retrospectively, [too](http://stackoverflow.com/questions/13043357/git-sign-off-previous-commits)
 if you forgot it the first time.
 
 ## Code of Conduct
@@ -117,7 +117,7 @@ a project may be further defined and clarified by project maintainers.
 ## Enforcement
 
 Instances of abusive, harassing, or otherwise unacceptable behavior may be
-reported by contacting the project team at [INSERT EMAIL ADDRESS]. All
+reported by contacting the project team at <top4j@openanswers.co.uk>. All
 complaints will be reviewed and investigated and will result in a response that
 is deemed necessary and appropriate to the circumstances. The project team is
 obligated to maintain confidentiality with regard to the reporter of an incident.
