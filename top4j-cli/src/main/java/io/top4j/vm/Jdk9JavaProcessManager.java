@@ -87,7 +87,7 @@ public class Jdk9JavaProcessManager extends JavaProcessManager {
     /**
      * Get Map containing list of attachable Java processes
      *
-     * @return Map<Integer   ,       JavaProcess> A Map containing a list of attachable Java processes
+     * @return Map<Integer, JavaProcess> A Map containing a list of attachable Java processes
      */
     private Map<Integer, JavaProcess> getAttachableVMs() {
         // retrieve list of attachable Java processes
