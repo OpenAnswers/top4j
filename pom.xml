@@ -3,7 +3,7 @@
 
   <groupId>io.top4j</groupId>
   <artifactId>top4j-parent</artifactId>
-  <version>1.0.0</version>
+  <version>1.0.1-SNAPSHOT</version>
   <packaging>pom</packaging>
 
   <name>Top4J Parent</name>
@@ -80,7 +80,7 @@
   </distributionManagement>
   <scm>
     <developerConnection>scm:git:git@gitlab.openans.co.uk:open-answers/top4j.git</developerConnection>
-    <tag>1.0.0</tag>
+    <tag>HEAD</tag>
   </scm>
 
   <dependencies>
