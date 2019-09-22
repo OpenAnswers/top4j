@@ -6,7 +6,7 @@ A complete list of Top4J MBeans and their associated attributes is documented be
 
 **All MBeans**
 --------------
-**Description:** The following MBean attributes and operations are common to all top4j MBeans....
+**Description:** The following MBean attributes and operations are common to all Top4J MBeans....
 
 ### Attributes
 
@@ -22,19 +22,19 @@ A complete list of Top4J MBeans and their associated attributes is documented be
 
 **AgentStats** [io.top4j:type=Agent,statsType=AgentStats]
 ---------------------------------------------------------
-**Description:** Used to persist and expose stats relating to the top4J JavaAgent run-time.
+**Description:** Used to store and expose stats relating to the Top4J JavaAgent run-time.
 
 ### Attributes
 
-**AgentCpuTime:** The amount of CPU time in milliseconds consumed by the top4J JavaAgent background threads.
+**AgentCpuTime:** The amount of CPU time in milliseconds consumed by the Top4J JavaAgent background threads.
 
-**AgentCpuUtil:** The percentage CPU utilisation of the top4J JavaAgent background threads.
+**AgentCpuUtil:** The percentage CPU utilisation of the Top4J JavaAgent background threads.
 
-**Iterations:** The number of top4J JavaAgent stats update iterations since the JavaAgent was enabled.
+**Iterations:** The number of Top4J JavaAgent stats update iterations since the JavaAgent was enabled.
 
 **BlockedThread:** [io.top4j:type=JVM,statsType=BlockedThread,rank=N]
 ---------------------------------------------------------------------
-**Description:** Used to persist and expose stats relating to a thread that has been blocked for some time during the last iteration. Each blocked thread is ranked between 1 and N via the "rank" attribute on the BlockedThread MBean Object Name, where 1 is the thread that has been blocked the most and N is the thread that has been blocked the least (out of the top ranked blocked threads).
+**Description:** Used to store and expose stats relating to a thread that has been blocked for some time during the last iteration. Each blocked thread is ranked between 1 and N via the "rank" attribute on the BlockedThread MBean Object Name, where 1 is the thread that has been blocked the most and N is the thread that has been blocked the least (out of the top ranked blocked threads).
 
 ### Attributes
 
@@ -56,7 +56,7 @@ A complete list of Top4J MBeans and their associated attributes is documented be
 
 **GCStats** [io.top4j:type=JVM,statsType=GCStats]
 -------------------------------------------------
-**Description:** Used to persist and expose stats relating to the performance of the JVM Garbage Collector.
+**Description:** Used to store and expose stats relating to the performance of the JVM Garbage Collector.
 ### Attributes
 
 **GcOverhead:** The GC overhead is calculated as the percentage of real time (wall clock time) the JVM spends in garbage collection. Only stop-the-world garbage collection pauses contribute to the GC overhead. This, therefore, equates to the percentage of real time that the application is stopped whilst garbage collection takes place. This is a key performance indicator of the impact of garbage collection on a running Java application. A high GC overhead overhead can lead to poor application performance as there is less time available to process application tasks and application threads can be blocked waiting to allocate memory (i.e. create objects).
@@ -67,7 +67,7 @@ A complete list of Top4J MBeans and their associated attributes is documented be
 
 **HeapStats** [io.top4j:type=JVM,statsType=HeapStats]
 -----------------------------------------------------
-**Description:** Used to persist and expose stats relating to the JVM heap utilisation. The heap utilisation is calculated as the percentage of heap used following the most recent garbage collection event. In other words.... ( heapUsed / heapCommitted ) * 100.
+**Description:** Used to store and expose stats relating to the JVM heap utilisation. The heap utilisation is calculated as the percentage of heap used following the most recent garbage collection event. In other words.... ( heapUsed / heapCommitted ) * 100.
 
 ### Attributes
 
@@ -79,7 +79,7 @@ A complete list of Top4J MBeans and their associated attributes is documented be
 
 **HotMethod** [io.top4j:type=JVM,statsType=HotMethod]
 -----------------------------------------------------
-**Description:** Used to persist and expose stats relating to a Java method that has been determined to have executed frequently.
+**Description:** Used to store and expose stats relating to a Java method that has been determined to have executed frequently.
 
 ### Attributes
 
@@ -97,7 +97,7 @@ A complete list of Top4J MBeans and their associated attributes is documented be
 
 **MemoryStats** [io.top4j:type=JVM,statsType=MemoryStats]
 ---------------------------------------------------------
-**Description:** Used to persist and expose stats relating to the JVM memory pool usage.
+**Description:** Used to store and expose stats relating to the JVM memory pool usage.
 
 ### Attributes
 
@@ -110,15 +110,15 @@ A complete list of Top4J MBeans and their associated attributes is documented be
 
 **ThreadStats** [io.top4j:type=JVM,statsType=ThreadStats]
 ---------------------------------------------------------
-**Description:** Used to persist and expose stats relating to JVM thread usage.
+**Description:** Used to store and expose stats relating to JVM thread usage.
 
 ### Attributes
 
 **CpuUsage:** The combined CPU usage of all JVM threads as a percentage of the total CPU available during the last iteration. The CPU usage is calculated as the total CPU usage consumed by all JVM threads divided by the number of processor cores available to give the system level CPU usage for the JVM process.
 
-**UserCpuUsage:** The combined user space CPU usage of all JVM threads as a percentage of the total CPU available during the last iteration.
+**UserCpuUsage:** The combined user space CPU usage of all JVM threads as a percentage of the total CPU available during the last iteration. The user CPU usage is calculated as the total user CPU usage consumed by all JVM threads divided by the number of processor cores available to give the system level user CPU usage for the JVM process.
 
-**SysCpuUsage:** The combined system CPU usage of all JVM threads as a percentage of the total CPU available during the last iteration.
+**SysCpuUsage:** The combined system CPU usage of all JVM threads as a percentage of the total CPU available during the last iteration. The system CPU usage is calculated as the total CPU usage consumed by all JVM threads minus the total user CPU usage.
 
 **ThreadCount:** The total number of threads running within the JVM process at the time of the last stats update.
 
@@ -132,7 +132,7 @@ A complete list of Top4J MBeans and their associated attributes is documented be
 
 **TopThread** [io.top4j:type=JVM,statsType=TopThread,rank=N]
 ------------------------------------------------------------
-**Description:** Used to persist and expose stats relating to a thread that has been determined as a top CPU consumer during the last iteration. Each top thread is ranked between 1 and N via the "rank" attribute on the TopThread MBean Object Name, where 1 is the thread that has consumed the most CPU and N is the thread that has consumed the least (out of the top ranked threads).
+**Description:** Used to store and expose stats relating to a thread that has been determined as a top CPU consumer during the last iteration. Each top thread is ranked between 1 and N via the "rank" attribute on the TopThread MBean Object Name, where 1 is the thread that has consumed the most CPU and N is the thread that has consumed the least (out of the top ranked threads).
 
 ### Attributes
 
