@@ -3,7 +3,7 @@
 Description
 ===========
 
-Top4J is a lightweight, low overhead, production-ready performance analysis tool for the Java runtime environment. As the name suggests, it works a bit like the UNIX/Linux top command but at the JVM-level exposing key performance metrics from a Java runtime perspective.
+Top4J is a lightweight, low overhead, production-ready performance analysis tool for the Java Runtime Environment. As the name suggests, it works a bit like the UNIX/Linux top command but at the JVM-level exposing key performance metrics from a Java runtime perspective.
 
 Top4J has **two** modes of operation: **Remote Attach** command-line interface (CLI) and **Java Agent**.
 
