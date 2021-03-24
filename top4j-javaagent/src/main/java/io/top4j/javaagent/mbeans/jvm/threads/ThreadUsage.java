@@ -18,6 +18,7 @@ package io.top4j.javaagent.mbeans.jvm.threads;
 
 import io.top4j.javaagent.config.Configurator;
 
+import javax.management.*;
 import java.io.IOException;
 import java.lang.Thread.State;
 import java.lang.management.*;
@@ -65,6 +66,7 @@ public class ThreadUsage {
     volatile private long waitingThreadCount;
     volatile private long timedWaitingThreadCount;
     private final ThreadMXBean threadMXBean;
+    private final MBeanServerConnection mbeanServer;
     private Map<Integer, TopThread> topThreadsMap;
     private Map<Integer, BlockedThread> blockedThreadsMap;
     private boolean threadContentionMonitoringEnabled;
@@ -80,11 +82,15 @@ public class ThreadUsage {
     private long lastThreadCacheRefreshTime = 0;
     private long newThreadStartTime;
     private int internalThreadScanLimit = 0;
+    private long lastSystemTime;
+    private long lastProcessCpuTime;
+    volatile private double processCpuUsage = -1; // default - not available
 
     private static final Logger LOGGER = Logger.getLogger(ThreadUsage.class.getName());
 
     public ThreadUsage(Configurator config, Map<Integer, TopThread> topThreadsMap) throws IOException {
-        final OperatingSystemMXBean osbean =
+        this.mbeanServer = config.getMBeanServerConnection();
+        OperatingSystemMXBean osbean =
                 ManagementFactory.getPlatformMXBean(config.getMBeanServerConnection(), OperatingSystemMXBean.class);
         this.numberOfProcessors = osbean.getAvailableProcessors();
         this.setTopThreadsMap(topThreadsMap);
@@ -94,6 +100,14 @@ public class ThreadUsage {
         long jvmStartUpTime = System.nanoTime() - (runtimeMXBean.getUptime() * 1000000);
         this.newThreadStartTime = jvmStartUpTime;
         this.internalThreadScanLimit = Integer.parseInt(config.get("thread.internal.scan.limit"));
+        // next two for process cpu calculation:
+        this.lastSystemTime = jvmStartUpTime;
+        // we want to match similar calculation for thread cpu; first time through this is mean since jvm started, so if process cpu is available, we set to zero, while
+        // -1 means it is not available. This avoids anomalies between threads and process the first time the cpu is displayed.
+        if (getProcessCpuTime() > 0) {
+            this.lastProcessCpuTime = 0;
+            this.processCpuUsage = 0;
+        }
 
         if (config.isThreadUsageCacheEnabled()) {
             // enable thread usage cache
@@ -196,6 +210,8 @@ public class ThreadUsage {
             // we've got a full set of threads - update full threadHistory and global counters
             update(threadHistory, true);
         }
+
+        updateProcessCpuTime();
 
         // update topThreadsMap
         updateTopThreads();
@@ -448,6 +464,13 @@ public class ThreadUsage {
      */
     public double getSysCpuUsage() {
         return this.sysCpuUsage;
+    }
+
+    /**
+     * Get Process CPU usage (<0 if not available).
+     */
+    public double getProcessCpuUsage() {
+        return this.processCpuUsage;
     }
 
     public synchronized void updateTopThreads() {
@@ -764,9 +787,35 @@ public class ThreadUsage {
      * Calculate CPU usage
      */
     private double calculateCpuUsage(long cpuTimeDiff, long timeDiff) {
+        if (timeDiff <= 0)
+            return 0;
 
         // calculate thread CPU usage as percentage of wall clock time, aka timeDiff
         return ((double) cpuTimeDiff / (double) timeDiff) * 100;
     }
+
+
+    private long getProcessCpuTime() {
+        try {
+            return (Long) this.mbeanServer.getAttribute(new ObjectName("java.lang:type=OperatingSystem"), "ProcessCpuTime");
+        } catch (Exception e) {
+            return -1;
+        }
+
+    }
+
+    private void updateProcessCpuTime() {
+        long currentCpu = getProcessCpuTime();
+        if (currentCpu < 0) {
+            LOGGER.fine("process cpu time not available");
+            return; // not available
+        }
+        long currentSystemTime = System.nanoTime();
+        this.processCpuUsage = calculateCpuUsage((currentCpu - this.lastProcessCpuTime) / this.numberOfProcessors, currentSystemTime - lastSystemTime);
+        LOGGER.fine("Process CPU Usage = " + this.processCpuUsage);
+        this.lastSystemTime = currentSystemTime;
+        this.lastProcessCpuTime = currentCpu;
+    }
+
 
 }

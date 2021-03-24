@@ -274,9 +274,7 @@ public class ConsoleController {
                 threadStatsMXBean.getWaitingThreadCount() + " waiting,   " +
                 threadStatsMXBean.getTimedWaitingThreadCount() + " timed waiting,   " +
                 threadStatsMXBean.getBlockedThreadCount() + " blocked\n");
-        sb.append("%Cpu(s): " + String.format("%.2f", threadStatsMXBean.getCpuUsage()) + " total,  " +
-                String.format("%.2f", threadStatsMXBean.getUserCpuUsage()) + " user,  " +
-                String.format("%.2f", threadStatsMXBean.getSysCpuUsage()) + " sys\n");
+        sb.append("%Cpu(s): " + getCpuUsage()+ "\n");
         if (heapStatsMXBean.isSingleGenerationHeap()) {
             sb.append("Heap Util(%):        " + String.format("%.2f", heapStatsMXBean.getEdenSpaceUtil()) + "\n");
             sb.append("Mem Alloc(MB/s):     " + String.format("%.2f", memoryStatsMXBean.getMemoryAllocationRate()) + "\n");
@@ -292,6 +290,22 @@ public class ConsoleController {
         sb.append("GC Overhead(%):      " + String.format("%.4f", gcStatsMXBean.getGcOverhead()) + "\n");
 
         return sb.toString();
+    }
+
+    private String getCpuUsage() {
+        double processCpu = threadStatsMXBean.getProcessCpuUsage();
+        if (processCpu >= 0) {
+            double threadCpu = threadStatsMXBean.getCpuUsage();
+            double threadUserCpu = threadStatsMXBean.getUserCpuUsage();
+            double threadSysCpu = threadStatsMXBean.getSysCpuUsage();
+            return String.format("%.2f", processCpu) + " total, " +
+                    String.format("%.2f", threadCpu) + " live threads, " +
+                    String.format("%.2f", processCpu - threadCpu) + " internal threads";
+        } else { // process cpu not available
+            return String.format("%.2f", threadStatsMXBean.getCpuUsage()) + " total,  " +
+                    String.format("%.2f", threadStatsMXBean.getUserCpuUsage()) + " user,  " +
+                    String.format("%.2f", threadStatsMXBean.getSysCpuUsage()) + " sys\n";
+        }
     }
 
     private String createTopThreadsScreen() {
