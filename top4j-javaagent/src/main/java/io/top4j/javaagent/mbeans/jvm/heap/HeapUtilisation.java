@@ -70,6 +70,9 @@ public class HeapUtilisation {
         }
         LOGGER.finer("Eden Space Util = " + edenSpaceUtil + "%");
 
+        if (this.isSingleGenerationHeap())
+            return;
+
         // update survivor space util
         long survivorSpaceUsed = 0;
         try {
@@ -149,6 +152,10 @@ public class HeapUtilisation {
 
         return ((double) heapUsed / heapCommitted) * 100;
 
+    }
+
+    boolean isSingleGenerationHeap() {
+        return this.memoryPoolMxBeanHelper.isSingleGenerationHeap();
     }
 
 }

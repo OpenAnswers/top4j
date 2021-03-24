@@ -41,6 +41,7 @@ public class MemoryPoolMXBeanHelper {
     private ObjectName tenuredPoolObjectName;
     private List<MemoryPoolMXBean> memPoolMXBeans;
     private MBeanServerConnection mbsc;
+    private boolean onegen = false; // single-generation heap?
 
     private static final Logger LOGGER = Logger.getLogger(MemoryPoolMXBeanHelper.class.getName());
 
@@ -55,19 +56,22 @@ public class MemoryPoolMXBeanHelper {
             throw new MBeanInitException(e, "JMX IOException: " + e.getMessage());
         }
 
-        // discover nursery Pool name
-        this.setNurseryPoolName(this.discoverNurseryPoolName());
-
-        // discover survivor space Pool name
-        this.setSurvivorSpacePoolName(this.discoverSurvivorSpacePoolName());
-
-        // discover tenured Pool name
-        this.setTenuredPoolName(this.discoverTenuredPoolName());
-
         try {
+            // discover nursery Pool name
+            this.setNurseryPoolName(this.discoverNurseryPoolName());
             this.nurseryPoolObjectName = new ObjectName("java.lang:type=MemoryPool,name=" + nurseryPoolName);
-            this.survivorSpacePoolObjectName = new ObjectName("java.lang:type=MemoryPool,name=" + survivorSpacePoolName);
-            this.tenuredPoolObjectName = new ObjectName("java.lang:type=MemoryPool,name=" + tenuredPoolName);
+
+            this.onegen = this.nurseryPoolName.equals("ZHeap");
+
+            if (!onegen) {
+                // discover survivor space Pool name
+                this.setSurvivorSpacePoolName(this.discoverSurvivorSpacePoolName());
+                // discover tenured Pool name
+                this.setTenuredPoolName(this.discoverTenuredPoolName());
+                this.survivorSpacePoolObjectName = new ObjectName("java.lang:type=MemoryPool,name=" + survivorSpacePoolName);
+                this.tenuredPoolObjectName = new ObjectName("java.lang:type=MemoryPool,name=" + tenuredPoolName);
+            }
+
         } catch (MalformedObjectNameException e) {
             throw new MBeanInitException(e, "JMX MalformedObjectNameException: " + e.getMessage());
         }
@@ -128,7 +132,8 @@ public class MemoryPoolMXBeanHelper {
             LOGGER.finest("Memory Pool MX Bean Name = " + mpName);
 
             if (mpName.endsWith("Eden Space") ||
-                    mpName.equals("Nursery")) {
+                    mpName.equals("Nursery") ||
+                    mpName.equals("ZHeap")) {
                 poolName = mpName;
             }
 
@@ -557,6 +562,10 @@ public class MemoryPoolMXBeanHelper {
             throw new MBeanRuntimeException(e, "JMX IOException: " + e.getMessage());
         }
 
+    }
+
+    public boolean isSingleGenerationHeap() {
+        return this.onegen;
     }
 
 }

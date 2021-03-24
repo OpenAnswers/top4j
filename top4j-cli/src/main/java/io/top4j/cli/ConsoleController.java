@@ -263,12 +263,18 @@ public class ConsoleController extends TimerTask {
         sb.append("%Cpu(s): " + String.format("%.2f", threadStatsMXBean.getCpuUsage()) + " total,  " +
                 String.format("%.2f", threadStatsMXBean.getUserCpuUsage()) + " user,  " +
                 String.format("%.2f", threadStatsMXBean.getSysCpuUsage()) + " sys\n");
-        sb.append("Heap Util(%):        " + String.format("%.2f", heapStatsMXBean.getEdenSpaceUtil()) + " eden,        " +
-                String.format("%.2f", heapStatsMXBean.getSurvivorSpaceUtil()) + " survivor,        " +
-                String.format("%.2f", heapStatsMXBean.getTenuredHeapUtil()) + " tenured\n");
-        sb.append("Mem Alloc(MB/s):     " + String.format("%.2f", memoryStatsMXBean.getMemoryAllocationRate()) + " eden,        " +
-                String.format("%.2f", memoryStatsMXBean.getMemorySurvivorRate()) + " survivor,        " +
-                String.format("%.2f", memoryStatsMXBean.getMemoryPromotionRate()) + " tenured\n");
+        if (heapStatsMXBean.isSingleGenerationHeap()) {
+            sb.append("Heap Util(%):        " + String.format("%.2f", heapStatsMXBean.getEdenSpaceUtil()) + "\n");
+            sb.append("Mem Alloc(MB/s):     " + String.format("%.2f", memoryStatsMXBean.getMemoryAllocationRate()) + "\n");
+        }
+        else {
+            sb.append("Heap Util(%):        " + String.format("%.2f", heapStatsMXBean.getEdenSpaceUtil()) + " eden,        " +
+                    String.format("%.2f", heapStatsMXBean.getSurvivorSpaceUtil()) + " survivor,        " +
+                    String.format("%.2f", heapStatsMXBean.getTenuredHeapUtil()) + " tenured\n");
+            sb.append("Mem Alloc(MB/s):     " + String.format("%.2f", memoryStatsMXBean.getMemoryAllocationRate()) + " eden,        " +
+                    String.format("%.2f", memoryStatsMXBean.getMemorySurvivorRate()) + " survivor,        " +
+                    String.format("%.2f", memoryStatsMXBean.getMemoryPromotionRate()) + " tenured\n");
+        }
         sb.append("GC Overhead(%):      " + String.format("%.4f", gcStatsMXBean.getGcOverhead()) + "\n");
 
         return sb.toString();
