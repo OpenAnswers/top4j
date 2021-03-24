@@ -50,6 +50,8 @@ public class Top4J {
     private static int threadCacheTTL = 15000;
     // set default start up verbosity
     private static boolean verbose = false;
+    // do not display system threads by default
+    private static boolean internalThreads = false;
 
     private static final Logger LOGGER = Logger.getLogger(Top4J.class.getName());
 
@@ -133,6 +135,9 @@ public class Top4J {
         if (cmd.hasOption("v")) {
             // enable verbose start up messages
             verbose = true;
+        }
+        if (cmd.hasOption("I")) {
+            internalThreads = true;
         }
         if (cmd.hasOption("D")) {
             // user has requested that the thread usage cache is disabled
@@ -258,6 +263,9 @@ public class Top4J {
                 "thread.usage.cache.ttl=" + threadCacheTTL + "," +
                 "top.thread.count=" + displayThreadCount + "," +
                 "blocked.thread.count=" + displayThreadCount;
+        if (internalThreads)
+            configOverrides += ",thread.internal.scan.limit=20";
+
         // initialise Top4J configurator
         Configurator config = new Configurator(mbsc, configOverrides);
 
@@ -386,6 +394,9 @@ public class Top4J {
 
         // add v option
         options.addOption("v", "verbose", false, "Print configuration properties on start up");
+
+        // add I option
+        options.addOption("I", "internals", false, "Include some additional internal system threads where identifiable (eg code compiler threads)");
 
         // add C option
         options.addOption("C", "cache-enabled", false, "Enable thread usage cache (enabled by default)");

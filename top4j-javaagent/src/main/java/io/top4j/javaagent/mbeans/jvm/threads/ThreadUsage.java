@@ -79,6 +79,7 @@ public class ThreadUsage {
     private int threadCacheTTL;
     private long lastThreadCacheRefreshTime = 0;
     private long newThreadStartTime;
+    private int internalThreadScanLimit = 0;
 
     private static final Logger LOGGER = Logger.getLogger(ThreadUsage.class.getName());
 
@@ -92,6 +93,7 @@ public class ThreadUsage {
         final RuntimeMXBean runtimeMXBean = ManagementFactory.getPlatformMXBean(config.getMBeanServerConnection(), RuntimeMXBean.class);
         long jvmStartUpTime = System.nanoTime() - (runtimeMXBean.getUptime() * 1000000);
         this.newThreadStartTime = jvmStartUpTime;
+        this.internalThreadScanLimit = Integer.parseInt(config.get("thread.internal.scan.limit"));
 
         if (config.isThreadUsageCacheEnabled()) {
             // enable thread usage cache
@@ -403,6 +405,23 @@ public class ThreadUsage {
             } else {
                 threadInfo.active = true;
             }
+        }
+
+        // if internalThreadScanLimit>0, check for additional system threads which are known to ThreadMXBean
+        // but are not returned by ThreadMXBean.getAllThreadIds.
+        for (long id=1; id<this.internalThreadScanLimit; id++) {
+            if (threadMXBean.getThreadInfo(id) == null)
+                continue;  // exclude invalid ids
+            ThreadInfo threadInfo = threadHistory.get(id);
+            if (threadInfo == null) {
+                // create new ThreadInfo object
+                threadInfo = new ThreadInfo(id, newThreadStartTime);
+                // add new ThreadInfo object to threadHistory
+                threadHistory.put(id, threadInfo);
+            } else {
+                threadInfo.active = true;
+            }
+
         }
 
         // clean up threadHistory

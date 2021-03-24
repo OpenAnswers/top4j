@@ -91,6 +91,9 @@ public class ThreadHelper {
             maxDepth = Integer.MAX_VALUE;
         }
         ThreadInfo threadInfo = threadMXBean.getThreadInfo(threadId, maxDepth);
+        // any internal threads (from thread.internal.scan.limit) likely return null above due to no stack trace, so:
+        if (threadInfo == null)
+            threadInfo = threadMXBean.getThreadInfo(threadId);
         String threadName;
         String threadState;
         StackTraceElement[] stackTraceElements;
