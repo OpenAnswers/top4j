@@ -82,6 +82,7 @@ public class ThreadUsage {
     private long lastThreadCacheRefreshTime = 0;
     private long newThreadStartTime;
     private int internalThreadScanLimit = 0;
+    private Long[] internalThreadIds;
     private long lastSystemTime;
     private long lastProcessCpuTime;
     volatile private double processCpuUsage = -1; // default - not available
@@ -100,6 +101,7 @@ public class ThreadUsage {
         long jvmStartUpTime = System.nanoTime() - (runtimeMXBean.getUptime() * 1000000);
         this.newThreadStartTime = jvmStartUpTime;
         this.internalThreadScanLimit = Integer.parseInt(config.get("thread.internal.scan.limit"));
+        this.internalThreadIds = getInternalThreadIds();
         // next two for process cpu calculation:
         this.lastSystemTime = jvmStartUpTime;
         // we want to match similar calculation for thread cpu; first time through this is mean since jvm started, so if process cpu is available, we set to zero, while
@@ -424,11 +426,9 @@ public class ThreadUsage {
             }
         }
 
-        // if internalThreadScanLimit>0, check for additional system threads which are known to ThreadMXBean
-        // but are not returned by ThreadMXBean.getAllThreadIds.
-        for (long id=1; id<this.internalThreadScanLimit; id++) {
-            if (threadMXBean.getThreadInfo(id) == null)
-                continue;  // exclude invalid ids
+        // Check for additional system threads which are not returned by ThreadMXBean.getAllThreadIds;
+        // see getInternalThreadIds().
+        for (long id : this.internalThreadIds) {
             ThreadInfo threadInfo = threadHistory.get(id);
             if (threadInfo == null) {
                 // create new ThreadInfo object
@@ -438,12 +438,29 @@ public class ThreadUsage {
             } else {
                 threadInfo.active = true;
             }
-
         }
 
         // clean up threadHistory
         cleanUpThreadHistory();
 
+    }
+
+    private Long[] getInternalThreadIds() {
+        // if internalThreadScanLimit>0, check for additional system threads which are known to ThreadMXBean
+        // but are not returned by ThreadMXBean.getAllThreadIds. We only do this once.
+        Map seen = new HashMap<Long, Object>();
+        for (long id : threadMXBean.getAllThreadIds()) {
+            seen.put(id, null);  // record normal threads
+        }
+        List<Long> internalIds = new ArrayList<Long>();
+        // now scan for unseen ids in range [1,internalThreadScanLimit] inclusive.
+        for (long id = 1; id <= this.internalThreadScanLimit; id++) {
+            if (seen.containsKey(id))
+                continue;
+            if (threadMXBean.getThreadInfo(id) != null)
+                internalIds.add(id);
+        }
+        return internalIds.toArray(new Long[internalIds.size()]);
     }
 
     /**
