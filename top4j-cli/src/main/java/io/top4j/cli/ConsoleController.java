@@ -296,11 +296,12 @@ public class ConsoleController {
         double processCpu = threadStatsMXBean.getProcessCpuUsage();
         if (processCpu >= 0) {
             double threadCpu = threadStatsMXBean.getCpuUsage();
-            double threadUserCpu = threadStatsMXBean.getUserCpuUsage();
-            double threadSysCpu = threadStatsMXBean.getSysCpuUsage();
+            // due to sampling period variations we can get threadCpu > processCpu; in this case set internalCpu = 0
+            // as it looks odd otherwise.
+            double internalCpu = Math.max(processCpu - threadCpu, 0);
             return String.format("%.2f", processCpu) + " total, " +
                     String.format("%.2f", threadCpu) + " live threads, " +
-                    String.format("%.2f", processCpu - threadCpu) + " internal threads";
+                    String.format("%.2f", internalCpu) + " internal threads";
         } else { // process cpu not available
             return String.format("%.2f", threadStatsMXBean.getCpuUsage()) + " total,  " +
                     String.format("%.2f", threadStatsMXBean.getUserCpuUsage()) + " user,  " +

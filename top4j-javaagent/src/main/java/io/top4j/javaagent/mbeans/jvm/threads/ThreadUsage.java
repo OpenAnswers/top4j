@@ -211,8 +211,6 @@ public class ThreadUsage {
             update(threadHistory, true);
         }
 
-        updateProcessCpuTime();
-
         // update topThreadsMap
         updateTopThreads();
 
@@ -356,6 +354,9 @@ public class ThreadUsage {
         }
 
         if (updateGlobalCounters) {
+
+            // do this here to keep (semi-)synchronised with thread cpu calculation
+            updateProcessCpuTime();
 
             // update cpuUsage
             this.cpuUsage = totalCpuTime / numberOfProcessors;
