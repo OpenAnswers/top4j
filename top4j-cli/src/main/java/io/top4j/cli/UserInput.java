@@ -16,11 +16,15 @@
 
 package io.top4j.cli;
 
+import java.util.concurrent.locks.ReentrantLock;
+
 public class UserInput {
 
     private volatile String text = "t";
     private volatile String screenId = "t";
     private volatile boolean isDigit = false;
+
+    ReentrantLock consoleLock = new ReentrantLock();
 
     public void setText(String text) {
         this.text = text;

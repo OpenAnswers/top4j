@@ -35,7 +35,7 @@ import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.logging.Logger;
 
-public class ConsoleController extends TimerTask {
+public class ConsoleController {
 
     private final ConsoleReader consoleReader;
     private final UserInput userInput;
@@ -57,6 +57,7 @@ public class ConsoleController extends TimerTask {
     private final static int MAX_DISPLAY_NAME_LENGTH = 64;
     private String mainScreenId;
     private DisplayConfig displayConfig;
+    volatile boolean paused = false;
     private static final String ANSI_WHITE_BACKGROUND = "\u001B[47m";
     private static final String ANSI_BLACK = "\u001B[30m";
     private static final String ANSI_RESET = "\u001B[0m";
@@ -192,10 +193,16 @@ public class ConsoleController extends TimerTask {
 
     }
 
-    @Override
+    //@Override
     public void run() {
 
+        boolean welockedit = false;
         try {
+            if (!userInput.consoleLock.tryLock()) // do nothing if Top4j user interaction is happening
+                return;
+            welockedit = true;
+            if (this.paused)
+                return;
             // update console screen
             updateScreen();
 
@@ -203,8 +210,15 @@ public class ConsoleController extends TimerTask {
             // something went wrong - print error message and exit gracefully
             LOGGER.severe(e.getMessage());
             System.exit(1);
+        } finally {
+            if (welockedit)
+                userInput.consoleLock.unlock();
         }
 
+    }
+
+    public void pause(boolean paused) {
+        this.paused = paused;
     }
 
     private void updateScreen() throws ScreenUpdateException {
@@ -260,18 +274,39 @@ public class ConsoleController extends TimerTask {
                 threadStatsMXBean.getWaitingThreadCount() + " waiting,   " +
                 threadStatsMXBean.getTimedWaitingThreadCount() + " timed waiting,   " +
                 threadStatsMXBean.getBlockedThreadCount() + " blocked\n");
-        sb.append("%Cpu(s): " + String.format("%.2f", threadStatsMXBean.getCpuUsage()) + " total,  " +
-                String.format("%.2f", threadStatsMXBean.getUserCpuUsage()) + " user,  " +
-                String.format("%.2f", threadStatsMXBean.getSysCpuUsage()) + " sys\n");
-        sb.append("Heap Util(%):        " + String.format("%.2f", heapStatsMXBean.getEdenSpaceUtil()) + " eden,        " +
-                String.format("%.2f", heapStatsMXBean.getSurvivorSpaceUtil()) + " survivor,        " +
-                String.format("%.2f", heapStatsMXBean.getTenuredHeapUtil()) + " tenured\n");
-        sb.append("Mem Alloc(MB/s):     " + String.format("%.2f", memoryStatsMXBean.getMemoryAllocationRate()) + " eden,        " +
-                String.format("%.2f", memoryStatsMXBean.getMemorySurvivorRate()) + " survivor,        " +
-                String.format("%.2f", memoryStatsMXBean.getMemoryPromotionRate()) + " tenured\n");
+        sb.append("%Cpu(s): " + getCpuUsage()+ "\n");
+        if (heapStatsMXBean.isSingleGenerationHeap()) {
+            sb.append("Heap Util(%):        " + String.format("%.2f", heapStatsMXBean.getEdenSpaceUtil()) + "\n");
+            sb.append("Mem Alloc(MB/s):     " + String.format("%.2f", memoryStatsMXBean.getMemoryAllocationRate()) + "\n");
+        }
+        else {
+            sb.append("Heap Util(%):        " + String.format("%.2f", heapStatsMXBean.getEdenSpaceUtil()) + " eden,        " +
+                    String.format("%.2f", heapStatsMXBean.getSurvivorSpaceUtil()) + " survivor,        " +
+                    String.format("%.2f", heapStatsMXBean.getTenuredHeapUtil()) + " tenured\n");
+            sb.append("Mem Alloc(MB/s):     " + String.format("%.2f", memoryStatsMXBean.getMemoryAllocationRate()) + " eden,        " +
+                    String.format("%.2f", memoryStatsMXBean.getMemorySurvivorRate()) + " survivor,        " +
+                    String.format("%.2f", memoryStatsMXBean.getMemoryPromotionRate()) + " tenured\n");
+        }
         sb.append("GC Overhead(%):      " + String.format("%.4f", gcStatsMXBean.getGcOverhead()) + "\n");
 
         return sb.toString();
+    }
+
+    private String getCpuUsage() {
+        double processCpu = threadStatsMXBean.getProcessCpuUsage();
+        if (processCpu >= 0) {
+            double threadCpu = threadStatsMXBean.getCpuUsage();
+            // due to sampling period variations we can get threadCpu > processCpu; in this case set internalCpu = 0
+            // as it looks odd otherwise.
+            double internalCpu = Math.max(processCpu - threadCpu, 0);
+            return String.format("%.2f", processCpu) + " total, " +
+                    String.format("%.2f", threadCpu) + " live threads, " +
+                    String.format("%.2f", internalCpu) + " internal threads";
+        } else { // process cpu not available
+            return String.format("%.2f", threadStatsMXBean.getCpuUsage()) + " total,  " +
+                    String.format("%.2f", threadStatsMXBean.getUserCpuUsage()) + " user,  " +
+                    String.format("%.2f", threadStatsMXBean.getSysCpuUsage()) + " sys\n";
+        }
     }
 
     private String createTopThreadsScreen() {
@@ -297,7 +332,7 @@ public class ConsoleController extends TimerTask {
             if (threadName != null && threadName.length() > MAX_THREAD_NAME_LENGTH) {
                 threadName = threadName.substring(0, MAX_THREAD_NAME_LENGTH - 1);
             }
-            sb.append(counter + "  " +
+            sb.append(String.format("%1$-2s", counter) + " " +
                     String.format("%1$-8s", threadId) +
                     String.format("%1$-3s", threadState) +
                     String.format("%1$-6.1f", threadCpuUsage) +
@@ -310,7 +345,9 @@ public class ConsoleController extends TimerTask {
             counter++;
         }
         sb.append("\n\n");
-        sb.append("Hit [0-9] to view thread stack trace, [b] to view blocked threads, [q] to quit\n");
+
+        sb.append(getThreadInteractionHelp(counter));
+        sb.append(", [b] to view blocked threads, [q] to quit\n");
 
         return sb.toString();
 
@@ -355,7 +392,7 @@ public class ConsoleController extends TimerTask {
             if (threadName != null && threadName.length() > MAX_THREAD_NAME_LENGTH) {
                 threadName = threadName.substring(0, MAX_THREAD_NAME_LENGTH - 1);
             }
-            sb.append(counter + "  " +
+            sb.append(String.format("%1$-2s", counter) + " " +
                     String.format("%1$-8s", threadId) +
                     String.format("%1$-3s", threadState) +
                     String.format("%1$-10.1f", threadBlockedPercentage) +
@@ -368,11 +405,20 @@ public class ConsoleController extends TimerTask {
             counter++;
         }
         sb.append("\n\n");
-        sb.append("Hit [0-9] to view thread stack trace, [t] to view top threads, [q] to quit\n");
+        sb.append(getThreadInteractionHelp(counter));
+        sb.append(", [t] to view top threads, [q] to quit\n");
 
         return sb.toString();
 
     }
+
+    private String getThreadInteractionHelp(int counter) {
+        if (counter <= 10)
+            return "Hit [0-9] to view thread stack trace";
+        else
+            return "[0-" + (counter - 1) + "](+Enter) to view thread stack trace";
+    }
+
 
     private String createThreadStackTraceScreen(int threadNumber) {
 

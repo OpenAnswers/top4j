@@ -83,4 +83,9 @@ public interface HeapStatsMXBean extends StatsMXBean {
      */
     double getTenuredHeapUtil();
 
+    /**
+     * @return true if the heap is a single-generation (thus no survivor/tenured generations).
+     */
+    boolean isSingleGenerationHeap();
+
 }

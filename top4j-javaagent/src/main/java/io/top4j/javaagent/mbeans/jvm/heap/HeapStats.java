@@ -135,4 +135,8 @@ public class HeapStats implements HeapStatsMXBean {
         return this.failureReason;
     }
 
+    public boolean isSingleGenerationHeap() {
+        return this.heapUtilisation.isSingleGenerationHeap();
+    }
+
 }

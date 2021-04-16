@@ -36,6 +36,7 @@ public class MemoryStats implements MemoryStatsMXBean {
     private double mBeanCpuTime;
     private boolean enabled = true;
     private String failureReason;
+    private boolean onegen = false;
 
     private static final Logger LOGGER = Logger.getLogger(MemoryStats.class.getName());
 
@@ -45,22 +46,27 @@ public class MemoryStats implements MemoryStatsMXBean {
 
         // instantiate new MemoryPoolUsageTracker to track nursery pool usage
         MemoryPoolUsageTracker nurseryPoolUsageTracker = new MemoryPoolUsageTracker(mbsc, "Nursery");
-
-        // instantiate new MemoryPoolUsageTracker to track nursery pool usage
-        MemoryPoolUsageTracker survivorPoolUsageTracker = new MemoryPoolUsageTracker(mbsc, "Survivor");
-
-        // instantiate new MemoryPoolUsageTracker to track nursery pool usage
-        MemoryPoolUsageTracker tenuredPoolUsageTracker = new MemoryPoolUsageTracker(mbsc, "Tenured");
+        this.onegen = nurseryPoolUsageTracker.getMemoryPoolName().equals("ZHeap");
 
         // instantiate new MemoryPoolAllocationRate to store memory allocation rate
         MemoryPoolAllocationRate memoryAllocationRate = new MemoryPoolAllocationRate(mbsc, "Nursery", nurseryPoolUsageTracker);
 
-        // instantiate new MemorySurvivorRate to store memory survivor rate
-        MemoryPoolAllocationRate memorySurvivorRate = new MemoryPoolAllocationRate(mbsc, "Survivor", survivorPoolUsageTracker);
+        MemoryPoolUsageTracker survivorPoolUsageTracker = null, tenuredPoolUsageTracker = null;
+        MemoryPoolAllocationRate memorySurvivorRate = null, memoryPromotionRate = null;
+        if (!onegen) {
+            // instantiate new MemoryPoolUsageTracker to track survivor pool usage
+            survivorPoolUsageTracker = new MemoryPoolUsageTracker(mbsc, "Survivor");
 
-        // instantiate new MemoryPoolAllocationRate to store memory promotion rate
-        MemoryPoolAllocationRate memoryPromotionRate = new MemoryPoolAllocationRate(mbsc, "Tenured", tenuredPoolUsageTracker);
+            // instantiate new MemoryPoolUsageTracker to track tenured pool usage
+            tenuredPoolUsageTracker = new MemoryPoolUsageTracker(mbsc, "Tenured");
 
+
+            // instantiate new MemorySurvivorRate to store memory survivor rate
+            memorySurvivorRate = new MemoryPoolAllocationRate(mbsc, "Survivor", survivorPoolUsageTracker);
+
+            // instantiate new MemoryPoolAllocationRate to store memory promotion rate
+            memoryPromotionRate = new MemoryPoolAllocationRate(mbsc, "Tenured", tenuredPoolUsageTracker);
+        }
         // instantiate new MemoryPoolMXBeanHelper
         MemoryPoolMXBeanHelper memoryPoolMxBeanHelper = new MemoryPoolMXBeanHelper(mbsc);
 
@@ -72,13 +78,16 @@ public class MemoryStats implements MemoryStatsMXBean {
 
         // set memory pool usage thresholds
         int memoryUsageThreshold = 1;
-        memoryPoolMxBeanHelper.setTenuredUsageThreshold(memoryUsageThreshold);
+        if (!onegen)
+            memoryPoolMxBeanHelper.setTenuredUsageThreshold(memoryUsageThreshold);
 
         // set memory pool collection usage thresholds
         int collectionUsageThreshold = 1;
         memoryPoolMxBeanHelper.setNurseryCollectionUsageThreshold(collectionUsageThreshold);
-        memoryPoolMxBeanHelper.setSurvivorCollectionUsageThreshold(collectionUsageThreshold);
-        memoryPoolMxBeanHelper.setTenuredCollectionUsageThreshold(collectionUsageThreshold);
+        if (!onegen) {
+            memoryPoolMxBeanHelper.setSurvivorCollectionUsageThreshold(collectionUsageThreshold);
+            memoryPoolMxBeanHelper.setTenuredCollectionUsageThreshold(collectionUsageThreshold);
+        }
 
         this.memoryAllocationRate = memoryAllocationRate;
         this.memorySurvivorRate = memorySurvivorRate;
@@ -115,11 +124,13 @@ public class MemoryStats implements MemoryStatsMXBean {
         // update memory allocation rate
         this.memoryAllocationRate.update();
 
-        // update memory survivor rate
-        this.memorySurvivorRate.update();
+        if (!onegen) {
+            // update memory survivor rate
+            this.memorySurvivorRate.update();
 
-        // update memory promotion rate
-        this.memoryPromotionRate.update();
+            // update memory promotion rate
+            this.memoryPromotionRate.update();
+        }
 
         // update memory stats CPU time
         mBeanCpuTime = cpuTime.getMillis();
@@ -153,6 +164,8 @@ public class MemoryStats implements MemoryStatsMXBean {
 
     @Override
     public double getMemorySurvivorRate() {
+        if (this.memorySurvivorRate == null)
+            return 0.0;
         return this.memorySurvivorRate.getMemoryPoolAllocationRate();
     }
 
@@ -163,6 +176,8 @@ public class MemoryStats implements MemoryStatsMXBean {
 
     @Override
     public double getMemoryPromotionRate() {
+        if (this.memoryPromotionRate == null)
+            return 0.0;
         return this.memoryPromotionRate.getMemoryPoolAllocationRate();
     }
 

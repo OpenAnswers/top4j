@@ -154,6 +154,9 @@ public class ThreadStats implements ThreadStatsMXBean {
     }
 
     @Override
+    public double getProcessCpuUsage() { return this.threadUsage.getProcessCpuUsage(); }
+
+    @Override
     public long getThreadCount() {
         return this.threadUsage.getThreadCount();
     }

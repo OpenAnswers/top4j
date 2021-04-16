@@ -77,6 +77,11 @@ public interface ThreadStatsMXBean extends StatsMXBean {
     double getSysCpuUsage();
 
     /**
+     * Get Process CPU usage (<0 if not available).
+     */
+    public double getProcessCpuUsage();
+
+    /**
      * Sets the total number of threads running within the JVM process at the time of the last stats update.
      * @param threadCount the thread count
      */

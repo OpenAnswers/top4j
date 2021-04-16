@@ -51,15 +51,16 @@ public class GarbageCollectorMXBeanHelper {
             throw new MBeanInitException(e, "JMX IOException: " + e.getMessage());
         }
 
-        // discover nursery collector name
-        this.setNurseryCollectorName(this.discoverNurseryCollectorName());
-
-        // discover tenured collector name
-        this.setTenuredCollectorName(this.discoverTenuredCollectorName());
-
         try {
+            // discover nursery collector name
+            this.setNurseryCollectorName(this.discoverNurseryCollectorName());
             this.nurseryCollectorObjectName = new ObjectName("java.lang:type=GarbageCollector,name=" + nurseryCollectorName);
-            this.tenuredCollectorObjectName = new ObjectName("java.lang:type=GarbageCollector,name=" + tenuredCollectorName);
+
+            if (!this.nurseryCollectorName.equals("ZGC")) {
+                // discover tenured collector name
+                this.setTenuredCollectorName(this.discoverTenuredCollectorName());
+                this.tenuredCollectorObjectName = new ObjectName("java.lang:type=GarbageCollector,name=" + tenuredCollectorName);
+            }
         } catch (MalformedObjectNameException e) {
             throw new MBeanInitException(e, "JMX MalformedObjectNameException: " + e.getMessage());
         }
@@ -113,7 +114,8 @@ public class GarbageCollectorMXBeanHelper {
                     name.equals("PS Scavenge") ||
                     name.endsWith("Young Collector") ||
                     name.equals("ParNew") ||
-                    name.equals("G1 Young Generation")) {
+                    name.equals("G1 Young Generation") ||
+                    name.equals("ZGC")) {
                 collectorName = name;
             }
         }
