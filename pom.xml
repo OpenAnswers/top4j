@@ -79,7 +79,7 @@
     </snapshotRepository>
   </distributionManagement>
   <scm>
-    <developerConnection>scm:git:git@github.com:OpenAnswers/top4j.git</developerConnection>
+    <developerConnection>scm:git:https://github.com:OpenAnswers/top4j.git</developerConnection>
     <tag>HEAD</tag>
   </scm>
 
