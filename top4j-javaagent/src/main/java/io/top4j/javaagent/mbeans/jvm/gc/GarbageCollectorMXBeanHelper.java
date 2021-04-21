@@ -84,7 +84,8 @@ public class GarbageCollectorMXBeanHelper {
     }
 
     /**
-     * List all available garbage collector names
+     * Lists all available garbage collector names
+     * @return list of garbage collector names
      */
     public List<String> listGarbageCollectorNames() {
 

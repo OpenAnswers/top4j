@@ -47,6 +47,7 @@ public class HeapUtilisation {
 
     /**
      * Update Heap Utilisation.
+     * @throws MBeanRuntimeException If an MBean runtime exception occurred
      */
     public void update() throws MBeanRuntimeException {
 

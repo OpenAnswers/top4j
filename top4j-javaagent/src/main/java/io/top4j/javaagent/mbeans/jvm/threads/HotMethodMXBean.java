@@ -78,7 +78,7 @@ public interface HotMethodMXBean {
 
     /**
      * Returns the most recent stack trace for the hot method.
-     * @param maxDepth
+     * @param maxDepth the stack trace maximum frame depth
      * @return a String representation of the stack trace
      */
     String getStackTrace(int maxDepth);

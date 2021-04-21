@@ -23,7 +23,8 @@ import java.util.TreeMap;
 public class CollatorTest {
 
     /**
-     * @param args
+     * Run collator test
+     * @param args list of command-line arguments
      */
     public static void main(String[] args) {
 

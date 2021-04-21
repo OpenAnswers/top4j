@@ -19,7 +19,8 @@ package io.top4j.javaagent.test;
 public class Test {
 
     /**
-     * @param args
+     * Run JavaAgent test
+     * @param args list of command-line arguments
      */
     public static void main(String[] args) {
         System.out.println("Firing up JavaAgent test....");

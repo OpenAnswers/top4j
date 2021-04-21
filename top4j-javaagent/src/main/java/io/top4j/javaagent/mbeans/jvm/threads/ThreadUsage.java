@@ -465,6 +465,7 @@ public class ThreadUsage {
 
     /**
      * Get CPU usage.
+     * @return the CPU usage
      */
     public double getCpuUsage() {
         return this.cpuUsage;
@@ -472,6 +473,7 @@ public class ThreadUsage {
 
     /**
      * Get User CPU usage.
+     * @return the user CPU usage
      */
     public double getUserCpuUsage() {
         return this.userCpuUsage;
@@ -479,13 +481,15 @@ public class ThreadUsage {
 
     /**
      * Get System CPU usage.
+     * @return the system CPU usage
      */
     public double getSysCpuUsage() {
         return this.sysCpuUsage;
     }
 
     /**
-     * Get Process CPU usage (<0 if not available).
+     * Get Process CPU usage (&lt;0 if not available).
+     * @return the Java process CPU usage
      */
     public double getProcessCpuUsage() {
         return this.processCpuUsage;
@@ -631,6 +635,7 @@ public class ThreadUsage {
 
     /**
      * Get total user time so far in nanoseconds.
+     * @return the total user time in nanoseconds
      */
     public long getTotalUserTime() {
         final Collection<ThreadInfo> hist = threadHistory.values();
@@ -643,6 +648,7 @@ public class ThreadUsage {
 
     /**
      * Get total system time so far in nanoseconds.
+     * @return the total system time in nanoseconds
      */
     public long getTotalSystemTime() {
         return getTotalCpuTime() - getTotalUserTime();

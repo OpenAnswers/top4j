@@ -77,7 +77,8 @@ public interface ThreadStatsMXBean extends StatsMXBean {
     double getSysCpuUsage();
 
     /**
-     * Get Process CPU usage (<0 if not available).
+     * Get Process CPU usage (&lt;0 if not available).
+     * @return the Java process CPU usage
      */
     public double getProcessCpuUsage();
 

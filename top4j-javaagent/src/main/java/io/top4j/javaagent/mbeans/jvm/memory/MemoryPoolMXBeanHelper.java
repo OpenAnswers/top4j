@@ -103,7 +103,8 @@ public class MemoryPoolMXBeanHelper {
     }
 
     /**
-     * List all available memory pool names
+     * Lists all available memory pool names
+     * @return list of memory pool names
      */
     public List<String> listMemoryPoolNames() {
 
