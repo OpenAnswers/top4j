@@ -623,6 +623,7 @@ public class ThreadUsage {
 
     /**
      * Get total CPU time so far in nanoseconds.
+     * @return the total CPU time in nanoseconds
      */
     public long getTotalCpuTime() {
         final Collection<ThreadInfo> hist = threadHistory.values();

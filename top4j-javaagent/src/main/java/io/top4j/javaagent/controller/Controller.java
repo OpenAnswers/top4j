@@ -39,6 +39,7 @@ public final class Controller extends Thread {
 
     /**
      * Create a polling thread to track JVM stats.
+     * @param config the Top4J JavaAgent configuration
      */
     public Controller(Configurator config) {
         super("Top4J Monitor");
