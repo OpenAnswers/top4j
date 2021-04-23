@@ -367,7 +367,12 @@ public class ThreadUsage {
             this.userCpuUsage = totalUserCpuTime / numberOfProcessors;
             LOGGER.fine("User CPU Usage = " + this.userCpuUsage);
             // update sysCpuUsage
-            this.sysCpuUsage = (totalCpuTime - totalUserCpuTime) / numberOfProcessors;
+            if (totalCpuTime > 0 && totalCpuTime > totalUserCpuTime) {
+                this.sysCpuUsage = (totalCpuTime - totalUserCpuTime) / numberOfProcessors;
+            }
+            else {
+                this.sysCpuUsage = 0.0;
+            }
             LOGGER.fine("System CPU Usage = " + this.sysCpuUsage);
             // update threadCount
             this.setThreadCount(threadCount);
