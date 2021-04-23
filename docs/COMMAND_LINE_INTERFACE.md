@@ -26,7 +26,12 @@ Header Fields
 
 **Threads:** The total number of threads within the JVM process along with a breakdown of the thread states. See the [java.lang.Thread.State Enum](https://docs.oracle.com/javase/8/docs/api/java/lang/Thread.State.html) for more details.
 
-**%Cpu(s):** The JVM process percentage CPU utilisation across all available processors along with a breakdown of the user space and system CPU included in the total. This is the JVM process CPU utilisation at the system level. It's effectively the sum of the CPU utilisation of all threads running within the JVM process divided by the number of available processors.
+**%Cpu(s):** The JVM process percentage CPU utilisation across all available processors. This is the JVM process CPU utilisation at the system level.
+The JVM process CPU utilisation is based on the ProcessCpuTime attribute on the JMX [OperatingSystemMXBean](https://docs.oracle.com/javase/8/docs/api/java/lang/management/OperatingSystemMXBean.html) if that's available.
+If not, it's calculated as the sum of the CPU utilisation of all live threads running within the JVM process divided by the number of available processors.
+In which case, the per thread CPU utilisation is derived from the JMX [ThreadMXBean](https://docs.oracle.com/javase/8/docs/api/java/lang/management/ThreadMXBean.html) [getThreadCpuTime()](https://docs.oracle.com/javase/8/docs/api/java/lang/management/ThreadMXBean.html#getThreadCpuTime-long-) operation.
+Where the CPU utilisation is taken from the JMX [OperatingSystemMXBean](https://docs.oracle.com/javase/8/docs/api/java/lang/management/OperatingSystemMXBean.html), a breakdown of the CPU usage consumed by live threads vs. internal threads is provided under the %Cpu(s) header, where live threads are threads returned by the JMX [ThreadMXBean.getAllThreadIds()](https://docs.oracle.com/javase/8/docs/api/java/lang/management/ThreadMXBean.html#getAllThreadIds--) operation and the internal threads CPU utilisation represents all other JVM threads, e.g. code compiler threads.
+Where the CPU utilisation is derived from the JMX [ThreadMXBean](https://docs.oracle.com/javase/8/docs/api/java/lang/management/ThreadMXBean.html), a breakdown of the user space and system CPU is included along side the total.
 
 **Heap Util(%):** The JVM heap space utilisation following the most recent garbage collection event for each of the primary Java heap spaces. This is effectively the residual heap occupied by live objects within the JVM heap which can't be garbage collected because they are still referenced by one or more other objects. It is calculated as ( ( heapUsed / heapCommitted ) * 100 ). See HeapStats MBean below for more details.
 
@@ -66,7 +71,7 @@ COMMAND-LINE Options
 
 The command-line syntax for Top4J consists of:
 
--hv | -CD -d delay -p pid -S cache-size -T cache-ttl
+-hv | -CDI -d delay -p pid -S cache-size -t threads -T cache-ttl
 
 All command-line switches are optional. White space between command-line switches is also optional.
 
@@ -86,6 +91,10 @@ All command-line switches are optional. White space between command-line switche
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Prints the [Top4J Configuration Properties](/docs/CONFIGURATION.md) used to configure the Top4J Java Agent used to gather performance metrics displayed on the Top4J CLI screens.
 
+-t : Number of top threads to display as: -t threads
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Specifies the number of top/blocked threads to display
+
 -C : Enable thread usage cache
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Switch to enable thread usage cache (enabled by default). The thread usage cache is a performance enhancement used to store the top thread IDs by usage (CPU and blocked time) so that only the threads with a history of high CPU usage or thread contention are updated on each thread usage update. The thread usage cache is updated periodically according to the thread cache time-to-live setting.
@@ -93,6 +102,10 @@ All command-line switches are optional. White space between command-line switche
 -D : Disable thread usage cache
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Switch to disable thread usage cache (which is enabled by default).
+
+-I : Include some additional internal system threads
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Include some additional internal system threads in the top threads display where identifiable (e.g. code compiler threads)
 
 -S : Thread usage cache size as: -S size
 

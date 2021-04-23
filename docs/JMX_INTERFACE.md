@@ -77,6 +77,10 @@ A complete list of Top4J MBeans and their associated attributes is documented be
 
 **TenuredHeapUtil:** The tenured (or old) heap space utilisation following the most recent garbage collection event. This is effectively the residual heap occupied by live objects within the tenured (or old) space which can't be garbage collected because they are still referenced by one or more other objects. High tenured heap space utilisation can be an indication that the JVM is running low on memory. A high tenured heap utilisation can lead to frequent garbage collection events which will typically lead to a high GC overhead and therefore poor application performance/memory throughput. See GCOverhead attribute above for more details.
 
+### Operations
+
+**isSingleGenerationHeap():** Returns true if the heap is a single generation heap, otherwise false.
+
 **HotMethod** [io.top4j:type=JVM,statsType=HotMethod]
 -----------------------------------------------------
 **Description:** Used to store and expose stats relating to a Java method that has been determined to have executed frequently.
@@ -114,11 +118,13 @@ A complete list of Top4J MBeans and their associated attributes is documented be
 
 ### Attributes
 
-**CpuUsage:** The combined CPU usage of all JVM threads as a percentage of the total CPU available during the last iteration. The CPU usage is calculated as the total CPU usage consumed by all JVM threads divided by the number of processor cores available to give the system level CPU usage for the JVM process.
+**CpuUsage:** The combined CPU usage of all live JVM threads as a percentage of the total CPU available during the last iteration. The CPU usage is calculated as the total CPU usage consumed by all JVM threads divided by the number of processor cores available to give the system level CPU usage for the JVM process.
 
-**UserCpuUsage:** The combined user space CPU usage of all JVM threads as a percentage of the total CPU available during the last iteration. The user CPU usage is calculated as the total user CPU usage consumed by all JVM threads divided by the number of processor cores available to give the system level user CPU usage for the JVM process.
+**UserCpuUsage:** The combined user space CPU usage of all live JVM threads as a percentage of the total CPU available during the last iteration. The user CPU usage is calculated as the total user CPU usage consumed by all JVM threads divided by the number of processor cores available to give the system level user CPU usage for the JVM process.
 
-**SysCpuUsage:** The combined system CPU usage of all JVM threads as a percentage of the total CPU available during the last iteration. The system CPU usage is calculated as the total CPU usage consumed by all JVM threads minus the total user CPU usage.
+**SysCpuUsage:** The combined system CPU usage of all live JVM threads as a percentage of the total CPU available during the last iteration. The system CPU usage is calculated as the total CPU usage consumed by all JVM threads minus the total user CPU usage.
+
+**ProcessCpuUsage:** The JVM process CPU utilisation based on the ProcessCpuTime attribute on the JMX [OperatingSystemMXBean](https://docs.oracle.com/javase/8/docs/api/java/lang/management/OperatingSystemMXBean.html) if that's available. The value stored by this attribute will be less than zero if the [OperatingSystemMXBean](https://docs.oracle.com/javase/8/docs/api/java/lang/management/OperatingSystemMXBean.html) ProcessCpuTime is not available.
 
 **ThreadCount:** The total number of threads running within the JVM process at the time of the last stats update.
 
