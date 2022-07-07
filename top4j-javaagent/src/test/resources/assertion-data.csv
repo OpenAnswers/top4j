@@ -10,7 +10,7 @@
 #    5. AssertionData - the assertion data
 #
 GCStats,GcOverhead,gt,double,0.0
-GCStats,MeanNurseryGCTime,gt,double,1.0
+GCStats,MeanNurseryGCTime,gt,double,0.1
 GCStats,MeanTenuredGCTime,eq,double,0.0
 #GCStats,MBeanCpuTime,gt,double,0.1
 MemoryStats,MemoryAllocationRate,gt,double,1.0
