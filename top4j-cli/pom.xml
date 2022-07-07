@@ -60,6 +60,10 @@
                   <exclude>logkit:logkit</exclude>
                   <exclude>avalon-framework:avalon-framework</exclude>
                   <exclude>org.cyclopsgroup:jcli</exclude>
+                  <exclude>com.google.guava:guava</exclude>
+                  <exclude>org.apache.commons:commons-collections4</exclude>
+                  <exclude>org.apache.commons:commons-configuration2</exclude>
+                  <exclude>org.apache.commons:commons-text</exclude>
                 </excludes>
               </artifactSet>
             </configuration>
